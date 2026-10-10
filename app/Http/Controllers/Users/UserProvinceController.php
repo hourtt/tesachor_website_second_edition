@@ -3,24 +3,26 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
-use App\Models\Province;
+use App\Services\ProvinceService;
 
 class UserProvinceController extends Controller
 {
+    protected $provinceService;
+
+    public function __construct(ProvinceService $provinceService)
+    {
+        $this->provinceService = $provinceService;
+    }
 
     public function index()
     {
-        $provinces = Province::orderBy('name', 'asc')->paginate(12);
+        $provinces = $this->provinceService->getProvincesPaginated(12);
         return view('auth.users.provinces.index', compact('provinces'));
     }
+
     public function show(string $id)
     {
-
-        // Added Show method to list destinations in this province
-        $province = Province::with('destinations')
-            ->where('id', $id)       // Check if it matches an ID
-            ->orWhere('slug', $id)   // OR check if it matches a Slug
-            ->firstOrFail();         // If neither works, THEN show 404
+        $province = $this->provinceService->getProvinceByIdOrSlug($id);
         return view('auth.users.provinces.show', compact('province'));
     }
 }

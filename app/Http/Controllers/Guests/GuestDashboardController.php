@@ -3,16 +3,23 @@
 namespace App\Http\Controllers\Guests;
 
 use App\Http\Controllers\Controller;
-use App\Models\Province;
-use App\Models\Destination;
+use App\Services\ProvinceService;
+use App\Services\DestinationService;
 use Illuminate\Support\Facades\Auth;
 
 class GuestDashboardController extends Controller
 {
-    //
+    protected $provinceService;
+    protected $destinationService;
+
+    public function __construct(ProvinceService $provinceService, DestinationService $destinationService)
+    {
+        $this->provinceService = $provinceService;
+        $this->destinationService = $destinationService;
+    }
+
     public function index()
     {
-        // Redirect to their specific dashboard if Authenticated (Prevent routing leaked)
         if (Auth::guard('admins')->check()) {
             return redirect()->route('admins.dashboard');
         }
@@ -20,18 +27,9 @@ class GuestDashboardController extends Controller
             return redirect()->route('users.dashboard');
         }
 
-        // Fetch Provinces for the dashboard slider
-        $provinces = Province::orderBy('name', 'asc')->paginate(4);
+        $provinces = $this->provinceService->getProvincesPaginated(4);
+        $destinations = $this->destinationService->getRecommendedDestinations(6);
 
-        //* Rename from $item -> $destinations
-        // We use the Destination model here to find items where is_recommended = true
-        $destinations = Destination::where('is_recommended', true)
-            ->with('province')
-            ->latest()
-            ->take(6)
-            ->get();
-
-        // Return the Dashboard View
         return view('guests.dashboard', compact('provinces', 'destinations'));
     }
 }

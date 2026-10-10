@@ -3,19 +3,20 @@
 namespace App\Http\Controllers\Guests;
 
 use App\Http\Controllers\Controller;
-use App\Models\Destination;
+use App\Services\DestinationService;
 
 class GuestDestinationController extends Controller
 {
-    //
+    protected $destinationService;
+
+    public function __construct(DestinationService $destinationService)
+    {
+        $this->destinationService = $destinationService;
+    }
+
     public function show(string $id)
     {
-        $destination = Destination::with('province')
-            ->where('id', $id)
-            ->orWhere('slug', $id)
-            ->firstOrFail();
-
-        // * Guests directory
+        $destination = $this->destinationService->getDestinationByIdOrSlug($id);
         return view('guests.destinations.show', compact('destination'));
     }
 }

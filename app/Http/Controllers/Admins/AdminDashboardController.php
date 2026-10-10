@@ -1,31 +1,28 @@
 <?php
 
-
 namespace App\Http\Controllers\Admins;
 
 use Illuminate\Http\Request;
-
-
 use App\Http\Controllers\Controller;
-use App\Models\Province;
-use App\Models\Destination; // <--- Import the Destination Model
+use App\Services\ProvinceService;
+use App\Services\DestinationService;
 
 class AdminDashboardController extends Controller
 {
+    protected $provinceService;
+    protected $destinationService;
+
+    public function __construct(ProvinceService $provinceService, DestinationService $destinationService)
+    {
+        $this->provinceService = $provinceService;
+        $this->destinationService = $destinationService;
+    }
+
     public function index()
     {
-        // 1. Fetch Provinces for the dashboard slider
-        $provinces = Province::orderBy('name', 'asc')->paginate(8);
+        $provinces = $this->provinceService->getProvincesPaginated(8);
+        $destinations = $this->destinationService->getRecommendedDestinations(6);
 
-        //* Rename from $item -> $destinations
-        // We use the Destination model here to find items where is_recommended = true
-        $destinations = Destination::where('is_recommended', true)
-            ->with('province')
-            ->latest()
-            ->take(6)
-            ->get();
-
-        // 3. Return the Dashboard View
         return view('auth.admins.dashboard', compact('provinces', 'destinations'));
     }
 }

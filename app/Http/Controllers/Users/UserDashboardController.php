@@ -3,22 +3,25 @@
 namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
-use App\Models\Province;
-use App\Models\Destination;
+use App\Services\ProvinceService;
+use App\Services\DestinationService;
 
 class UserDashboardController extends Controller
 {
+    protected $provinceService;
+    protected $destinationService;
+
+    public function __construct(ProvinceService $provinceService, DestinationService $destinationService)
+    {
+        $this->provinceService = $provinceService;
+        $this->destinationService = $destinationService;
+    }
+
     public function index()
     {
-        // Fetch Provinces here too!
-        $provinces =  Province::orderBy('name', 'asc')->paginate(8);
+        $provinces = $this->provinceService->getProvincesPaginated(8);
+        $destinations = $this->destinationService->getRecommendedDestinations(6);
 
-        $destination = Destination::where('is_recommended', true)
-            ->with('province')
-            ->latest()
-            ->take(6)
-            ->get();
-
-        return view('auth.users.dashboard', compact('provinces', 'destination'));
+        return view('auth.users.dashboard', compact('provinces', 'destinations'));
     }
 }
