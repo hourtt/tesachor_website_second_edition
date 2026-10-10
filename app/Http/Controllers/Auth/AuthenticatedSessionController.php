@@ -28,12 +28,12 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         //* Admin dashboard
-        if (Auth::guard('admins')->check()) {
+        if (Auth::check() && Auth::user()->hasRole('admin')) {
             return redirect()->intended(route('admins.dashboard'));
         }
 
         //* User dashboard
-        if (Auth::guard('web')->check()) {
+        if (Auth::check()) {
              return redirect()->intended(route('users.dashboard', absolute: false));
         }
         //* Guest dashboard
@@ -46,8 +46,7 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         // Logout both guards to be safe
-        Auth::guard('admins')->logout();
-        Auth::guard('web')->logout();
+        Auth::logout();
 
         $request->session()->invalidate();
 

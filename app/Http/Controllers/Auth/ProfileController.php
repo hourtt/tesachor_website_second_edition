@@ -17,7 +17,7 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        $guard = Auth::guard('admins')->check() ? 'admins' : 'web';
+        $guard = 'web';
         
         return view('profile.edit', [
             'user' => $request->user($guard),
@@ -29,7 +29,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $guard = Auth::guard('admins')->check() ? 'admins' : 'web';
+        $guard = 'web';
         $user = $request->user($guard);
 
         $user->fill($request->validated());
@@ -52,7 +52,7 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
-        $guard = Auth::guard('admins')->check() ? 'admins' : 'web';
+        $guard = 'web';
         $user = $request->user($guard);
 
         Auth::guard($guard)->logout();

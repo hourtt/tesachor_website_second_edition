@@ -21,6 +21,34 @@
                 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
                 Discover the Kingdom of Wonder
             </p>
+            {{-- Call to Action --}}
+            <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
+                <a href="#travel" class="inline-block px-8 py-4 bg-red-600 text-white font-bold rounded-full hover:bg-red-700 hover:scale-105 transition-all shadow-lg text-sm md:text-base tracking-wider uppercase">
+                    Start Your Journey
+                </a>
+            </div>
+        </div>
+    </section>
+
+    {{-- SEARCH BAR --}}
+    <section class="relative z-30 -mt-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="bg-white p-2 rounded-full shadow-2xl flex items-center border border-gray-100" data-aos="fade-up" data-aos-delay="600">
+            <div class="flex-grow flex items-center pl-6">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <input type="text" placeholder="Where do you want to go?" class="w-full border-none focus:ring-0 text-gray-700 bg-transparent py-3 px-4 outline-none">
+            </div>
+            <div class="hidden md:block w-px h-8 bg-gray-200 mx-4"></div>
+            <div class="hidden md:flex items-center space-x-2 mr-4 text-gray-500">
+                <select class="border-none focus:ring-0 bg-transparent text-sm cursor-pointer outline-none text-gray-700">
+                    <option>All Categories</option>
+                    <option>Temples</option>
+                    <option>Beaches</option>
+                    <option>Nature</option>
+                </select>
+            </div>
+            <button class="bg-gray-900 text-white px-8 py-3 rounded-full font-bold hover:bg-red-600 transition flex-shrink-0">
+                Search
+            </button>
         </div>
     </section>
 
@@ -112,43 +140,37 @@
     </section>
 
     {{-- 3. WHO WE ARE: FADE DIRECTIONS --}}
-    <section id="about" class="py-10 bg-transparent overflow-hidden">
-        <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
-            {{-- Animation: fade-right (Text fades in from left) --}}
-            <div class="space-y-8" data-aos="fade-right" data-aos-duration="1000">
-                <div class="space-y-2">
-                    <span class="text-red-500 font-bold tracking-widest text-sm capitalize">Who we
-                        are</span>
-                    <h2 class="font-serif text-5xl text-gray-900 leading-tight">Authentic Cambodian <br><span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Adventures</span>
-                    </h2>
-                </div>
-                <p class="text-gray-600 leading-relaxed text-lg text-center">
-                    <span class="font-bold text-blue-600"><i class="font-playfair">Tesachor</i></span> website is your
-                    guide to discovering the true beauty of Cambodia. From ancient temple to a
-                    peaceful villages, explore Khmer nature, culture, and history in one place. Start your travel
-                    journey and make an unforgettable moment with your friend, family and your lover in the land of
-                    beautiful culture, Cambodia.
+    <section id="about" class="py-16 bg-transparent overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-red-500 font-bold tracking-widest text-sm uppercase mb-3 block">Who we are</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-gray-900 leading-tight mb-6">Authentic Cambodian <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Adventures</span></h2>
+                <p class="text-gray-600 leading-relaxed text-lg">
+                    <span class="font-bold text-gray-900"><i class="font-serif">Tesachor</i></span> is your ultimate guide to discovering the true beauty of Cambodia. From ancient temples to peaceful villages, explore Khmer nature, culture, and history in one place.
                 </p>
             </div>
-
-            {{-- Animation: fade-left (Profile fades in from right) --}}
-            <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100" data-aos="fade-left"
-                data-aos-duration="1000">
-                <div class="flex items-center gap-6 mb-6">
-                    <img src="https://i.pravatar.cc/150?img=32"
-                        class="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg" alt="Author">
-                    <div>
-                        <h4 class="font-bold text-xl text-gray-900">Jessica Kim</h4>
-                        <p class="text-sm text-red-500 font-medium">Travel Blogger</p>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-14 h-14 mx-auto bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
+                    <h3 class="font-bold text-xl text-gray-900 mb-3">Explore Anywhere</h3>
+                    <p class="text-gray-600 text-sm">Discover hidden gems and popular destinations across all 25 provinces.</p>
                 </div>
-                <p class="text-gray-600 italic text-lg text-center">" I came to Cambodia with curiosity, but I left with
-                    deep
-                    respect and love for this country. The temples are powerful, the nature is peaceful, and the culture
-                    feels real and alive. What touched me most were the people. They are warm, kind, and always smiling.
-                    Don’t worry about exploring Cambodia. You will never forget what you experience in this country. 😊"
-                </p>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-14 h-14 mx-auto bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-xl text-gray-900 mb-3">Rich Culture</h3>
+                    <p class="text-gray-600 text-sm">Immerse yourself in authentic traditions, delicious cuisine, and local life.</p>
+                </div>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-14 h-14 mx-auto bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </div>
+                    <h3 class="font-bold text-xl text-gray-900 mb-3">Unforgettable</h3>
+                    <p class="text-gray-600 text-sm">Create lasting memories with your friends and family in the Kingdom of Wonder.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -181,10 +203,10 @@
                     </div>
                 </div>
             @empty
-                <div class="col-span-1 md:col-span-3 text-center py-12">
+                <div class="col-span-full text-center py-12">
                     <div class="bg-white rounded-2xl p-8 shadow-sm border border-dashed border-gray-300">
                         <p class="text-gray-500 italic mb-4">No recommended places found yet.</p>
-                        @if (Auth::guard('admins')->check())
+                        @if (Auth::check() && Auth::user()->hasRole('admin'))
                             <p class="text-sm text-gray-400">Add a destination and check "Recommended" to see it here.
                             </p>
                         @endif
@@ -195,7 +217,7 @@
     </section>
 
     {{-- 5. Explore province & city --}}
-    <section id="stories" class="py-10 bg-transparent">
+    <section id="provinces" class="py-10 bg-transparent">
         <div class="max-w-5xl mx-auto px-4 mb-16">
             <div
                 class="flex flex-col md:flex-row justify-between items-end md:items-center text-center md:text-left gap-4 py-4">
@@ -250,7 +272,7 @@
     </section>
 
     {{-- 6. Discover Cambodia --}}
-    <section id="stories" class="py-10 bg-transparent">
+    <section id="lifestyle" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 text-center mb-16">
             <h2 class="font-serif text-4xl italic text-gray-800">Discover Cambodia</h2>
         </div>
@@ -356,11 +378,7 @@
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="0">
                     <div
                         class="w-16 h-16 mx-auto bg-red-50 text-red-500 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                            class="bi bi-currency-exchange" viewBox="0 0 16 16">
-                            <path
-                                d="M0 5a5 5 0 0 0 4.027 4.905 6.5 6.5 0 0 1 .544-2.073C3.695 7.536 3.132 6.864 3 5.91h-.5v-.426h.466V5.05q-.001-.07.004-.135H2.5v-.427h.511C3.236 3.24 4.213 2.5 5.681 2.5c.316 0 .59.031.819.085v.733a3.5 3.5 0 0 0-.815-.082c-.919 0-1.538.466-1.734 1.252h1.917v.427h-1.98q-.004.07-.003.147v.422h1.983v.427H3.93c.118.602.468 1.03 1.005 1.229a6.5 6.5 0 0 1 4.97-3.113A5.002 5.002 0 0 0 0 5m16 5.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0m-7.75 1.322c.069.835.746 1.485 1.964 1.562V14h.54v-.62c1.259-.086 1.996-.74 1.996-1.69 0-.865-.563-1.31-1.57-1.54l-.426-.1V8.374c.54.06.884.347.966.745h.948c-.07-.804-.779-1.433-1.914-1.502V7h-.54v.629c-1.076.103-1.808.732-1.808 1.622 0 .787.544 1.288 1.45 1.493l.358.085v1.78c-.554-.08-.92-.376-1.003-.787zm1.96-1.895c-.532-.12-.82-.364-.82-.732 0-.41.311-.719.824-.809v1.54h-.005zm.622 1.044c.645.145.943.38.943.796 0 .474-.37.8-1.02.86v-1.674z" />
-                        </svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <h3 class="font-bold text-lg mb-2">Currency</h3>
                     <p class="text-sm text-gray-500">Riel (៛) & USD ($) are accepted everywhere.</p>
@@ -381,12 +399,8 @@
 
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="200">
                     <div
-                        class="w-16 h-16 mx-auto text-green-500 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 576 512"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
-                            <path
-                                d="M470.1 231.3s7.6 37.2 9.3 45l-33.4 0c3.3-8.9 16-43.5 16-43.5-.2 .3 3.3-9.1 5.3-14.9l2.8 13.4zM576 80l0 352c0 26.5-21.5 48-48 48L48 480c-26.5 0-48-21.5-48-48L0 80C0 53.5 21.5 32 48 32l480 0c26.5 0 48 21.5 48 48zM152.5 331.2l63.2-155.2-42.5 0-39.3 106-4.3-21.5-14-71.4c-2.3-9.9-9.4-12.7-18.2-13.1l-64.7 0-.7 3.1c15.8 4 29.9 9.8 42.2 17.1l35.8 135 42.5 0zm94.4 .2l25.2-155.4-40.2 0-25.1 155.4 40.1 0zm139.9-50.8c.2-17.7-10.6-31.2-33.7-42.3-14.1-7.1-22.7-11.9-22.7-19.2 .2-6.6 7.3-13.4 23.1-13.4 13.1-.3 22.7 2.8 29.9 5.9l3.6 1.7 5.5-33.6c-7.9-3.1-20.5-6.6-36-6.6-39.7 0-67.6 21.2-67.8 51.4-.3 22.3 20 34.7 35.2 42.2 15.5 7.6 20.8 12.6 20.8 19.3-.2 10.4-12.6 15.2-24.1 15.2-16 0-24.6-2.5-37.7-8.3l-5.3-2.5-5.6 34.9c9.4 4.3 26.8 8.1 44.8 8.3 42.2 .1 69.7-20.8 70-53zM528 331.4l-32.4-155.4-31.1 0c-9.6 0-16.9 2.8-21 12.9l-59.7 142.5 42.2 0s6.9-19.2 8.4-23.3l51.6 0c1.2 5.5 4.8 23.3 4.8 23.3l37.2 0z" />
-                        </svg>
+                        class="w-16 h-16 mx-auto bg-green-50 text-green-500 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
                     </div>
                     <h3 class="font-bold text-lg mb-2">Visa</h3>
                     <p class="text-sm text-gray-500">Visa on Arrival available at all major airports.</p>
@@ -394,12 +408,8 @@
 
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="300">
                     <div
-                        class="w-16 h-16 mx-auto text-yellow-500 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 640 640"><!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
-                            <path
-                                d="M192 64C139 64 96 107 96 160L96 448C96 477.8 116.4 502.9 144 510L144 544C144 561.7 158.3 576 176 576L192 576C209.7 576 224 561.7 224 544L224 512L416 512L416 544C416 561.7 430.3 576 448 576L464 576C481.7 576 496 561.7 496 544L496 510C523.6 502.9 544 477.8 544 448L544 160C544 107 501 64 448 64L192 64zM160 240C160 222.3 174.3 208 192 208L296 208L296 320L192 320C174.3 320 160 305.7 160 288L160 240zM344 320L344 208L448 208C465.7 208 480 222.3 480 240L480 288C480 305.7 465.7 320 448 320L344 320zM192 384C209.7 384 224 398.3 224 416C224 433.7 209.7 448 192 448C174.3 448 160 433.7 160 416C160 398.3 174.3 384 192 384zM448 384C465.7 384 480 398.3 480 416C480 433.7 465.7 448 448 448C430.3 448 416 433.7 416 416C416 398.3 430.3 384 448 384zM248 136C248 122.7 258.7 112 272 112L368 112C381.3 112 392 122.7 392 136C392 149.3 381.3 160 368 160L272 160C258.7 160 248 149.3 248 136z" />
-                        </svg>
+                        class="w-16 h-16 mx-auto bg-yellow-50 text-yellow-500 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                     </div>
                     <h3 class="font-bold text-lg mb-2">Transport</h3>
                     <p class="text-sm text-gray-500">Use PassApp or Grab for easy TukTuk rides.</p>

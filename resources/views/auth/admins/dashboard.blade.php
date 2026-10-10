@@ -144,7 +144,7 @@
                         <p class="text-l text-black mb-3 line-clamp-2">{{ $tour->short_description }}</p>
 
                         {{-- DYNAMIC LINK: Checks if User is Admin --}}
-                        <a href="{{ Auth::guard('admins')->check() ? route('admins.destinations.show', $tour->slug) : route('destinations.show', $tour->slug) }}"
+                        <a href="{{ Auth::check() && Auth::user()->hasRole('admin') ? route('admins.destinations.show', $tour->slug) : route('destinations.show', $tour->slug) }}"
                             class="inline-flex items-center text-sm font-bold  tracking-wider text-gray-900 hover:text-red-600 transition-colors">
                             Read More
                         </a>
@@ -154,7 +154,7 @@
                 <div class="col-span-1 md:col-span-3 text-center py-12">
                     <div class="bg-white rounded-2xl p-8 shadow-sm border border-dashed border-gray-300">
                         <p class="text-gray-500 italic mb-4">No recommended places found yet.</p>
-                        @if (Auth::guard('admins')->check())
+                        @if (Auth::check() && Auth::user()->hasRole('admin'))
                             <p class="text-sm text-gray-400">Add a destination and check "Recommended" to see it here.
                             </p>
                         @endif
@@ -165,7 +165,7 @@
     </section>
 
     {{-- 5. Provinces & Cities Section --}}
-    <section id="stories" class="py-14 bg-transparent">
+    <section id=""" class="py-14 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 mb-16">
             <div
                 class="flex flex-col md:flex-row justify-between items-end md:items-center text-center md:text-left gap-4">
@@ -176,7 +176,7 @@
                 </div>
 
                 {{-- ADMIN ONLY: Add Button --}}
-                @if (Auth::guard('admins')->check())
+                @if (Auth::check() && Auth::user()->hasRole('admin'))
                     <div data-aos="fade-left" class="flex flex-wrap justify-center gap-3">
                         {{-- * See province/city list* --}}
                         <a href="{{ route('admins.provinces.index') }}"
@@ -220,7 +220,7 @@
                     </div>
 
                     {{-- ADMIN ONLY: Quick Edit Button --}}
-                    @if (Auth::guard('admins')->check())
+                    @if (Auth::check() && Auth::user()->hasRole('admin'))
                         <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity z-20">
                             <object class="relative">
                                 <a href="{{ route('admins.provinces.edit', $province->slug) }}"
@@ -240,7 +240,7 @@
     </section>
 
     {{-- 6. Discover Cambodia (Static) --}}
-    <section id="stories" class="py-24 bg-transparent">
+    <section id=""" class="py-24 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 text-center mb-16">
             <h2 class="font-serif text-4xl italic text-gray-800">Discover Cambodia</h2>
         </div>

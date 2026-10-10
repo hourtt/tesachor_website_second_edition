@@ -15,7 +15,7 @@ class EmailVerificationPromptController extends Controller
      */
     public function __invoke(Request $request): RedirectResponse|View
     {
-        $guard = Auth::guard('admins')->check() ? 'admins' : 'web';
+        $guard = 'web';
         $user = $request->user($guard);
 
         return $user->hasVerifiedEmail()

@@ -6,14 +6,14 @@
     $logout = 'logout';
 
     // 2. Check for Admin first
-    if (Auth::guard('admins')->check()) {
-        $user = Auth::guard('admins')->user();
+    if (Auth::check() && Auth::user()->hasRole('admin')) {
+        $user = Auth::user();
         $dashboard = 'admins.dashboard';
         $profile = 'admins.profile.edit';
         $logout = 'logout';
     }
     // 3. Check for Regular User second
-    elseif (Auth::guard('web')->check()) {
+    elseif (Auth::check()) {
         $user = Auth::user();
         $dashboard = 'users.dashboard';
         $profile = 'users.profile.edit';
@@ -31,11 +31,11 @@
     init() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isInterSecting) {
+                if (entry.isIntersecting) {
                     this.activeSection = entry.target.id;
                 }
             });
-        }, { threshold: 0.5 });
+        }, { rootMargin: '-80px 0px -60% 0px' });
 
         document.querySelectorAll('section[id]').forEach(section => {
             observer.observe(section);
@@ -54,9 +54,9 @@
                     @php
                         // Determine the logo link based on authentication status
                         $logoRoute = 'guests.dashboard'; // Default for non-users (guests)
-                        if (Auth::guard('admins')->check()) {
+                        if (Auth::check() && Auth::user()->hasRole('admin')) {
                             $logoRoute = 'admins.dashboard';
-                        } elseif (Auth::guard('web')->check()) {
+                        } elseif (Auth::check()) {
                             $logoRoute = 'users.dashboard';
                         }
                     @endphp
@@ -69,7 +69,7 @@
 
             {{-- *Center Menu Items (Desktop)* --}}
             <div class="hidden sm:flex space-x-8 items-center">
-                @foreach (['Home', 'Travel', 'Life Style', 'About', 'Province/Cities'] as $item)
+                @foreach (['Home', 'About', 'Travel', 'Provinces', 'Life Style'] as $item)
                     @php $targetId = strtolower(str_replace(' ', '', $item)); @endphp
                     <a href="#{{ $targetId }}" @click="activeSection = '{{ $targetId }}'"
                         class="text-sm transition-colors duration-200 relative group" :class="activeSection == '{{ $targetId }}' ? 'text-red-500' : ((scrolled || forceSolid) ?
@@ -164,7 +164,7 @@
 
         {{-- Links --}}
         <div class="pb-3 py-2">
-            @foreach (['Home', 'Travel', 'Life Style', 'About', 'Provinces/Cities'] as $item)
+            @foreach (['Home', 'About', 'Travel', 'Provinces', 'Life Style'] as $item)
                 @php $targetId = strtolower(str_replace(' ', '', $item)); @endphp
                 <a href="#{{ $targetId }}" @click="open = false"
                     class="block w-full ps-3 pe-4 py-2 border-l-4 text-start text-base transition duration-150 ease-in-out"

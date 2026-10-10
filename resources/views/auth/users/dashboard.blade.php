@@ -180,7 +180,7 @@
     </section>
 
     {{-- 5. Explore province & city --}}
-    <section id="stories" class="py-10 bg-transparent">
+    <section id=""" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 mb-16">
             <div
                 class="flex flex-col md:flex-row justify-between items-end md:items-center text-center md:text-left gap-4">
@@ -200,7 +200,7 @@
                     </div>
                 @endif
                 {{-- ADMIN ONLY: Add Button --}}
-                @if (Auth::guard('admins')->check())
+                @if (Auth::check() && Auth::user()->hasRole('admin'))
                     <div data-aos="fade-left" class="flex flex-wrap justify-center gap-3">
                         {{-- * See province/city list* --}}
                         <a href="{{ route('admins.provinces.index') }}"
@@ -252,7 +252,7 @@
     </section>
 
     {{-- 6. Discover Cambodia --}}
-    <section id="stories" class="py-10 bg-transparent">
+    <section id=""" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 text-center mb-16">
             <h2 class="font-serif text-4xl italic text-gray-800">Discover Cambodia</h2>
         </div>

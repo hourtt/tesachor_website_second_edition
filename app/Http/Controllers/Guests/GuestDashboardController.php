@@ -20,10 +20,10 @@ class GuestDashboardController extends Controller
 
     public function index()
     {
-        if (Auth::guard('admins')->check()) {
-            return redirect()->route('admins.dashboard');
-        }
-        if (Auth::guard('web')->check()) {
+        if (Auth::check()) {
+            if (Auth::user()->hasRole('admin')) {
+                return redirect()->route('admins.dashboard');
+            }
             return redirect()->route('users.dashboard');
         }
 

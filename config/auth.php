@@ -42,11 +42,7 @@ return [
             'provider' => 'users',
         ],
 
-        //* add new admin guard 
-        'admins' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
+
 
     ],
 
@@ -72,11 +68,7 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
-        'admins' => [
-            'driver' => 'eloquent',
-            //* add admin model 21/Dec 9:55 AM
-            'model' => App\Models\Admin::class,
-        ],
+
 
         // 'users' => [
         //     'driver' => 'database',

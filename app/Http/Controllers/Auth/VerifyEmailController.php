@@ -15,7 +15,7 @@ class VerifyEmailController extends Controller
      */
     public function __invoke(EmailVerificationRequest $request): RedirectResponse
     {
-        $guard = Auth::guard('admins')->check() ? 'admins' : 'web';
+        $guard = 'web';
 
         if ($request->user($guard)->hasVerifiedEmail()) {
             return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'users.dashboard', absolute: false).'?verified=1');

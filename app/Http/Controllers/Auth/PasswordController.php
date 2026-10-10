@@ -21,7 +21,7 @@ class PasswordController extends Controller
             'password' => ['required', Password::defaults(), 'confirmed'],
         ]);
 
-        $guard = Auth::guard('admins')->check() ? 'admins' : 'web';
+        $guard = 'web';
         
         $request->user($guard)->update([
             'password' => Hash::make($validated['password']),
