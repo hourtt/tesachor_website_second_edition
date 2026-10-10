@@ -17,6 +17,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
+       html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         html {
             scroll-behavior: smooth;
         }
@@ -41,8 +46,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased text-gray-800 bg-transparent">
-
+<body class="font-sans antialiased text-gray-800 bg-transparent overflow-x-hidden">
     @include('layouts.navigation')
 
     <main>
@@ -54,7 +58,7 @@
     @push('scripts')
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 // 1. Initialize Swiper
                 var swiper = new Swiper(".mySwiper", {
                     slidesPerView: 1,
@@ -92,4 +96,5 @@
         </script>
     @endpush
 </body>
+
 </html>

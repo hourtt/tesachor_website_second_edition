@@ -144,7 +144,7 @@
             <h2 class="font-serif text-4xl md:text-5xl text-gray-900" data-aos="fade-up">Recommended for You</h2>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {{-- This loop is VISIBLE to everyone (Guest, User, Admin) --}}
             @forelse ($destination as $index => $tour)
                 <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"

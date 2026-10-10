@@ -12,8 +12,8 @@
 
         <div class="relative z-10 text-center text-white px-4">
             {{-- Animation: fade-down (Headline drops in from top) --}}
-            <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl tracking-tight mb-4 drop-shadow-2xl" font-variant:
-                title-case data-aos="fade-down" data-aos-duration="1000">
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl tracking-tight mb-4 drop-shadow-2xl"
+                data-aos="fade-down" data-aos-duration="1000">
                 Tesachor
             </h1>
             {{-- Animation: fade-up (Subtitle rises from bottom) --}}
@@ -153,13 +153,13 @@
         </div>
     </section>
 
-    {{-- 4. RECOMMENDED TRAVEL--}}
+    {{-- 4. RECOMMENDED TRAVEL --}}
     <section id="travel" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 mb-16 text-center">
             <h2 class="font-serif text-4xl md:text-5xl text-gray-900" data-aos="fade-up">Recommended for You</h2>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             @forelse ($destinations as $index => $tour)
                 <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
                     data-aos="zoom-in-up" data-aos-delay="{{ $index * 100 }}">
