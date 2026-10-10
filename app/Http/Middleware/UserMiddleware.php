@@ -11,23 +11,19 @@ class UserMiddleware
 {
     /**
      * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // 1. Check if user is authenticated as 'web' (User)
-        if (Auth::guard('web')->check()) {
+        // For 'user' routes, we can just ensure they are logged in.
+        // Or if strictly 'user' role:
+        if (Auth::check()) {
+            // Admins accessing user route might be okay, but if you want strict:
+            if (Auth::user()->hasRole('admin')) {
+                return redirect()->route('admins.dashboard');
+            }
             return $next($request);
         }
 
-        // 2. Check if user is authenticated as 'admins' (Admin)
-        if (Auth::guard('admins')->check()) {
-            // User is an Admin trying to access User route -> Redirect to Admin Dashboard
-            return redirect()->route('admins.dashboard');
-        }
-
-        // 3. Not authenticated at all -> Redirect to Login
         return redirect()->route('login');
     }
 }
