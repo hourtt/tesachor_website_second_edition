@@ -20,6 +20,7 @@ use App\Http\Controllers\Guests\GuestProvinceController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Users\UserDestinationController;
 use App\Http\Controllers\Users\UserProvinceController;
+use App\Http\Controllers\ProfileAvatarController;
 
 
 
@@ -72,5 +73,7 @@ Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('adm
     Route::resource('provinces', AdminProvinceController::class);
     Route::resource('destinations', AdminDestinationController::class);
 });
+
+Route::middleware('auth')->post('/profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar.update');
 
 require __DIR__ . '/auth.php';
