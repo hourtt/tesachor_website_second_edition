@@ -9,9 +9,11 @@
         </p>
     </header>
 
-    <form id="send-verification" method="post" action="{{ route('users.verification.send') }}">
-        @csrf
-    </form>
+    @if (Route::has('users.verification.send'))
+        <form id="send-verification" method="post" action="{{ route('users.verification.send') }}">
+            @csrf
+        </form>
+    @endif
 
     <form method="post" action="{{ route('users.profile.update') }}" class="mt-6 space-y-6">
         @csrf
@@ -30,7 +32,7 @@
                 required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
+            @if (Route::has('users.verification.send') && $user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
                 <div>
                     <p class="text-sm mt-2 text-gray-800">
                         {{ __('Your email address is unverified.') }}
