@@ -87,10 +87,17 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center px-3 py-2 text-sm leading-4 hover:text-red-500 focus:outline-none transition ease-in-out duration-150"
+                                class="inline-flex items-center gap-2 px-3 py-1.5 text-sm leading-4 hover:text-red-500 focus:outline-none transition ease-in-out duration-150"
                                 :class="{ 'text-gray-600': scrolled || forceSolid, 'text-gray-100': !(scrolled || forceSolid) }">
+                                @if ($user->avatar_url)
+                                    <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-7 h-7 rounded-full object-cover border border-gray-200">
+                                @else
+                                    <span class="w-7 h-7 rounded-full bg-red-100 text-red-600 text-xs font-bold flex items-center justify-center">
+                                        {{ strtoupper(substr($user->name, 0, 1)) }}
+                                    </span>
+                                @endif
                                 <div>{{ $user->name }}</div>
-                                <div class="ms-1">
+                                <div class="ms-0.5">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
                                         viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
@@ -180,9 +187,18 @@
         {{-- User Info --}}
         <div class="pb-1 border-gray-200">
             @if ($user)
-                <div class="px-4 py-2 bg-gray-50">
-                    <div class="text-base font-medium text-gray-800">{{ $user->name }}</div>
-                    <div class="text-sm font-medium text-gray-500">{{ $user->email }}</div>
+                <div class="px-4 py-3 bg-gray-50 flex items-center gap-3 border-b border-gray-100">
+                    @if ($user->avatar_url)
+                        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-10 h-10 rounded-full object-cover border border-gray-200 shrink-0">
+                    @else
+                        <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 text-sm font-bold flex items-center justify-center shrink-0">
+                            {{ strtoupper(substr($user->name, 0, 1)) }}
+                        </div>
+                    @endif
+                    <div class="min-w-0">
+                        <div class="text-base font-medium text-gray-800 truncate">{{ $user->name }}</div>
+                        <div class="text-sm font-medium text-gray-500 truncate">{{ $user->email }}</div>
+                    </div>
                 </div>
                 <div class="mt-3 space-y-1">
                     <x-responsive-nav-link :href="route($dashboard)">{{ __('Dashboard') }}</x-responsive-nav-link>

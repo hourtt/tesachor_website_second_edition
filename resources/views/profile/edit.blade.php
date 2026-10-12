@@ -5,14 +5,7 @@
             : (Auth::check() ? route('users.dashboard') : route('guests.dashboard'));
 
         $currentUser = Auth::user();
-        $avatarUrl = null;
-        if ($currentUser && !empty($currentUser->avatar_path)) {
-            try {
-                $avatarUrl = \Illuminate\Support\Facades\Storage::disk('supabase')->url($currentUser->avatar_path);
-            } catch (\Throwable $e) {
-                $avatarUrl = null;
-            }
-        }
+        $avatarUrl = $currentUser?->avatar_url;
     @endphp
 
     {{-- Top Header Bar with Responsive "Back to Dashboard" Button --}}
@@ -65,6 +58,12 @@
     {{-- Main Profile Content --}}
     <div class="py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+            <div class="p-5 sm:p-8 bg-white shadow-sm rounded-2xl border border-gray-100">
+                <div class="max-w-xl">
+                    @include('profile.partials.update-avatar-form')
+                </div>
+            </div>
+
             <div class="p-5 sm:p-8 bg-white shadow-sm rounded-2xl border border-gray-100">
                 <div class="max-w-xl">
                     @include('profile.partials.update-profile-information-form')
