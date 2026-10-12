@@ -38,14 +38,9 @@
                 <input type="text" placeholder="Where do you want to go?" class="w-full border-none focus:ring-0 text-gray-700 bg-transparent py-3 px-4 outline-none">
             </div>
             <div class="hidden md:block w-px h-8 bg-gray-200 mx-4"></div>
-            <div class="hidden md:flex items-center space-x-2 mr-4 text-gray-500">
-                <select class="border-none focus:ring-0 bg-transparent text-sm cursor-pointer outline-none text-gray-700">
-                    <option>All Categories</option>
-                    <option>Temples</option>
-                    <option>Beaches</option>
-                    <option>Nature</option>
-                </select>
-            </div>
+            {{-- Category Dropdown --}}
+           <x-category-dropdown/>
+
             <button class="bg-gray-900 text-white px-8 py-3 rounded-full font-bold hover:bg-red-600 transition flex-shrink-0">
                 Search
             </button>
