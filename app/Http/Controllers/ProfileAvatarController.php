@@ -18,16 +18,33 @@ class ProfileAvatarController extends Controller
 
         $path = Storage::disk('supabase')->putFile(
             "avatars/{$user->id}",
-            $request->file('avatar')
+            $request->file('avatar'),
+            'public'
         );
 
         $user->avatar_path = $path;
         $user->save();
 
-        if ($oldPath) {
+        if ($oldPath && $oldPath !== $path) {
             Storage::disk('supabase')->delete($oldPath);
         }
 
-        return back()->with('success', 'Profile image uploaded.');
+        return back()->with('status', 'avatar-updated');
+    }
+
+    /**
+     * Remove the user's avatar.
+     */
+    public function destroy(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user->avatar_path) {
+            Storage::disk('supabase')->delete($user->avatar_path);
+            $user->avatar_path = null;
+            $user->save();
+        }
+
+        return back()->with('status', 'avatar-deleted');
     }
 }

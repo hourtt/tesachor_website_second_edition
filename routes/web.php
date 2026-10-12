@@ -74,6 +74,9 @@ Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('adm
     Route::resource('destinations', AdminDestinationController::class);
 });
 
-Route::middleware('auth')->post('/profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar.update');
+Route::middleware('auth')->group(function () {
+    Route::post('/profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar.update');
+    Route::delete('/profile/avatar', [ProfileAvatarController::class, 'destroy'])->name('profile.avatar.destroy');
+});
 
 require __DIR__ . '/auth.php';
