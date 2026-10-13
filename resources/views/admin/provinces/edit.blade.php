@@ -1,0 +1,198 @@
+<x-admin-layout>
+    <x-slot name="title">Edit {{ $province->name }}</x-slot>
+
+    {{-- Cropper CSS --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+
+    <div class="max-w-4xl mx-auto">
+        <div class="mb-6 flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Edit Province</h1>
+                <p class="text-gray-500 text-sm mt-1">Update details for <span class="font-semibold text-gray-800">{{ $province->name }}</span></p>
+            </div>
+            <a href="{{ route('admins.provinces.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900">
+                <i class="fa-solid fa-arrow-left mr-1"></i> Back to Provinces
+            </a>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8">
+            <form action="{{ route('admins.provinces.update', $province->slug) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+
+                <div class="space-y-6">
+                    {{-- English Name --}}
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (English)</label>
+                        <input type="text" name="name" value="{{ old('name', $province->name) }}" required
+                            class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-red-500 border-gray-200 outline-none transition">
+                        @error('name')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Khmer Name --}}
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (Khmer)</label>
+                        <input type="text" name="name_in_khmer" value="{{ old('name_in_khmer', $province->name_in_khmer) }}" required
+                            class="font-khmer font-normal w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-red-500 border-gray-200 outline-none transition">
+                        @error('name_in_khmer')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Image Upload Section --}}
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700">Cover Image</label>
+
+                        <div class="flex flex-col md:flex-row gap-6 items-start">
+                            {{-- Preview Box --}}
+                            <div class="shrink-0 w-44 h-44 bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group">
+                                <img id="final_preview" class="w-full h-full object-cover"
+                                    src="{{ $province->thumbnail ? asset('storage/' . $province->thumbnail) : 'https://placehold.co/300x300?text=No+Image' }}">
+                                <div id="edit_overlay"
+                                    class="hidden absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
+                                    onclick="reOpenCropper()">
+                                    <span class="text-white text-xs font-bold bg-black/60 px-3 py-1.5 rounded-lg">
+                                        <i class="fa-solid fa-pen mr-1"></i> Edit Crop
+                                    </span>
+                                </div>
+                            </div>
+
+                            {{-- Input Area --}}
+                            <div class="flex-1">
+                                <input type="file" id="image_input" name="thumbnail" accept="image/*"
+                                    onchange="startCropping(event)" class="block w-full text-sm text-slate-500
+                                        file:mr-4 file:py-2.5 file:px-4
+                                        file:rounded-xl file:border-0
+                                        file:text-sm file:font-semibold
+                                        file:bg-red-50 file:text-red-700
+                                        hover:file:bg-red-100
+                                        cursor-pointer transition" />
+                                <p class="text-xs text-gray-500 mt-2">Leave empty to keep existing image, or choose a new one to replace.</p>
+                                @error('thumbnail')
+                                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Actions --}}
+                <div class="flex justify-end pt-8 mt-6 border-t border-gray-100 gap-3">
+                    <a href="{{ route('admins.provinces.index') }}"
+                        class="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition font-medium text-sm">
+                        Cancel
+                    </a>
+                    <button type="submit"
+                        class="text-white bg-red-600 hover:bg-red-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm">
+                        Update Province
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {{-- Cropper Modal --}}
+    <div id="cropper_modal"
+        class="fixed inset-0 z-50 hidden bg-black/80 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden">
+            <div class="p-4 border-b flex justify-between items-center">
+                <h3 class="font-bold text-gray-800">Crop Image</h3>
+                <button type="button" onclick="closeCropper()" class="text-gray-400 hover:text-red-500 transition">
+                    <i class="fa-solid fa-times text-lg"></i>
+                </button>
+            </div>
+
+            <div class="h-96 bg-gray-900 flex justify-center items-center">
+                <img id="image_to_crop" class="max-h-full max-w-full block" src="">
+            </div>
+
+            <div class="p-4 bg-gray-50 flex justify-end gap-3 border-t">
+                <button type="button" onclick="closeCropper()"
+                    class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-xl text-sm font-medium">Cancel</button>
+                <button type="button" onclick="performCrop()"
+                    class="px-5 py-2 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 shadow-sm text-sm">
+                    <i class="fa-solid fa-check mr-1.5"></i> Crop & Save
+                </button>
+            </div>
+        </div>
+    </div>
+
+    {{-- Cropper Javascript --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script>
+        let cropper;
+        let originalFile;
+        const imageInput = document.getElementById('image_input');
+        const imageToCrop = document.getElementById('image_to_crop');
+        const modal = document.getElementById('cropper_modal');
+        const finalPreview = document.getElementById('final_preview');
+        const editOverlay = document.getElementById('edit_overlay');
+
+        function startCropping(event) {
+            const file = event.target.files[0];
+            if (file) {
+                originalFile = file;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imageToCrop.src = e.target.result;
+                    openModal();
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function openModal() {
+            modal.classList.remove('hidden');
+            if (cropper) {
+                cropper.destroy();
+            }
+
+            cropper = new Cropper(imageToCrop, {
+                aspectRatio: NaN,
+                viewMode: 1,
+                dragMode: 'move',
+                autoCropArea: 0.8,
+            });
+        }
+
+        function performCrop() {
+            if (!cropper) return;
+
+            cropper.getCroppedCanvas().toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                finalPreview.src = url;
+                editOverlay.classList.remove('hidden');
+
+                const croppedFile = new File([blob], "cropped_image.jpg", {
+                    type: "image/jpeg"
+                });
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(croppedFile);
+                imageInput.files = dataTransfer.files;
+
+                closeCropper();
+            }, 'image/jpeg');
+        }
+
+        function reOpenCropper() {
+            if (originalFile) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    imageToCrop.src = e.target.result;
+                    openModal();
+                }
+                reader.readAsDataURL(originalFile);
+            }
+        }
+
+        function closeCropper() {
+            modal.classList.add('hidden');
+            if (cropper) {
+                cropper.destroy();
+                cropper = null;
+            }
+        }
+    </script>
+</x-admin-layout>
