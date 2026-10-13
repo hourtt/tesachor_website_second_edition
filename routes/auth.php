@@ -10,7 +10,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
-
+use \App\Http\Controllers\Auth\ProfileController;
 
 Route::middleware('guest')->group(function () {
 
@@ -38,17 +38,17 @@ Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function (
     // However, for typical Laravel setup, we might need separate groups or a unified middleware if we want generic access.
     // Given "Unified Auth System", we try to rely on the controller logic finding the user from request, but middleware filters access.
     // Does 'auth' middleware support multiple guards? Yes: 'auth:web,admins'
-    
-    // Route::get('verify-email', EmailVerificationPromptController::class)
-    //     ->name('verification.notice');
 
-    // Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-    //     ->middleware(['signed', 'throttle:6,1'])
-    //     ->name('verification.verify');
+    Route::get('verify-email', EmailVerificationPromptController::class)
+        ->name('verification.notice');
 
-    // Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-    //     ->middleware('throttle:6,1')
-    //     ->name('verification.send');
+    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+
+    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
 
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
@@ -64,9 +64,9 @@ Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function (
 // To ensure ProfileController works for both, we need it protected.
 // Since 'auth' alias usually means default guard, if we want to allow admins, we must specify 'auth:web,admins'
 Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function () {
-    Route::get('/profile', [\App\Http\Controllers\Auth\ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [\App\Http\Controllers\Auth\ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [\App\Http\Controllers\Auth\ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
