@@ -35,13 +35,7 @@ class NewPasswordController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Determine broker based on email existence
-        $broker = 'users';
-        if (\App\Models\Admin::where('email', '=', $request->email, 'and')->exists()) {
-            $broker = 'admins';
-        }
-
-        $status = Password::broker($broker)->reset(
+        $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
                 $user->forceFill([

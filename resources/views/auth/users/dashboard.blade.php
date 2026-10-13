@@ -146,7 +146,7 @@
 
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {{-- This loop is VISIBLE to everyone (Guest, User, Admin) --}}
-            @forelse ($destination as $index => $tour)
+            @forelse ($destinations as $index => $tour)
                 <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
                     data-aos="zoom-in-up" data-aos-delay="{{ $index * 100 }}">
 
