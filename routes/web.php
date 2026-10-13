@@ -29,12 +29,8 @@ Route::name('guests.')->group(function () {
 
 // AUTHENTICATED USER ROUTE ALIASES & COMPATIBILITY
 Route::get('/dashboard', [GuestDashboardController::class, 'index'])->name('users.dashboard');
-Route::get('/user/dashboard', function () {
-    return redirect()->route('users.dashboard');
-});
-Route::get('/user/profile', function () {
-    return redirect()->route('profile.edit');
-})->name('users.profile.edit');
+Route::get('/user/dashboard', fn() => redirect()->route('users.dashboard'));
+Route::get('/user/profile', fn() => redirect()->route('profile.edit'))->name('users.profile.edit');
 
 // ADMIN ROUTES (Full CRUD — Admin Role Required)
 // Controllers: App\Http\Controllers\Admin\*
