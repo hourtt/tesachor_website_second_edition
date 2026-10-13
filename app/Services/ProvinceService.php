@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 
 class ProvinceService
 {
-    public function getProvincesPaginated(int $perPage = 12)
+    public function getProvincesPaginated(int $perPage = 8)
     {
         return Province::orderBy('name', 'asc')->paginate($perPage);
     }

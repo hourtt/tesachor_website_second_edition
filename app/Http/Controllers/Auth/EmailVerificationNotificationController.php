@@ -18,7 +18,7 @@ class EmailVerificationNotificationController extends Controller
         $user = $request->user($guard);
 
         if ($user->hasVerifiedEmail()) {
-             return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'users.dashboard', absolute: false));
+             return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'public.landing', absolute: false));
         }
 
         $user->sendEmailVerificationNotification();

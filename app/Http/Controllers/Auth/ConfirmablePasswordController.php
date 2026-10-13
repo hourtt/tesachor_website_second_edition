@@ -39,7 +39,7 @@ class ConfirmablePasswordController extends Controller
         $request->session()->put('auth.password_confirmed_at', time());
 
         return redirect()->intended(
-            $guard === 'admins' ? route('admins.dashboard') : route('users.dashboard', absolute: false)
+            $guard === 'admins' ? route('admins.dashboard') : route('public.landing', absolute: false)
         );
     }
 }

@@ -32,12 +32,12 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('admins.dashboard'));
         }
 
-        //* User dashboard
+        //* User landing
         if (Auth::check()) {
-             return redirect()->intended(route('users.dashboard', absolute: false));
+             return redirect()->intended(route('public.landing', absolute: false));
         }
-        //* Guest dashboard
-        return redirect('/');
+        //* Guest landing
+        return redirect()->route('public.landing');
     }
 
     /**
@@ -52,6 +52,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('guests.dashboard');
+        return redirect()->route('public.landing');
     }
 }

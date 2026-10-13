@@ -342,15 +342,15 @@ class AdminPanelTest extends TestCase
         $activeUser = User::factory()->create(['is_active' => true]);
         $activeUser->assignRole('user');
 
-        // Can access dashboard while active
-        $response = $this->actingAs($activeUser)->get(route('users.dashboard'));
+        // Can access landing page while active
+        $response = $this->actingAs($activeUser)->get(route('public.landing'));
         $response->assertOk();
 
         // Admin deactivates user
         $activeUser->update(['is_active' => false]);
 
-        // Attempting to visit user dashboard now redirects to login
-        $response2 = $this->actingAs($activeUser)->get(route('users.dashboard'));
+        // Attempting to visit landing page now redirects to login
+        $response2 = $this->actingAs($activeUser)->get(route('public.landing'));
         $response2->assertRedirect(route('login'));
         $this->assertGuest();
     }

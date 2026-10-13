@@ -3,16 +3,16 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-//* New Admin Controllers (App\Http\Controllers\Admin\)
+//* New Admin Controllers
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\ProvinceController as AdminProvince;
 use App\Http\Controllers\Admin\DestinationController as AdminDestination;
 use App\Http\Controllers\Admin\UserController as AdminUser;
 
-//* Shared Public & Frontend Controllers (App\Http\Controllers\Guests\)
-use App\Http\Controllers\Guests\GuestDashboardController;
-use App\Http\Controllers\Guests\GuestDestinationController;
-use App\Http\Controllers\Guests\GuestProvinceController;
+//* Shared Public Controllers
+use App\Http\Controllers\Public\LandingController;
+use App\Http\Controllers\Public\DestinationController as PublicDestination;
+use App\Http\Controllers\Public\ProvinceController as PublicProvince;
 
 //* Auth Controllers
 use App\Http\Controllers\Auth\ProfileController;
@@ -20,21 +20,14 @@ use App\Http\Controllers\ProfileAvatarController;
 
 
 // SHARED PUBLIC ROUTES (Accessible to both Guests and Authenticated Users)
-Route::name('guests.')->group(function () {
-    Route::get('/', [GuestDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/provinces', [GuestProvinceController::class, 'index'])->name('provinces.index');
-    Route::get('/provinces/{province:slug}', [GuestProvinceController::class, 'show'])->name('provinces.show');
-    Route::get('/destinations/{destination:slug}', [GuestDestinationController::class, 'show'])->name('destinations.show');
+Route::name('public.')->group(function () {
+    Route::get('/', [LandingController::class, 'index'])->name('landing');
+    Route::get('/provinces', [PublicProvince::class, 'index'])->name('provinces.index');
+    Route::get('/provinces/{province:slug}', [PublicProvince::class, 'show'])->name('provinces.show');
+    Route::get('/destinations/{destination:slug}', [PublicDestination::class, 'show'])->name('destinations.show');
 });
 
-// AUTHENTICATED USER ROUTE ALIASES & COMPATIBILITY
-Route::get('/dashboard', [GuestDashboardController::class, 'index'])->name('users.dashboard');
-Route::get('/user/dashboard', fn() => redirect()->route('users.dashboard'));
-Route::get('/user/profile', fn() => redirect()->route('profile.edit'))->name('users.profile.edit');
-
-// ADMIN ROUTES (Full CRUD — Admin Role Required)
-// Controllers: App\Http\Controllers\Admin\*
-// Views:       resources/views/admin/*
+// ADMIN ROUTES
 Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('admins.')->group(function () {
 
     // Dashboard
@@ -48,7 +41,7 @@ Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('adm
     // Provinces CRUD
     Route::resource('provinces', AdminProvince::class);
 
-    // Destinations CRUD (full resource including index)
+    // Destinations CRUD
     Route::resource('destinations', AdminDestination::class);
 
     // Users management

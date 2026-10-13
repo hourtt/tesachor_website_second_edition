@@ -51,30 +51,23 @@ class UnifiedFrontendTest extends TestCase
 
     public function test_guest_can_access_unified_frontend_pages(): void
     {
-        $this->get('/')->assertOk()->assertSee('Tesachor');
-        $this->get('/provinces')->assertOk()->assertSee('Siem Reap');
-        $this->get('/provinces/siem-reap')->assertOk()->assertSee('Angkor Wat');
-        $this->get('/destinations/angkor-wat')->assertOk()->assertSee('Angkor Wat');
+        $this->get(route('public.landing'))->assertOk()->assertSee('Tesachor');
+        $this->get(route('public.provinces.index'))->assertOk()->assertSee('Siem Reap');
+        $this->get(route('public.provinces.show', 'siem-reap'))->assertOk()->assertSee('Angkor Wat');
+        $this->get(route('public.destinations.show', 'angkor-wat'))->assertOk()->assertSee('Angkor Wat');
     }
 
     public function test_authenticated_user_can_access_unified_frontend_pages(): void
     {
-        $this->actingAs($this->user)->get('/')->assertOk()->assertSee('Tesachor');
-        $this->actingAs($this->user)->get('/dashboard')->assertOk()->assertSee('Tesachor');
-        $this->actingAs($this->user)->get('/provinces')->assertOk()->assertSee('Siem Reap');
-        $this->actingAs($this->user)->get('/provinces/siem-reap')->assertOk()->assertSee('Angkor Wat');
-        $this->actingAs($this->user)->get('/destinations/angkor-wat')->assertOk()->assertSee('Angkor Wat');
-    }
-
-    public function test_legacy_user_dashboard_redirects_to_unified_dashboard(): void
-    {
-        $this->actingAs($this->user)->get('/user/dashboard')
-            ->assertRedirect(route('users.dashboard'));
+        $this->actingAs($this->user)->get(route('public.landing'))->assertOk()->assertSee('Tesachor');
+        $this->actingAs($this->user)->get(route('public.provinces.index'))->assertOk()->assertSee('Siem Reap');
+        $this->actingAs($this->user)->get(route('public.provinces.show', 'siem-reap'))->assertOk()->assertSee('Angkor Wat');
+        $this->actingAs($this->user)->get(route('public.destinations.show', 'angkor-wat'))->assertOk()->assertSee('Angkor Wat');
     }
 
     public function test_admin_visiting_home_is_redirected_to_admin_dashboard(): void
     {
-        $this->actingAs($this->admin)->get('/')
+        $this->actingAs($this->admin)->get(route('public.landing'))
             ->assertRedirect(route('admins.dashboard'));
     }
 }

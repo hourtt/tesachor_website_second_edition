@@ -15,9 +15,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
     <style>
-       html, body {
+        html,
+        body {
             max-width: 100%;
             overflow-x: hidden;
         }
@@ -53,48 +54,6 @@
         {{ $slot }}
     </main>
 
-
-    {{-- SCRIPTS --}}
-    @push('scripts')
-        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // 1. Initialize Swiper
-                var swiper = new Swiper(".mySwiper", {
-                    slidesPerView: 1,
-                    spaceBetween: 0,
-                    loop: true,
-                    speed: 1000,
-                    centeredSlides: false, // Changed to false for better left alignment
-                    autoplay: {
-                        delay: 3500,
-                        disableOnInteraction: false,
-                    },
-                    pagination: {
-                        el: ".swiper-pagination",
-                        clickable: true,
-                    },
-                    breakpoints: {
-                        640: {
-                            slidesPerView: 2
-                        },
-                        1024: {
-                            slidesPerView: 3
-                        }, // Show 3 full slides
-                    },
-                });
-
-                // 2. Initialize AOS with correct settings
-                AOS.init({
-                    duration: 500,
-                    easing: 'ease-in-out',
-                    once: true,
-                    mirror: false,
-                    offset: 50,
-                });
-            });
-        </script>
-    @endpush
 </body>
 
 </html>

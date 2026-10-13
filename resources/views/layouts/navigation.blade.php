@@ -15,7 +15,7 @@
     // 3. Check for Regular User second
     elseif (Auth::check()) {
         $user = Auth::user();
-        $dashboard = 'users.dashboard';
+        $dashboard = 'public.landing';
         $profile = 'profile.edit';
         $logout = 'logout';
     }
@@ -53,11 +53,9 @@
                 <div class="shrink-0 flex items-center">
                     @php
                         // Determine the logo link based on authentication status
-                        $logoRoute = 'guests.dashboard'; // Default for non-users (guests)
+                        $logoRoute = 'public.landing'; // Default for visitors & regular users
                         if (Auth::check() && Auth::user()->hasRole('admin')) {
                             $logoRoute = 'admins.dashboard';
-                        } elseif (Auth::check()) {
-                            $logoRoute = 'users.dashboard';
                         }
                     @endphp
                     <a href="{{ route($logoRoute) }}" class="font-serif text-2xl font-bold tracking-wider"
@@ -72,10 +70,10 @@
                 @foreach (['Home', 'About', 'Travel', 'Provinces', 'Life Style'] as $item)
                     @php $targetId = strtolower(str_replace(' ', '', $item)); @endphp
                     <a href="#{{ $targetId }}" @click="activeSection = '{{ $targetId }}'"
-                        class="text-sm transition-colors duration-200 relative group" :class="activeSection == '{{ $targetId }}' ? 'text-red-500' : ((scrolled || forceSolid) ?
+                        class="text-sm transition-colors duration-200 relative group" :class="activeSection == '{{ $targetId }}' ? 'text-white-500' : ((scrolled || forceSolid) ?
                                 'text-grey-900' : 'text-grey-100')">
                         {{ $item }} <span
-                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-red-500 transition-all duration-300 group-hover:w-full"
+                            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"
                             :class="{ 'w-full': activeSection === '{{ $targetId }}' }"></span>
                     </a>
                 @endforeach
@@ -87,12 +85,12 @@
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
-                                class="inline-flex items-center gap-2 px-3 py-1.5 text-sm leading-4 hover:text-red-500 focus:outline-none transition ease-in-out duration-150"
+                                class="inline-flex items-center gap-2 px-3 py-1.5 text-sm leading-4 hover:text-white-500 focus:outline-none transition ease-in-out duration-150"
                                 :class="{ 'text-gray-600': scrolled || forceSolid, 'text-gray-100': !(scrolled || forceSolid) }">
                                 @if ($user->avatar_url)
                                     <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-7 h-7 rounded-full object-cover border border-gray-200">
                                 @else
-                                    <span class="w-7 h-7 rounded-full bg-red-100 text-red-600 text-xs font-bold flex items-center justify-center">
+                                    <span class="w-7 h-7 rounded-full bg-blue-100 text-white-600 text-xs font-bold flex items-center justify-center">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </span>
                                 @endif
@@ -125,7 +123,7 @@
                             Log in
                         </a>
                         <a href="{{ route('register') }}"
-                            class="px-4 py-2 text-sm rounded-full bg-red-500 text-white hover:bg-red-600 transition">
+                            class="px-4 py-2 text-sm rounded-full bg-blue-500 text-white hover:bg-blue-600 transition">
                             Register
                         </a>
                     </div>
@@ -177,7 +175,7 @@
                     class="block w-full ps-3 pe-4 py-2 border-l-4 text-start text-base transition duration-150 ease-in-out"
                     :class="activeSection === '{{ $targetId }}'
                             ?
-                            'border-red-500 text-red-700 bg-red-50' :
+                            'border-red-500 text-white-700 bg-blue-50' :
                             'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'">
                     {{ $item }}
                 </a>
@@ -191,7 +189,7 @@
                     @if ($user->avatar_url)
                         <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-10 h-10 rounded-full object-cover border border-gray-200 shrink-0">
                     @else
-                        <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 text-sm font-bold flex items-center justify-center shrink-0">
+                        <div class="w-10 h-10 rounded-full bg-blue-100 text-white-600 text-sm font-bold flex items-center justify-center shrink-0">
                             {{ strtoupper(substr($user->name, 0, 1)) }}
                         </div>
                     @endif

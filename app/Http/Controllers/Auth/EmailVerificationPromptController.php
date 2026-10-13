@@ -19,7 +19,7 @@ class EmailVerificationPromptController extends Controller
         $user = $request->user($guard);
 
         return $user->hasVerifiedEmail()
-                    ? redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'users.dashboard', absolute: false))
+                    ? redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'public.landing', absolute: false))
                     : view('auth.verify-email');
     }
 }

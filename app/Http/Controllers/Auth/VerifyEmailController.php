@@ -18,13 +18,13 @@ class VerifyEmailController extends Controller
         $guard = 'web';
 
         if ($request->user($guard)->hasVerifiedEmail()) {
-            return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'users.dashboard', absolute: false).'?verified=1');
+            return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'public.landing', absolute: false).'?verified=1');
         }
 
         if ($request->user($guard)->markEmailAsVerified()) {
             event(new Verified($request->user($guard)));
         }
 
-        return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'users.dashboard', absolute: false).'?verified=1');
+        return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'public.landing', absolute: false).'?verified=1');
     }
 }
