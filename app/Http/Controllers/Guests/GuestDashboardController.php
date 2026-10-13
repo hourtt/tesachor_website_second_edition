@@ -20,14 +20,11 @@ class GuestDashboardController extends Controller
 
     public function index()
     {
-        if (Auth::check()) {
-            if (Auth::user()->hasRole('admin')) {
-                return redirect()->route('admins.dashboard');
-            }
-            return redirect()->route('users.dashboard');
+        if (Auth::check() && Auth::user()->hasRole('admin')) {
+            return redirect()->route('admins.dashboard');
         }
 
-        $provinces = $this->provinceService->getProvincesPaginated(4);
+        $provinces = $this->provinceService->getProvincesPaginated(8);
         $destinations = $this->destinationService->getRecommendedDestinations(6);
 
         return view('guests.dashboard', compact('provinces', 'destinations'));

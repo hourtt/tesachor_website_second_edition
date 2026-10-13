@@ -16,7 +16,7 @@
     elseif (Auth::check()) {
         $user = Auth::user();
         $dashboard = 'users.dashboard';
-        $profile = 'users.profile.edit';
+        $profile = 'profile.edit';
         $logout = 'logout';
     }
     $isProfilePage = request()->routeIs('*.profile.*', 'profile.*');

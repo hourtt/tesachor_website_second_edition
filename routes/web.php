@@ -9,43 +9,32 @@ use App\Http\Controllers\Admin\ProvinceController as AdminProvince;
 use App\Http\Controllers\Admin\DestinationController as AdminDestination;
 use App\Http\Controllers\Admin\UserController as AdminUser;
 
-//* User Controllers
-use App\Http\Controllers\Users\UserDashboardController;
-
-//* Guest Controllers
+//* Shared Public & Frontend Controllers (App\Http\Controllers\Guests\)
 use App\Http\Controllers\Guests\GuestDashboardController;
 use App\Http\Controllers\Guests\GuestDestinationController;
 use App\Http\Controllers\Guests\GuestProvinceController;
 
 //* Auth Controllers
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\Users\UserDestinationController;
-use App\Http\Controllers\Users\UserProvinceController;
 use App\Http\Controllers\ProfileAvatarController;
 
 
-// GUEST ROUTES (View Only — No Login Required)
+// SHARED PUBLIC ROUTES (Accessible to both Guests and Authenticated Users)
 Route::name('guests.')->group(function () {
     Route::get('/', [GuestDashboardController::class, 'index'])->name('dashboard');
-    Route::resource('provinces', GuestProvinceController::class);
-    Route::resource('destinations', GuestDestinationController::class);
-    Route::get('/destinations/{destination:slug}', [GuestDestinationController::class, 'show'])
-        ->name('destinations.show');
+    Route::get('/provinces', [GuestProvinceController::class, 'index'])->name('provinces.index');
+    Route::get('/provinces/{province:slug}', [GuestProvinceController::class, 'show'])->name('provinces.show');
+    Route::get('/destinations/{destination:slug}', [GuestDestinationController::class, 'show'])->name('destinations.show');
 });
 
-// USER ROUTES (View Only — Login Required, non-admin)
-Route::middleware(['user', 'prevent-back-history'])->prefix('user')->name('users.')->group(function () {
-    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    Route::resource('provinces', UserProvinceController::class);
-    Route::resource('destinations', UserDestinationController::class);
-    Route::get('/destinations/{destination:slug}', [UserDestinationController::class, 'show'])
-        ->name('destinations.show');
+// AUTHENTICATED USER ROUTE ALIASES & COMPATIBILITY
+Route::get('/dashboard', [GuestDashboardController::class, 'index'])->name('users.dashboard');
+Route::get('/user/dashboard', function () {
+    return redirect()->route('users.dashboard');
 });
+Route::get('/user/profile', function () {
+    return redirect()->route('profile.edit');
+})->name('users.profile.edit');
 
 // ADMIN ROUTES (Full CRUD — Admin Role Required)
 // Controllers: App\Http\Controllers\Admin\*
