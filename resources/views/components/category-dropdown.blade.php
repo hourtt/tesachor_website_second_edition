@@ -59,11 +59,11 @@
                         @click="select(option)"
                         class="w-full flex items-center justify-between px-3.5 py-2.5 text-sm rounded-xl text-left transition-colors duration-150 cursor-pointer"
                         :class="selected.value === option.value
-                            ? 'bg-red-50 text-red-600 font-semibold'
+                            ? 'bg-blue-50 text-blue-600 font-semibold'
                             : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-medium'">
                     <span x-text="option.label"></span>
                     <svg x-show="selected.value === option.value"
-                         class="w-4 h-4 text-red-600 flex-shrink-0 ml-2"
+                         class="w-4 h-4 text-blue-600 flex-shrink-0 ml-2"
                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                     </svg>

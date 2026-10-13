@@ -14,7 +14,7 @@
 
         <div class="flex items-center gap-3">
             <a href="{{ route('admins.destinations.create', ['province_id' => $province->id]) }}"
-                class="inline-flex items-center px-4 py-2.5 bg-red-600 text-white font-semibold text-sm rounded-xl shadow-sm hover:bg-red-700 transition">
+                class="inline-flex items-center px-4 py-2.5 bg-blue-600 text-white font-semibold text-sm rounded-xl shadow-sm hover:bg-blue-700 transition">
                 <i class="fa-solid fa-plus mr-2"></i> Add Destination
             </a>
             <a href="{{ route('admins.provinces.edit', $province->slug) }}"
@@ -26,7 +26,7 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                    class="inline-flex items-center px-4 py-2.5 bg-white border border-red-200 text-red-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-red-50 transition">
+                    class="inline-flex items-center px-4 py-2.5 bg-white border border-red-200 text-white-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-blue-50 transition">
                     <i class="fa-solid fa-trash mr-2"></i> Delete
                 </button>
             </form>
@@ -47,9 +47,9 @@
                 <p class="text-gray-500 text-lg mb-6">{{ $province->name }}</p>
 
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-red-50 p-4 rounded-xl border border-red-100">
-                        <span class="block text-xs font-bold text-red-500 uppercase tracking-wider mb-1">Total Destinations</span>
-                        <span class="text-3xl font-bold text-red-700">{{ $province->destinations->count() }}</span>
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                        <span class="block text-xs font-bold text-blue-600 uppercase tracking-wider mb-1">Total Destinations</span>
+                        <span class="text-3xl font-bold text-blue-700">{{ $province->destinations->count() }}</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
                         <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Slug</span>
@@ -88,7 +88,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="w-8 h-8 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition shadow-sm"
+                            class="w-8 h-8 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-white-600 transition shadow-sm"
                             title="Delete">
                             <i class="fa-solid fa-trash text-xs"></i>
                         </button>
@@ -118,13 +118,13 @@
             </div>
         @empty
             <div class="col-span-full py-16 text-center bg-white rounded-2xl border-2 border-dashed border-gray-200">
-                <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500">
+                <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
                     <i class="fa-regular fa-map-location-dot text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-medium text-gray-900">No destinations yet</h3>
                 <p class="text-gray-500 mb-6 max-w-sm mx-auto">Start by adding the first destination for {{ $province->name }}.</p>
                 <a href="{{ route('admins.destinations.create', ['province_id' => $province->id]) }}"
-                    class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent font-semibold rounded-xl text-white bg-red-600 hover:bg-red-700 transition shadow-sm text-sm">
+                    class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition shadow-sm text-sm">
                     <i class="fa-solid fa-plus mr-2"></i> Add Destination
                 </a>
             </div>

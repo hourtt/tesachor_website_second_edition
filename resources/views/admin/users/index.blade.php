@@ -38,7 +38,7 @@
                                         <div class="font-semibold text-gray-900 flex items-center gap-2">
                                             {{ $user->name }}
                                             @if ($user->id === auth()->id())
-                                                <span class="text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-bold">You</span>
+                                                <span class="text-[10px] bg-blue-50 text-white-600 px-2 py-0.5 rounded-full font-bold">You</span>
                                             @endif
                                         </div>
                                         <p class="text-xs text-gray-400">{{ $user->email }}</p>
@@ -48,7 +48,7 @@
                             <td class="px-6 py-4">
                                 @forelse ($user->roles as $role)
                                     <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold
-                                        {{ $role->name === 'admin' ? 'bg-red-50 text-red-700 border border-red-200' : 'bg-gray-100 text-gray-700' }}">
+                                        {{ $role->name === 'admin' ? 'bg-blue-50 text-white-700 border border-red-200' : 'bg-gray-100 text-gray-700' }}">
                                         {{ ucfirst($role->name) }}
                                     </span>
                                 @empty
@@ -72,7 +72,7 @@
                             <td class="px-6 py-4 text-right">
                                 @if ($user->id !== auth()->id())
                                     <a href="{{ route('admins.users.edit', $user->id) }}"
-                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition">
+                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-700 hover:text-white-600 hover:bg-blue-50 rounded-lg transition">
                                         <i class="fa-solid fa-user-pen"></i> Edit Role & Status
                                     </a>
                                 @else

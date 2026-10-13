@@ -7,13 +7,6 @@
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Destinations</h1>
             <p class="text-gray-500 text-sm mt-1">Manage all destinations, attractions, and travel points of interest.</p>
         </div>
-
-        <div class="flex items-center gap-3">
-            <a href="{{ route('admins.destinations.create') }}"
-                class="inline-flex items-center px-4 py-2.5 bg-red-600 text-white font-semibold text-sm rounded-xl shadow-sm hover:bg-red-700 transition">
-                <i class="fa-solid fa-plus mr-2"></i> Add Destination
-            </a>
-        </div>
     </div>
 
     {{-- Destinations Table / Card List --}}
@@ -45,7 +38,7 @@
                                             @endif
                                         </div>
                                         <div>
-                                            <a href="{{ route('admins.destinations.show', $destination->slug) }}" class="font-semibold text-gray-900 hover:text-red-600 transition">
+                                            <a href="{{ route('admins.destinations.show', $destination->slug) }}" class="font-semibold text-gray-900 hover:text-white-600 transition">
                                                 {{ $destination->place_name }}
                                             </a>
                                             <p class="text-xs text-gray-400 line-clamp-1 max-w-xs">{{ $destination->short_description }}</p>
@@ -56,7 +49,7 @@
                                     @if ($destination->province)
                                         <a href="{{ route('admins.provinces.show', $destination->province->slug) }}"
                                             class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-100 text-gray-700 text-xs font-medium hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-map-pin text-red-500 text-[10px]"></i>
+                                            <i class="fa-solid fa-map-pin text-blue-600 text-[10px]"></i>
                                             {{ $destination->province->name }}
                                         </a>
                                     @else
@@ -96,7 +89,7 @@
                                             onsubmit="return confirm('Are you sure you want to delete {{ $destination->place_name }}?');" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Delete">
+                                            <button type="submit" class="p-2 text-gray-400 hover:text-white-600 hover:bg-blue-50 rounded-lg transition" title="Delete">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </button>
                                         </form>
@@ -115,13 +108,13 @@
             @endif
         @else
             <div class="py-16 text-center">
-                <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500">
+                <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
                     <i class="fa-solid fa-location-dot text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-medium text-gray-900">No destinations found</h3>
                 <p class="text-gray-500 mb-6 max-w-sm mx-auto">Get started by creating your first travel destination.</p>
                 <a href="{{ route('admins.destinations.create') }}"
-                    class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-white bg-red-600 hover:bg-red-700 transition shadow-sm text-sm font-semibold">
+                    class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition shadow-sm text-sm font-semibold">
                     <i class="fa-solid fa-plus mr-2"></i> Add Destination
                 </a>
             </div>

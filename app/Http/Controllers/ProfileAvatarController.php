@@ -18,8 +18,7 @@ class ProfileAvatarController extends Controller
 
         $path = Storage::disk('supabase')->putFile(
             "avatars/{$user->id}",
-            $request->file('avatar'),
-            'public'
+            $request->file('avatar')
         );
 
         $user->avatar_path = $path;

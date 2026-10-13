@@ -26,10 +26,10 @@
         <a href="{{ route('admins.destinations.index') }}"
             class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all group">
             <div class="flex items-center justify-between mb-4">
-                <div class="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center group-hover:bg-red-100 transition-colors">
-                    <i class="fa-solid fa-location-dot text-red-500"></i>
+                <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors">
+                    <i class="fa-solid fa-location-dot text-blue-600"></i>
                 </div>
-                <span class="text-xs font-semibold text-red-500 bg-red-50 px-2 py-1 rounded-full">Places</span>
+                <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">Places</span>
             </div>
             <p class="text-3xl font-bold text-gray-900">{{ $stats['destinations'] }}</p>
             <p class="text-sm text-gray-500 mt-1">Total destinations</p>
@@ -69,7 +69,7 @@
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-50">
                 <h3 class="font-semibold text-gray-900">Recent Provinces</h3>
                 <a href="{{ route('admins.provinces.create') }}"
-                    class="text-xs font-semibold text-red-600 hover:text-red-700 flex items-center gap-1">
+                    class="text-xs font-semibold text-white-600 hover:text-white-700 flex items-center gap-1">
                     <i class="fa-solid fa-plus text-[10px]"></i> Add
                 </a>
             </div>
@@ -96,7 +96,7 @@
                 @empty
                     <div class="px-6 py-8 text-center">
                         <p class="text-sm text-gray-400">No provinces yet.</p>
-                        <a href="{{ route('admins.provinces.create') }}" class="text-xs text-red-500 hover:underline mt-1 inline-block">Add the first one →</a>
+                        <a href="{{ route('admins.provinces.create') }}" class="text-xs text-blue-600 hover:underline mt-1 inline-block">Add the first one →</a>
                     </div>
                 @endforelse
             </div>
@@ -107,7 +107,7 @@
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-50">
                 <h3 class="font-semibold text-gray-900">Recent Destinations</h3>
                 <a href="{{ route('admins.destinations.create') }}"
-                    class="text-xs font-semibold text-red-600 hover:text-red-700 flex items-center gap-1">
+                    class="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
                     <i class="fa-solid fa-plus text-[10px]"></i> Add
                 </a>
             </div>
@@ -133,7 +133,7 @@
                 @empty
                     <div class="px-6 py-8 text-center">
                         <p class="text-sm text-gray-400">No destinations yet.</p>
-                        <a href="{{ route('admins.destinations.create') }}" class="text-xs text-red-500 hover:underline mt-1 inline-block">Add the first one →</a>
+                        <a href="{{ route('admins.destinations.create') }}" class="text-xs text-blue-600 hover:underline mt-1 inline-block">Add the first one →</a>
                     </div>
                 @endforelse
             </div>

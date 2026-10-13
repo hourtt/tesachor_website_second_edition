@@ -35,12 +35,13 @@
 
             {{-- Logo --}}
             <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-100">
-                <div class="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center shadow-sm">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm">
                     <span class="text-white font-bold text-sm font-serif">T</span>
                 </div>
                 <div>
                     <span class="font-serif font-bold text-gray-900 text-lg tracking-wide">Tesachor</span>
-                    <p class="text-[10px] text-red-500 font-semibold capitalize tracking-widest -mt-0.5">Admin Panel</p>
+                    <p class="text-[10px] text-gray-500 font-semibold capitalize tracking-widest -mt-0.5">Admin Panel
+                    </p>
                 </div>
             </div>
 
@@ -51,8 +52,9 @@
                 @php $isDash = request()->routeIs('admins.dashboard'); @endphp
                 <a href="{{ route('admins.dashboard') }}"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
-                           {{ $isDash ? 'bg-red-50 text-red-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i class="fa-solid fa-gauge-high w-4 text-center {{ $isDash ? 'text-red-500' : 'text-gray-400' }}"></i>
+                           {{ $isDash ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                    <i
+                        class="fa-solid fa-gauge-high w-4 text-center {{ $isDash ? 'text-blue-600' : 'text-gray-400' }}"></i>
                     Dashboard
                 </a>
 
@@ -63,16 +65,18 @@
                 @php $isProvinces = request()->routeIs('admins.provinces.*'); @endphp
                 <a href="{{ route('admins.provinces.index') }}"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
-                           {{ $isProvinces ? 'bg-red-50 text-red-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i class="fa-solid fa-map w-4 text-center {{ $isProvinces ? 'text-red-500' : 'text-gray-400' }}"></i>
+                           {{ $isProvinces ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                    <i
+                        class="fa-solid fa-map w-4 text-center {{ $isProvinces ? 'text-blue-600' : 'text-gray-400' }}"></i>
                     Provinces
                 </a>
 
                 @php $isDest = request()->routeIs('admins.destinations.*'); @endphp
                 <a href="{{ route('admins.destinations.index') }}"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
-                           {{ $isDest ? 'bg-red-50 text-red-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i class="fa-solid fa-location-dot w-4 text-center {{ $isDest ? 'text-red-500' : 'text-gray-400' }}"></i>
+                           {{ $isDest ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                    <i
+                        class="fa-solid fa-location-dot w-4 text-center {{ $isDest ? 'text-blue-600' : 'text-gray-400' }}"></i>
                     Destinations
                 </a>
 
@@ -83,8 +87,9 @@
                 @php $isUsers = request()->routeIs('admins.users.*'); @endphp
                 <a href="{{ route('admins.users.index') }}"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
-                           {{ $isUsers ? 'bg-red-50 text-red-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i class="fa-solid fa-users w-4 text-center {{ $isUsers ? 'text-red-500' : 'text-gray-400' }}"></i>
+                           {{ $isUsers ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
+                    <i
+                        class="fa-solid fa-users w-4 text-center {{ $isUsers ? 'text-blue-600' : 'text-gray-400' }}"></i>
                     Users
                 </a>
             </nav>
@@ -94,9 +99,10 @@
                 <div class="flex items-center gap-3">
                     @if (Auth::user()->avatar_url)
                         <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}"
-                            class="w-9 h-9 rounded-full object-cover border-2 border-red-100 flex-shrink-0">
+                            class="w-9 h-9 rounded-full object-cover border-2 border-blue-100 flex-shrink-0">
                     @else
-                        <div class="w-9 h-9 rounded-full bg-red-100 text-red-600 font-bold text-sm flex items-center justify-center border-2 border-red-100 flex-shrink-0">
+                        <div
+                            class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 font-bold text-sm flex items-center justify-center border-2 border-blue-100 flex-shrink-0">
                             {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                         </div>
                     @endif
@@ -132,15 +138,6 @@
                     <div class="hidden lg:block">
                         <h1 class="text-lg font-semibold text-gray-900">{{ $title ?? 'Dashboard' }}</h1>
                     </div>
-
-                    {{-- Right side actions --}}
-                    <div class="flex items-center gap-3 ml-auto lg:ml-0">
-                        <a href="{{ route('admins.provinces.create') }}"
-                            class="hidden sm:inline-flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-xl text-sm font-semibold hover:bg-red-700 transition-colors shadow-sm">
-                            <i class="fa-solid fa-plus text-xs"></i>
-                            Quick Add
-                        </a>
-                    </div>
                 </div>
             </header>
 
@@ -152,7 +149,8 @@
                             class="flex items-center gap-3 p-4 bg-green-50 border border-green-200 text-green-800 rounded-xl text-sm">
                             <i class="fa-solid fa-circle-check text-green-500 flex-shrink-0"></i>
                             <span>{{ session('success') }}</span>
-                            <button @click="show = false" class="ml-auto text-green-400 hover:text-green-600 flex-shrink-0">
+                            <button @click="show = false"
+                                class="ml-auto text-green-400 hover:text-green-600 flex-shrink-0">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
@@ -162,7 +160,8 @@
                             class="flex items-center gap-3 p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-sm">
                             <i class="fa-solid fa-circle-exclamation text-red-500 flex-shrink-0"></i>
                             <span>{{ session('error') }}</span>
-                            <button @click="show = false" class="ml-auto text-red-400 hover:text-red-600 flex-shrink-0">
+                            <button @click="show = false"
+                                class="ml-auto text-red-400 hover:text-red-600 flex-shrink-0">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
@@ -174,13 +173,6 @@
             <main class="flex-1 px-4 sm:px-6 lg:px-8 py-6">
                 {{ $slot }}
             </main>
-
-            {{-- FOOTER --}}
-            <footer class="border-t border-gray-100 px-4 sm:px-6 lg:px-8 py-4">
-                <p class="text-xs text-gray-400 text-center">
-                    Tesachor Admin Panel &mdash; &copy; {{ date('Y') }}
-                </p>
-            </footer>
         </div>
     </div>
 

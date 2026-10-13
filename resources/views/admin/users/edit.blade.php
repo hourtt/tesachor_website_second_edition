@@ -43,7 +43,7 @@
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">Role Assignment</label>
                     <select name="role" required
-                        class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-red-500 border-gray-200 outline-none transition bg-white">
+                        class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition bg-white">
                         @foreach ($roles as $role)
                             <option value="{{ $role->name }}"
                                 {{ $user->hasRole($role->name) ? 'selected' : '' }}>
@@ -95,7 +95,7 @@
                     Cancel
                 </a>
                 <button type="submit"
-                    class="text-white bg-red-600 hover:bg-red-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm">
+                    class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm">
                     Save Changes
                 </button>
             </div>

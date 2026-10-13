@@ -22,7 +22,7 @@
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                    class="inline-flex items-center px-4 py-2 bg-white border border-red-200 text-red-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-red-50 transition">
+                    class="inline-flex items-center px-4 py-2 bg-white border border-red-200 text-white-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-blue-50 transition">
                     <i class="fa-solid fa-trash mr-2"></i> Delete
                 </button>
             </form>
@@ -48,7 +48,7 @@
             <h2 class="text-3xl font-bold font-serif">{{ $destination->place_name }}</h2>
             <div class="flex items-center gap-4 mt-2 text-sm text-gray-200">
                 @if ($destination->province)
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-map-pin text-red-400"></i> {{ $destination->province->name }}</span>
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-map-pin text-white-400"></i> {{ $destination->province->name }}</span>
                 @endif
                 @if ($destination->rating)
                     <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-yellow-400"></i> {{ $destination->rating }} / 5.0</span>

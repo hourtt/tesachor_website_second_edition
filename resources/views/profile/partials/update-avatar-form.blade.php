@@ -40,7 +40,7 @@
                          alt="{{ $user->name }}"
                          class="w-24 h-24 rounded-full object-cover border-2 border-gray-100 shadow-md">
                 @else
-                    <div class="w-24 h-24 rounded-full bg-red-100 text-red-600 font-bold text-3xl flex items-center justify-center border-2 border-red-200/60 shadow-md">
+                    <div class="w-24 h-24 rounded-full bg-blue-100 text-white-600 font-bold text-3xl flex items-center justify-center border-2 border-red-200/60 shadow-md">
                         {{ strtoupper(substr($user->name ?? 'U', 0, 1)) }}
                     </div>
                 @endif
@@ -51,7 +51,7 @@
                 <img :src="photoPreview"
                      alt="Avatar Preview"
                      class="w-24 h-24 rounded-full object-cover border-2 border-red-500 shadow-md ring-4 ring-red-50">
-                <span class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider">New</span>
+                <span class="absolute -top-1 -right-1 bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase tracking-wider">New</span>
             </div>
         </div>
 
@@ -73,7 +73,7 @@
                     {{-- Select File Button --}}
                     <button type="button"
                             @click="$refs.photoInput.click()"
-                            class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-900 text-white text-xs sm:text-sm font-semibold rounded-xl hover:bg-red-600 shadow-sm transition-all duration-200 cursor-pointer">
+                            class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-900 text-white text-xs sm:text-sm font-semibold rounded-xl hover:bg-blue-600 shadow-sm transition-all duration-200 cursor-pointer">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
                         </svg>
@@ -84,7 +84,7 @@
                     <button type="submit"
                             x-show="photoPreview"
                             style="display: none;"
-                            class="inline-flex items-center gap-2 px-4 py-2.5 bg-red-600 text-white text-xs sm:text-sm font-semibold rounded-xl hover:bg-red-700 shadow-sm transition-all duration-200 cursor-pointer">
+                            class="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white text-xs sm:text-sm font-semibold rounded-xl hover:bg-blue-700 shadow-sm transition-all duration-200 cursor-pointer">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
                         </svg>
@@ -105,7 +105,7 @@
                         <button type="button"
                                 x-show="!photoPreview"
                                 onclick="if(confirm('Are you sure you want to remove your profile photo?')) document.getElementById('delete-avatar-form').submit();"
-                                class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-gray-600 hover:text-red-600 bg-gray-50 hover:bg-red-50 rounded-xl border border-gray-200 hover:border-red-200 transition duration-150 cursor-pointer">
+                                class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs sm:text-sm font-semibold text-gray-600 hover:text-white-600 bg-gray-50 hover:bg-blue-50 rounded-xl border border-gray-200 hover:border-red-200 transition duration-150 cursor-pointer">
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>

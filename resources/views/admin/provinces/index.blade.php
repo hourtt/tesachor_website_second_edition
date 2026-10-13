@@ -7,13 +7,6 @@
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Provinces & Cities</h1>
             <p class="text-gray-500 text-sm mt-1">Manage the {{ $provinces->total() }} provinces and destinations in the system.</p>
         </div>
-
-        <div class="flex items-center gap-3">
-            <a href="{{ route('admins.provinces.create') }}"
-                class="inline-flex items-center px-4 py-2.5 bg-red-600 text-white font-semibold text-sm rounded-xl shadow-sm hover:bg-red-700 transition-all duration-200">
-                <i class="fa-solid fa-plus mr-2"></i> Add New Province
-            </a>
-        </div>
     </div>
 
     {{-- GRID LAYOUT --}}
@@ -41,7 +34,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition shadow-sm"
+                            class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-white-600 transition shadow-sm"
                             title="Delete Province">
                             <i class="fa-solid fa-trash text-xs"></i>
                         </button>
@@ -51,7 +44,7 @@
                 {{-- Destination Count Badge (Top Left) --}}
                 <div class="absolute top-3 left-3 z-20">
                     <span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-sm flex items-center gap-1">
-                        <i class="fa-solid fa-map-location-dot text-red-400"></i>
+                        <i class="fa-solid fa-map-location-dot text-white-400"></i>
                         {{ $province->destinations->count() }} {{ Str::plural('Place', $province->destinations->count()) }}
                     </span>
                 </div>
@@ -64,13 +57,13 @@
             </div>
         @empty
             <div class="col-span-full py-16 text-center bg-white rounded-2xl border-2 border-dashed border-gray-200">
-                <div class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500">
+                <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
                     <i class="fa-regular fa-map text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-medium text-gray-900">No provinces found</h3>
                 <p class="text-gray-500 mb-6 max-w-sm mx-auto">Get started by adding the first province or city to your database.</p>
                 <a href="{{ route('admins.provinces.create') }}"
-                    class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent font-semibold rounded-xl text-white bg-red-600 hover:bg-red-700 transition shadow-md">
+                    class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition shadow-md">
                     <i class="fa-solid fa-plus mr-2"></i> Create Province
                 </a>
             </div>
