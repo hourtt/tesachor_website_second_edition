@@ -1,5 +1,5 @@
 <x-admin-layout>
-    <x-slot name="title">Edit User — {{ $user->name }}</x-slot>
+    <x-slot name="title">Edit User: {{ $user->name }}</x-slot>
 
     {{-- Breadcrumb / Header --}}
     <div class="mb-6 flex items-center justify-between">
@@ -45,8 +45,7 @@
                     <select name="role" required
                         class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition bg-white">
                         @foreach ($roles as $role)
-                            <option value="{{ $role->name }}"
-                                {{ $user->hasRole($role->name) ? 'selected' : '' }}>
+                            <option value="{{ $role->name }}" @selected($user->hasRole($role->name))>
                                 {{ ucfirst($role->name) }}
                             </option>
                         @endforeach
