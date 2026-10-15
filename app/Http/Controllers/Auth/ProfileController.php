@@ -16,12 +16,23 @@ class ProfileController extends Controller
     /**
      * Display the user's profile form.
      */
-    public function edit(Request $request): View
+    public function edit(Request $request)
     {
         $guard = 'web';
+        $user = $request->user($guard);
+
+        if ($request->routeIs('admins.*')) {
+            return view('admin.profile.edit', [
+                'user' => $user,
+            ]);
+        }
+
+        if ($user && $user->hasRole('admin')) {
+            return redirect()->route('admins.profile.edit');
+        }
 
         return view('profile.edit', [
-            'user' => $request->user($guard),
+            'user' => $user,
         ]);
     }
 
@@ -34,7 +45,11 @@ class ProfileController extends Controller
         $profileService->update($request->user($guard), $request->validated());
 
         if ($request->routeIs('admins.*')) {
-            return Redirect::route('admins.profile.edit')->with('status', 'profile-updated');
+            $redirect = Redirect::route('admins.profile.edit')->with('status', 'profile-updated');
+            if ($request->filled('email') && !$request->filled('name')) {
+                $redirect->with('email_updated', true);
+            }
+            return $redirect;
         }
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
