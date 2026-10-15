@@ -360,6 +360,7 @@ class AdminPanelTest extends TestCase
         $response = $this->actingAs($this->admin)->get(route('admins.dashboard'));
 
         $response->assertOk();
+        $response->assertSee('Settings');
         $response->assertSee(route('admins.profile.edit'));
         $response->assertSee('Sign Out Confirmation');
         $response->assertSee('Cancel');
@@ -369,6 +370,12 @@ class AdminPanelTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->get(route('admins.profile.edit'));
         $response->assertOk();
+        $response->assertSee('Admin Profile Settings');
+        $response->assertSee('Profile Overview');
+        $response->assertSee('Profile Preferences');
+        $response->assertSee('Change Password');
+        $response->assertDontSee('Delete Account');
+        $response->assertSee(route('profile.avatar.update'));
 
         $updateResponse = $this->actingAs($this->admin)->patch(route('admins.profile.update'), [
             'name' => 'Updated Admin Name',
@@ -379,5 +386,17 @@ class AdminPanelTest extends TestCase
         $updateResponse->assertRedirect(route('admins.profile.edit'));
         $this->assertSame('Updated Admin Name', $this->admin->fresh()->name);
         $this->assertSame('updatedadmin@example.com', $this->admin->fresh()->email);
+    }
+
+    public function test_admin_can_update_password_from_profile_settings(): void
+    {
+        $response = $this->actingAs($this->admin)->put(route('password.update'), [
+            'current_password' => 'password',
+            'password' => 'new-secret-password123',
+            'password_confirmation' => 'new-secret-password123',
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $response->assertSessionHas('status', 'password-updated');
     }
 }
