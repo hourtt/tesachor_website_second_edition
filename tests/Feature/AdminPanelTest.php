@@ -354,4 +354,30 @@ class AdminPanelTest extends TestCase
         $response2->assertRedirect(route('login'));
         $this->assertGuest();
     }
+
+    public function test_admin_dashboard_renders_profile_edit_link_and_logout_modal(): void
+    {
+        $response = $this->actingAs($this->admin)->get(route('admins.dashboard'));
+
+        $response->assertOk();
+        $response->assertSee(route('admins.profile.edit'));
+        $response->assertSee('Sign Out Confirmation');
+        $response->assertSee('Cancel');
+    }
+
+    public function test_admin_can_access_and_update_profile_from_admin_route(): void
+    {
+        $response = $this->actingAs($this->admin)->get(route('admins.profile.edit'));
+        $response->assertOk();
+
+        $updateResponse = $this->actingAs($this->admin)->patch(route('admins.profile.update'), [
+            'name' => 'Updated Admin Name',
+            'email' => 'updatedadmin@example.com',
+        ]);
+
+        $updateResponse->assertSessionHasNoErrors();
+        $updateResponse->assertRedirect(route('admins.profile.edit'));
+        $this->assertSame('Updated Admin Name', $this->admin->fresh()->name);
+        $this->assertSame('updatedadmin@example.com', $this->admin->fresh()->email);
+    }
 }

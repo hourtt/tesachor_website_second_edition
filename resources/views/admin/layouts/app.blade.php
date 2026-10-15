@@ -16,7 +16,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="h-full bg-gray-50 font-sans antialiased" x-data="{ sidebarOpen: false }">
+<body class="h-full bg-gray-50 font-sans antialiased" x-data="{ sidebarOpen: false, logoutModalOpen: false }"
+    @keydown.escape.window="logoutModalOpen = false">
 
     {{-- MOBILE SIDEBAR OVERLAY --}}
     <div x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300"
@@ -97,26 +98,36 @@
             {{-- User Profile Footer --}}
             <div class="border-t border-gray-100 p-4">
                 <div class="flex items-center gap-3">
-                    @if (Auth::user()->avatar_url)
-                        <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}"
-                            class="w-9 h-9 rounded-full object-cover border-2 border-blue-100 flex-shrink-0">
-                    @else
-                        <div
-                            class="w-9 h-9 rounded-full bg-blue-100 text-blue-600 font-bold text-sm flex items-center justify-center border-2 border-blue-100 flex-shrink-0">
-                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                    <a href="{{ route('admins.profile.edit') }}"
+                        class="flex items-center gap-3 flex-1 min-w-0 group cursor-pointer focus:outline-hidden"
+                        title="Edit profile information">
+                        <div class="relative flex-shrink-0">
+                            @if (Auth::user()->avatar_url)
+                                <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}"
+                                    class="w-10 h-10 rounded-full object-cover border-2 border-blue-100 shadow-2xs group-hover:border-blue-500 group-hover:ring-2 group-hover:ring-blue-100 transition-all duration-200">
+                            @else
+                                <div
+                                    class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 font-bold text-sm flex items-center justify-center border-2 border-blue-100 shadow-2xs group-hover:border-blue-500 group-hover:ring-2 group-hover:ring-blue-100 transition-all duration-200">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
+                            @endif
                         </div>
-                    @endif
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-gray-400 truncate">Administrator</p>
-                    </div>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" title="Log out"
-                            class="text-gray-400 hover:text-red-500 transition-colors p-1 flex-shrink-0">
-                            <i class="fa-solid fa-right-from-bracket text-sm"></i>
-                        </button>
-                    </form>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-1.5">
+                                <p class="text-sm font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+                                    {{ Auth::user()->name }}
+                                </p>
+                                <i
+                                    class="fa-solid fa-pen-to-square text-[10px] text-blue-500 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 flex-shrink-0"></i>
+                            </div>
+                            <p class="text-xs text-gray-400 truncate">Administrator</p>
+                        </div>
+                    </a>
+
+                    <button type="button" @click="logoutModalOpen = true" title="Sign out"
+                        class="text-gray-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-xl transition-all duration-200 flex-shrink-0 focus:outline-hidden focus:ring-2 focus:ring-red-100">
+                        <i class="fa-solid fa-right-from-bracket text-sm"></i>
+                    </button>
                 </div>
             </div>
         </aside>
@@ -173,6 +184,74 @@
             <main class="flex-1 px-4 sm:px-6 lg:px-8 py-6">
                 {{ $slot }}
             </main>
+        </div>
+    </div>
+
+    {{-- ===================== LOGOUT CONFIRMATION MODAL ===================== --}}
+    <div x-cloak x-show="logoutModalOpen" class="fixed inset-0 z-50 overflow-y-auto"
+        aria-labelledby="logout-modal-title" role="dialog" aria-modal="true" style="display: none;">
+
+        {{-- Backdrop --}}
+        <div x-show="logoutModalOpen" x-transition:enter="transition-opacity ease-out duration-300"
+            x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity ease-in duration-200" x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0" class="fixed inset-0 bg-gray-900/50 backdrop-blur-xs transition-opacity"
+            @click="logoutModalOpen = false">
+        </div>
+
+        {{-- Modal Dialog --}}
+        <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+            <div x-show="logoutModalOpen" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                @click.outside="logoutModalOpen = false"
+                class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border border-gray-100">
+
+                <div class="p-6">
+                    <div class="flex items-start gap-4">
+                        {{-- Warning Icon Container --}}
+                        <div
+                            class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center ring-8 ring-red-50/60 shadow-xs flex-shrink-0">
+                            <i class="fa-solid fa-right-from-bracket text-lg"></i>
+                        </div>
+
+                        {{-- Text Content --}}
+                        <div class="flex-1 min-w-0">
+                            <h3 id="logout-modal-title" class="text-lg font-bold text-gray-900 leading-tight">
+                                Sign Out Confirmation
+                            </h3>
+                            <p class="mt-2 text-sm text-gray-500 leading-relaxed">
+                                Are you sure you want to sign out from the admin dashboard? You can cancel to keep working or proceed to sign out.
+                            </p>
+                        </div>
+
+                        {{-- Close Button --}}
+                        <button type="button" @click="logoutModalOpen = false"
+                            class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
+                            <i class="fa-solid fa-xmark text-base"></i>
+                        </button>
+                    </div>
+
+                    {{-- Action Buttons --}}
+                    <div class="mt-6 flex flex-col-reverse sm:flex-row sm:justify-end gap-2.5">
+                        <button type="button" @click="logoutModalOpen = false"
+                            class="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-gray-700 font-semibold text-sm hover:bg-gray-50 hover:text-gray-900 shadow-2xs transition-all text-center">
+                            Cancel
+                        </button>
+                        <form method="POST" action="{{ route('logout') }}" class="w-full sm:w-auto m-0">
+                            @csrf
+                            <button type="submit"
+                                class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-xs hover:shadow-sm transition-all focus:outline-hidden focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                <i class="fa-solid fa-right-from-bracket text-xs"></i>
+                                Yes, Sign Out
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

@@ -32,6 +32,11 @@ class ProfileController extends Controller
     {
         $guard = 'web';
         $profileService->update($request->user($guard), $request->validated());
+
+        if ($request->routeIs('admins.*')) {
+            return Redirect::route('admins.profile.edit')->with('status', 'profile-updated');
+        }
+
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 

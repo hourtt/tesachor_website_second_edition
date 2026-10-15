@@ -1,10 +1,12 @@
 <x-app-layout :hideNav="true">
     @php
-        $dashboardRoute = (Auth::check() && Auth::user()->hasRole('admin')) 
+        /** @var \App\Models\User|null $currentUser */
+        $currentUser = Auth::user();
+
+        $dashboardRoute = ($currentUser && $currentUser->hasRole('admin')) 
             ? route('admins.dashboard') 
             : route('public.landing');
 
-        $currentUser = Auth::user();
         $avatarUrl = $currentUser?->avatar_url;
     @endphp
 
@@ -15,8 +17,8 @@
                 {{-- Left: Back to Dashboard Button --}}
                 <div class="flex items-center z-10">
                     <a href="{{ $dashboardRoute }}"
-                        class="group inline-flex items-center gap-1.5 sm:gap-2.5 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 hover:text-white-600 border border-gray-200/80 hover:border-gray-300 shadow-2xs transition-all duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <svg class="w-4 h-4 text-gray-500 transition-transform duration-200 group-hover:-translate-x-1 group-hover:text-white-600 flex-shrink-0"
+                        class="group inline-flex items-center gap-1.5 sm:gap-2.5 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 hover:text-blue-600 border border-gray-200/80 hover:border-gray-300 shadow-2xs transition-all duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        <svg class="w-4 h-4 text-gray-500 transition-transform duration-200 group-hover:-translate-x-1 group-hover:text-blue-600 flex-shrink-0"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>
@@ -27,7 +29,7 @@
                 {{-- Center: Tesachor Logo --}}
                 <div class="absolute inset-x-0 flex items-center justify-center pointer-events-none">
                     <a href="{{ $dashboardRoute }}"
-                        class="pointer-events-auto font-serif text-2xl sm:text-3xl font-bold tracking-wider text-gray-900 hover:text-white-600 transition-colors">
+                        class="pointer-events-auto font-serif text-2xl sm:text-3xl font-bold tracking-wider text-gray-900 hover:text-blue-600 transition-colors">
                         Tesachor
                     </a>
                 </div>
@@ -46,7 +48,7 @@
                             alt="{{ $currentUser->name ?? 'User' }}"
                             class="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover border border-gray-200 shadow-2xs">
                     @else
-                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-blue-100 text-white-600 font-bold text-sm sm:text-base flex items-center justify-center border border-red-200/60 shadow-2xs">
+                        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-blue-100 text-blue-600 font-bold text-sm sm:text-base flex items-center justify-center border border-blue-200 shadow-2xs">
                             {{ strtoupper(substr($currentUser->name ?? 'U', 0, 1)) }}
                         </div>
                     @endif
