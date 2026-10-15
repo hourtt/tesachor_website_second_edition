@@ -1,5 +1,16 @@
 <?php
 
+
+$supabaseS3 = [
+    'driver' => 's3',
+    'key' => env('SUPABASE_S3_KEY'),
+    'secret' => env('SUPABASE_S3_SECRET'),
+    'region' => env('SUPABASE_S3_REGION'),
+    'endpoint' => env('SUPABASE_S3_ENDPOINT'),
+    'use_path_style_endpoint' => true,
+    'throw' => true,
+];
+
 return [
 
     /*
@@ -59,18 +70,26 @@ return [
             'throw' => false,
             'report' => false,
         ],
+        // Alias for backwards compatibility
+        'supabase' => array_merge($supabaseS3, [
+            'bucket' => env('SUPABASE_AVATAR_BUCKET'),
+            'url' => env('SUPABASE_AVATAR_PUBLIC_URL'),
+        ]),
 
-        'supabase' => [
-            'driver' => 's3',
-            'key' => env('SUPABASE_S3_KEY'),
-            'secret' => env('SUPABASE_S3_SECRET'),
-            'region' => env('SUPABASE_S3_REGION'),
-            'bucket' => env('SUPABASE_S3_BUCKET'),
-            'endpoint' => env('SUPABASE_S3_ENDPOINT'),
-            'url' => env('SUPABASE_STORAGE_PUBLIC_URL'),
-            'use_path_style_endpoint' => true,
-            'throw' => true,
-        ],
+        'supabase_avatar' => array_merge($supabaseS3, [
+            'bucket' => env('SUPABASE_AVATAR_BUCKET'),
+            'url' => env('SUPABASE_AVATAR_PUBLIC_URL'),
+        ]),
+
+        'supabase_destination' => array_merge($supabaseS3, [
+            'bucket' => env('SUPABASE_DESTINATION_BUCKET'),
+            'url' => env('SUPABASE_DESTINATION_PUBLIC_URL'),
+        ]),
+
+        'supabase_province' => array_merge($supabaseS3, [
+            'bucket' => env('SUPABASE_PROVINCE_BUCKET'),
+            'url' => env('SUPABASE_PROVINCE_PUBLIC_URL'),
+        ]),
     ],
 
     /*

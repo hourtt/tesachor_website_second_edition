@@ -44,8 +44,15 @@ class User extends Authenticatable
             return null;
         }
 
+        if (str_starts_with($this->avatar_path, 'http://') || str_starts_with($this->avatar_path, 'https://')) {
+            return $this->avatar_path;
+        }
+
         try {
-            return Storage::disk('supabase')->url($this->avatar_path);
+            /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+            $disk = Storage::disk('supabase_avatar');
+
+            return $disk->url($this->avatar_path);
         } catch (\Throwable $e) {
             return null;
         }

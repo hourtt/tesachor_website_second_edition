@@ -2,47 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ProfileAvatarService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileAvatarController extends Controller
 {
-    public function update(Request $request)
+    public function update(Request $request, ProfileAvatarService $profileAvatarService)
     {
+        $user = $request->user();
+        $requestFile = $request->file('avatar');
+
         $request->validate([
             'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ]);
 
-        $user = $request->user();
-        $oldPath = $user->avatar_path;
-
-        $path = Storage::disk('supabase')->putFile(
-            "avatars/{$user->id}",
-            $request->file('avatar')
-        );
-
-        $user->avatar_path = $path;
-        $user->save();
-
-        if ($oldPath && $oldPath !== $path) {
-            Storage::disk('supabase')->delete($oldPath);
-        }
-
+        $profileAvatarService->updateAvatar($user, $requestFile);
         return back()->with('status', 'avatar-updated');
     }
 
     /**
      * Remove the user's avatar.
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, ProfileAvatarService $profileAvatarService)
     {
         $user = $request->user();
-
-        if ($user->avatar_path) {
-            Storage::disk('supabase')->delete($user->avatar_path);
-            $user->avatar_path = null;
-            $user->save();
-        }
+        $profileAvatarService->deleteAvatar($user);
 
         return back()->with('status', 'avatar-deleted');
     }
