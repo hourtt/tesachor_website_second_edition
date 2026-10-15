@@ -23,7 +23,8 @@
             </p>
             {{-- Call to Action --}}
             <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
-                <a href="#travel" class="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 hover:scale-105 transition-all shadow-lg text-sm md:text-base tracking-wider uppercase">
+                <a href="#travel"
+                    class="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 hover:scale-105 transition-all shadow-lg text-sm md:text-base tracking-wider uppercase">
                     Start Your Journey
                 </a>
             </div>
@@ -32,16 +33,22 @@
 
     {{-- SEARCH BAR --}}
     <section class="relative z-30 -mt-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white p-2 rounded-full shadow-2xl flex items-center border border-gray-100" data-aos="fade-up" data-aos-delay="600">
+        <div class="bg-white p-2 rounded-full shadow-2xl flex items-center border border-gray-100" data-aos="fade-up"
+            data-aos-delay="600">
             <div class="flex-grow flex items-center pl-6">
-                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                <input type="text" placeholder="Where do you want to go?" class="w-full border-none focus:ring-0 text-gray-700 bg-transparent py-3 px-4 outline-none">
+                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input type="text" placeholder="Where do you want to go?"
+                    class="w-full border-none focus:ring-0 text-gray-700 bg-transparent py-3 px-4 outline-none">
             </div>
             <div class="hidden md:block w-px h-8 bg-gray-200 mx-4"></div>
             {{-- Category Dropdown --}}
-           <x-category-dropdown/>
+            <x-category-dropdown />
 
-            <button class="bg-gray-900 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition flex-shrink-0">
+            <button
+                class="bg-gray-900 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition flex-shrink-0">
                 Search
             </button>
         </div>
@@ -79,10 +86,6 @@
                         Embark on a journey where the horizon has no end. From the pristine coastlines to the lush
                         countryside, travel in Cambodia is more than just sightseeing...
                     </p>
-                    {{-- <button
-                        class="flex items-center gap-2 text-sm font-semibold border-b border-white/50 pb-1 hover:border-white hover:text-white-300 transition-all">
-                        Explore Now <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
-                    </button> --}}
                 </div>
             </div>
 
@@ -139,32 +142,57 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-duration="1000">
                 <span class="text-white-500 font-bold tracking-widest text-sm uppercase mb-3 block">Who we are</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-gray-900 leading-tight mb-6">Authentic Cambodian <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Adventures</span></h2>
+                <h2 class="font-serif text-4xl md:text-5xl text-gray-900 leading-tight mb-6">Authentic Cambodian <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Adventures</span>
+                </h2>
                 <p class="text-gray-600 leading-relaxed text-lg">
-                    <span class="font-bold text-gray-900"><i class="font-serif">Tesachor</i></span> is your ultimate guide to discovering the true beauty of Cambodia. From ancient temples to peaceful villages, explore Khmer nature, culture, and history in one place.
+                    <span class="font-bold text-gray-900"><i class="font-serif">Tesachor</i></span> is your ultimate
+                    guide to discovering the true beauty of Cambodia. From ancient temples to peaceful villages, explore
+                    Khmer nature, culture, and history in one place.
                 </p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center" data-aos="fade-up" data-aos-delay="100">
-                    <div class="w-14 h-14 mx-auto bg-blue-50 text-white-500 rounded-full flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div
+                        class="w-14 h-14 mx-auto bg-blue-50 text-white-500 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
                     </div>
                     <h3 class="font-bold text-xl text-gray-900 mb-3">Explore Anywhere</h3>
-                    <p class="text-gray-600 text-sm">Discover hidden gems and popular destinations across all 25 provinces.</p>
+                    <p class="text-gray-600 text-sm">Discover hidden gems and popular destinations across all 25
+                        provinces.</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center" data-aos="fade-up" data-aos-delay="200">
-                    <div class="w-14 h-14 mx-auto bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div
+                        class="w-14 h-14 mx-auto bg-blue-50 text-blue-500 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                            </path>
+                        </svg>
                     </div>
                     <h3 class="font-bold text-xl text-gray-900 mb-3">Rich Culture</h3>
-                    <p class="text-gray-600 text-sm">Immerse yourself in authentic traditions, delicious cuisine, and local life.</p>
+                    <p class="text-gray-600 text-sm">Immerse yourself in authentic traditions, delicious cuisine, and
+                        local life.</p>
                 </div>
-                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center" data-aos="fade-up" data-aos-delay="300">
-                    <div class="w-14 h-14 mx-auto bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-6">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center"
+                    data-aos="fade-up" data-aos-delay="300">
+                    <div
+                        class="w-14 h-14 mx-auto bg-green-50 text-green-500 rounded-full flex items-center justify-center mb-6">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                            </path>
+                        </svg>
                     </div>
                     <h3 class="font-bold text-xl text-gray-900 mb-3">Unforgettable</h3>
-                    <p class="text-gray-600 text-sm">Create lasting memories with your friends and family in the Kingdom of Wonder.</p>
+                    <p class="text-gray-600 text-sm">Create lasting memories with your friends and family in the
+                        Kingdom of Wonder.</p>
                 </div>
             </div>
         </div>
@@ -190,7 +218,6 @@
                         <h3 class="font-serif text-2xl font-semibold mb-2">{{ $tour->place_name }}</h3>
                         <p class="text-l text-black mb-3 line-clamp-2">{{ $tour->short_description }}</p>
 
-                        {{-- DYNAMIC LINK: Checks if User is Admin --}}
                         <a href="{{ route('public.destinations.show', $tour->slug) }}"
                             class="inline-flex items-center text-sm font-bold uppercase tracking-wider text-gray-900 hover:text-white-600 transition-colors">
                             Read More
@@ -200,11 +227,7 @@
             @empty
                 <div class="col-span-full text-center py-12">
                     <div class="bg-white rounded-2xl p-8 shadow-sm border border-dashed border-gray-300">
-                        <p class="text-gray-500 italic mb-4">No recommended places found yet.</p>
-                        @if (Auth::check() && Auth::user()->hasRole('admin'))
-                            <p class="text-sm text-gray-400">Add a destination and check "Recommended" to see it here.
-                            </p>
-                        @endif
+                        <p class="text-gray-500 italic mb-5">No recommended places found yet.</p>
                     </div>
                 </div>
             @endforelse
@@ -373,7 +396,11 @@
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="0">
                     <div
                         class="w-16 h-16 mx-auto bg-blue-50 text-white-500 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
                     </div>
                     <h3 class="font-bold text-lg mb-2">Currency</h3>
                     <p class="text-sm text-gray-500">Riel (៛) & USD ($) are accepted everywhere.</p>
@@ -395,7 +422,11 @@
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="200">
                     <div
                         class="w-16 h-16 mx-auto bg-green-50 text-green-500 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z">
+                            </path>
+                        </svg>
                     </div>
                     <h3 class="font-bold text-lg mb-2">Visa</h3>
                     <p class="text-sm text-gray-500">Visa on Arrival available at all major airports.</p>
@@ -404,7 +435,10 @@
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="300">
                     <div
                         class="w-16 h-16 mx-auto bg-yellow-50 text-yellow-500 rounded-2xl flex items-center justify-center mb-4 group-hover:rotate-12 transition-transform">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
+                        </svg>
                     </div>
                     <h3 class="font-bold text-lg mb-2">Transport</h3>
                     <p class="text-sm text-gray-500">Use PassApp or Grab for easy TukTuk rides.</p>
