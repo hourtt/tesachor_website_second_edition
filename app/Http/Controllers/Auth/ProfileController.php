@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Services\ProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class ProfileController extends Controller
     public function edit(Request $request): View
     {
         $guard = 'web';
-        
+
         return view('profile.edit', [
             'user' => $request->user($guard),
         ]);
@@ -27,26 +28,17 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request, ProfileService $profileService): RedirectResponse
     {
         $guard = 'web';
-        $user = $request->user($guard);
-
-        $user->fill($request->validated());
-
-        if ($user->isDirty('email')) {
-            $user->email_verified_at = null;
-        }
-
-        $user->save();
-
+        $profileService->update($request->user($guard), $request->validated());
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(Request $request, ProfileService $profileService): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
@@ -56,9 +48,7 @@ class ProfileController extends Controller
         $user = $request->user($guard);
 
         Auth::guard($guard)->logout();
-
-        $user->delete();
-
+        $profileService->delete($user);
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
