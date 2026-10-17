@@ -12,7 +12,8 @@ class LandingController extends Controller
     public function __construct(
         protected ProvinceService $provinceService,
         protected DestinationService $destinationService
-    ) {}
+    ) {
+    }
 
     public function index()
     {

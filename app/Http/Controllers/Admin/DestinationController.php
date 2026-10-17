@@ -17,7 +17,8 @@ class DestinationController extends Controller
     public function __construct(
         protected DestinationService $destinationService,
         // TODO(SUPABASE): protected SupabaseService $supabase,
-    ) {}
+    ) {
+    }
 
     public function index()
     {
