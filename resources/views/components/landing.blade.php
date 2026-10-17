@@ -43,14 +43,54 @@
 
             /* Matches your class opacity-80 */
         }
+
+        /* Smooth Cross-Fade Transition for Language Switching */
+        [x-text],
+        [x-html] {
+            transition: opacity 160ms ease-in-out, transform 160ms ease-in-out;
+            will-change: opacity, transform;
+        }
+
+        body.lang-switching [x-text],
+        body.lang-switching [x-html] {
+            opacity: 0 !important;
+            transform: translateY(-2px);
+        }
     </style>
+
+    @php
+        $translations = [
+            'en' => [
+                'navbar' => trans('navbar', [], 'en'),
+                'landing' => trans('landing/landing', [], 'en'),
+                'landing/landing' => trans('landing/landing', [], 'en'),
+                'auth' => trans('auth', [], 'en'),
+            ],
+            'km' => [
+                'navbar' => trans('navbar', [], 'km'),
+                'landing' => trans('landing/landing', [], 'km'),
+                'landing/landing' => trans('landing/landing', [], 'km'),
+                'auth' => trans('auth', [], 'km'),
+            ],
+        ];
+        foreach (['en', 'km'] as $loc) {
+            $landingArr = trans('landing/landing', [], $loc);
+            if (is_array($landingArr)) {
+                $translations[$loc] += $landingArr;
+            }
+        }
+    @endphp
+    <script>
+        window.translations = @json($translations);
+    </script>
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased text-gray-800 bg-transparent overflow-x-hidden">
+<body x-data class="font-sans antialiased text-gray-800 bg-transparent overflow-x-hidden">
     @include('layouts.navigation')
 
-    <main>
+    <main x-data>
         {{ $slot }}
     </main>
 
