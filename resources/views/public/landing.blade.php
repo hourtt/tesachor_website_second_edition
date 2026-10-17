@@ -13,19 +13,22 @@
         <div class="relative z-10 text-center text-white px-4">
             {{-- Animation: fade-down (Headline drops in from top) --}}
             <h1 class="font-serif text-5xl md:text-7xl lg:text-9xl tracking-tight mb-4 drop-shadow-2xl"
-                data-aos="fade-down" data-aos-duration="1000">
-                Tesachor
+                data-aos="fade-down" data-aos-duration="1000"
+                x-text="$store.i18n.t('landing/landing.headline')">
+                {{ __('landing/landing.headline') }}
             </h1>
             {{-- Animation: fade-up (Subtitle rises from bottom) --}}
             <p class="text-lg md:text-2xl font-light tracking-[0.2em] font-variant: small-caps mb-8 text-gray-100"
-                data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
-                Discover the Kingdom of Wonder
+                data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"
+                x-text="$store.i18n.t('landing/landing.subtitle')">
+                {{ __('landing/landing.subtitle') }}
             </p>
             {{-- Call to Action --}}
             <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
                 <a href="#travel"
-                    class="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 hover:scale-105 transition-all shadow-lg text-sm md:text-base tracking-wider uppercase">
-                    Start Your Journey
+                    class="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 hover:scale-105 transition-all shadow-lg text-sm md:text-base tracking-wider uppercase"
+                    x-text="$store.i18n.t('landing/landing.start_journey')">
+                    {{ __('landing/landing.start_journey') }}
                 </a>
             </div>
         </div>
@@ -40,7 +43,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-                <input type="text" placeholder="Where do you want to go?"
+                <input type="text" placeholder="{{ __('landing/landing.search_placeholder') }}"
+                    :placeholder="$store.i18n.t('landing/landing.search_placeholder')"
                     class="w-full border-none focus:ring-0 text-gray-700 bg-transparent py-3 px-4 outline-none">
             </div>
             <div class="hidden md:block w-px h-8 bg-gray-200 mx-4"></div>
@@ -48,8 +52,9 @@
             <x-category-dropdown />
 
             <button
-                class="bg-gray-900 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition flex-shrink-0">
-                Search
+                class="bg-gray-900 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition flex-shrink-0"
+                x-text="$store.i18n.t('landing/landing.search_button')">
+                {{ __('landing/landing.search_button') }}
             </button>
         </div>
     </section>
@@ -63,7 +68,7 @@
                 data-aos="zoom-in" data-aos-duration="800" data-aos-once="true">
 
                 {{-- Image --}}
-                <img src="/storage/container-images/1500-mountains.jpg"
+                <img src="{{ asset('storage/container-images/1500-mountains.jpg') }}"
                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 will-change-transform"
                     alt="Koh Rong">
 
@@ -76,15 +81,17 @@
                 <div
                     class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                     <span
-                        class="inline-block px-3 py-1 bg-blue-500/90 backdrop-blur rounded-full text-[10px] font-bold tracking-widest uppercase mb-3">
-                        Featured
+                        class="inline-block px-3 py-1 bg-blue-500/90 backdrop-blur rounded-full text-[10px] font-bold tracking-widest uppercase mb-3"
+                        x-text="$store.i18n.t('landing/landing.featured')">
+                        {{ __('landing/landing.featured') }}
                     </span>
-                    <h3 class="font-serif text-4xl mb-3 group-hover:text-white-200 transition-colors">
-                        Coastal Journey
+                    <h3 class="font-serif text-4xl mb-3 group-hover:text-white-200 transition-colors"
+                        x-text="$store.i18n.t('landing/landing.coastal_journey_title')">
+                        {{ __('landing/landing.coastal_journey_title') }}
                     </h3>
-                    <p class="font-serif text-xs text-gray-200 mb-3 line-clamp-3">
-                        Embark on a journey where the horizon has no end. From the pristine coastlines to the lush
-                        countryside, travel in Cambodia is more than just sightseeing...
+                    <p class="font-serif text-xs text-gray-200 mb-3 line-clamp-3"
+                        x-text="$store.i18n.t('landing/landing.coastal_journey_desc')">
+                        {{ __('landing/landing.coastal_journey_desc') }}
                     </p>
                 </div>
             </div>
@@ -96,19 +103,24 @@
                 <div class="relative group h-[240px] rounded-3xl overflow-hidden shadow-xl cursor-pointer"
                     data-aos="fade-left" data-aos-delay="100" data-aos-once="true">
 
-                    <img src="/storage/container-images/independence-monument.jpg"
+                    <img src="{{ asset('storage/container-images/independence-monument.jpg') }}"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 will-change-transform"
                         alt="Independent Monument">
                     <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
 
                     <div
                         class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <h3 class="font-serif text-2xl group-hover:text-white-200 transition-colors">Life Style</h3>
-                        <p class="font-serif text-xs text-gray-200 mb-2 line-clamp-2">
-                            Immerse yourself in the rhythm of the Kingdom. Where ancient traditions meet modern energy.
+                        <h3 class="font-serif text-2xl group-hover:text-white-200 transition-colors"
+                            x-text="$store.i18n.t('landing/landing.lifestyle_title')">
+                            {{ __('landing/landing.lifestyle_title') }}
+                        </h3>
+                        <p class="font-serif text-xs text-gray-200 mb-2 line-clamp-2"
+                            x-text="$store.i18n.t('landing/landing.lifestyle_desc')">
+                            {{ __('landing/landing.lifestyle_desc') }}
                         </p>
-                        <p class="text-xs text-white-200 mt-1 opacity-90 group-hover:opacity-100 font-semibold">
-                            Ancient traditions
+                        <p class="text-xs text-white-200 mt-1 opacity-90 group-hover:opacity-100 font-semibold"
+                            x-text="$store.i18n.t('landing/landing.ancient_traditions')">
+                            {{ __('landing/landing.ancient_traditions') }}
                         </p>
                     </div>
                 </div>
@@ -117,19 +129,24 @@
                 <div class="relative group h-[240px] rounded-3xl overflow-hidden shadow-xl cursor-pointer"
                     data-aos="fade-left" data-aos-delay="200" data-aos-once="true">
 
-                    <img src="/storage/container-images/phnom-penh-royal-palace.jpg"
+                    <img src="{{ asset('storage/container-images/phnom-penh-royal-palace.jpg') }}"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 will-change-transform"
                         alt="Royal Palace">
                     <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
 
                     <div
                         class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                        <h3 class="font-serif text-2xl group-hover:text-white-200 transition-colors">Nation Soul</h3>
-                        <p class="font-serif text-xs text-gray-200 mb-2 line-clamp-2">
-                            The Royal Palace stands as the nation’s soul, symbolizing Cambodia’s monarchy.
+                        <h3 class="font-serif text-2xl group-hover:text-white-200 transition-colors"
+                            x-text="$store.i18n.t('landing/landing.nation_soul_title')">
+                            {{ __('landing/landing.nation_soul_title') }}
+                        </h3>
+                        <p class="font-serif text-xs text-gray-200 mb-2 line-clamp-2"
+                            x-text="$store.i18n.t('landing/landing.nation_soul_desc')">
+                            {{ __('landing/landing.nation_soul_desc') }}
                         </p>
-                        <p class="text-xs text-white-200 mt-1 opacity-90 group-hover:opacity-100 font-semibold">
-                            Royal Palace
+                        <p class="text-xs text-white-200 mt-1 opacity-90 group-hover:opacity-100 font-semibold"
+                            x-text="$store.i18n.t('landing/landing.royal_palace')">
+                            {{ __('landing/landing.royal_palace') }}
                         </p>
                     </div>
                 </div>
@@ -141,14 +158,16 @@
     <section id="about" class="py-16 bg-transparent overflow-hidden">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-duration="1000">
-                <span class="text-white-500 font-bold tracking-widest text-sm uppercase mb-3 block">Who we are</span>
-                <h2 class="font-serif text-4xl md:text-5xl text-gray-900 leading-tight mb-6">Authentic Cambodian <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Adventures</span>
+                <span class="text-white-500 font-bold tracking-widest text-sm uppercase mb-3 block"
+                    x-text="$store.i18n.t('landing/landing.who_we_are')">{{ __('landing/landing.who_we_are') }}</span>
+                <h2 class="font-serif text-4xl md:text-5xl text-gray-900 leading-tight mb-6">
+                    <span x-text="$store.i18n.t('landing/landing.authentic_cambodian')">{{ __('landing/landing.authentic_cambodian') }}</span>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500"
+                        x-text="$store.i18n.t('landing/landing.adventures')">{{ __('landing/landing.adventures') }}</span>
                 </h2>
-                <p class="text-gray-600 leading-relaxed text-lg">
-                    <span class="font-bold text-gray-900"><i class="font-serif">Tesachor</i></span> is your ultimate
-                    guide to discovering the true beauty of Cambodia. From ancient temples to peaceful villages, explore
-                    Khmer nature, culture, and history in one place.
+                <p class="text-gray-600 leading-relaxed text-lg"
+                    x-html="$store.i18n.t('landing/landing.about_desc')">
+                    {!! __('landing/landing.about_desc') !!}
                 </p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
@@ -162,9 +181,10 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-xl text-gray-900 mb-3">Explore Anywhere</h3>
-                    <p class="text-gray-600 text-sm">Discover hidden gems and popular destinations across all 25
-                        provinces.</p>
+                    <h3 class="font-bold text-xl text-gray-900 mb-3"
+                        x-text="$store.i18n.t('landing/landing.explore_anywhere_title')">{{ __('landing/landing.explore_anywhere_title') }}</h3>
+                    <p class="text-gray-600 text-sm"
+                        x-text="$store.i18n.t('landing/landing.explore_anywhere_desc')">{{ __('landing/landing.explore_anywhere_desc') }}</p>
                 </div>
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center"
                     data-aos="fade-up" data-aos-delay="200">
@@ -176,9 +196,10 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-xl text-gray-900 mb-3">Rich Culture</h3>
-                    <p class="text-gray-600 text-sm">Immerse yourself in authentic traditions, delicious cuisine, and
-                        local life.</p>
+                    <h3 class="font-bold text-xl text-gray-900 mb-3"
+                        x-text="$store.i18n.t('landing/landing.rich_culture_title')">{{ __('landing/landing.rich_culture_title') }}</h3>
+                    <p class="text-gray-600 text-sm"
+                        x-text="$store.i18n.t('landing/landing.rich_culture_desc')">{{ __('landing/landing.rich_culture_desc') }}</p>
                 </div>
                 <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center"
                     data-aos="fade-up" data-aos-delay="300">
@@ -190,9 +211,10 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-xl text-gray-900 mb-3">Unforgettable</h3>
-                    <p class="text-gray-600 text-sm">Create lasting memories with your friends and family in the
-                        Kingdom of Wonder.</p>
+                    <h3 class="font-bold text-xl text-gray-900 mb-3"
+                        x-text="$store.i18n.t('landing/landing.unforgettable_title')">{{ __('landing/landing.unforgettable_title') }}</h3>
+                    <p class="text-gray-600 text-sm"
+                        x-text="$store.i18n.t('landing/landing.unforgettable_desc')">{{ __('landing/landing.unforgettable_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -201,7 +223,8 @@
     {{-- 4. RECOMMENDED TRAVEL --}}
     <section id="travel" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 mb-16 text-center">
-            <h2 class="font-serif text-4xl md:text-5xl text-gray-900" data-aos="fade-up">Recommended for You</h2>
+            <h2 class="font-serif text-4xl md:text-5xl text-gray-900" data-aos="fade-up"
+                x-text="$store.i18n.t('landing/landing.recommended_title')">{{ __('landing/landing.recommended_title') }}</h2>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -219,15 +242,17 @@
                         <p class="text-l text-black mb-3 line-clamp-2">{{ $tour->short_description }}</p>
 
                         <a href="{{ route('public.destinations.show', $tour->slug) }}"
-                            class="inline-flex items-center text-sm font-bold uppercase tracking-wider text-gray-900 hover:text-white-600 transition-colors">
-                            Read More
+                            class="inline-flex items-center text-sm font-bold uppercase tracking-wider text-gray-900 hover:text-white-600 transition-colors"
+                            x-text="$store.i18n.t('landing/landing.read_more')">
+                            {{ __('landing/landing.read_more') }}
                         </a>
                     </div>
                 </div>
             @empty
                 <div class="col-span-full text-center py-12">
                     <div class="bg-white rounded-2xl p-8 shadow-sm border border-dashed border-gray-300">
-                        <p class="text-gray-500 italic mb-5">No recommended places found yet.</p>
+                        <p class="text-gray-500 italic mb-5"
+                            x-text="$store.i18n.t('landing/landing.no_recommended')">{{ __('landing/landing.no_recommended') }}</p>
                     </div>
                 </div>
             @endforelse
@@ -241,8 +266,10 @@
                 class="flex flex-col md:flex-row justify-between items-end md:items-center text-center md:text-left gap-4 py-4">
                 <div class="w-full md:w-auto">
                     <span class="text-white-500 font-bold tracking-widest text-sm capitalize mb-2 block"
-                        data-aos="fade-down">Explore</span>
-                    <h2 class="font-serif text-4xl italic text-gray-800" data-aos="fade-up">Provinces & Cities</h2>
+                        data-aos="fade-down"
+                        x-text="$store.i18n.t('landing/landing.explore_badge')">{{ __('landing/landing.explore_badge') }}</span>
+                    <h2 class="font-serif text-4xl italic text-gray-800" data-aos="fade-up"
+                        x-text="$store.i18n.t('landing/landing.provinces_cities_title')">{{ __('landing/landing.provinces_cities_title') }}</h2>
                 </div>
 
                 <div data-aos="fade-left" class="flex flex-wrap justify-center gap-3">
@@ -250,7 +277,7 @@
                     <a href="{{ route('public.provinces.index') }}"
                         class="inline-flex items-center px-6 py-3 bg-white text-gray-900 border border-gray-200 rounded-full hover:bg-gray-50 hover:text-white-600 transition shadow-md text-sm font-bold uppercase tracking-wider">
                         <i class="fa-solid fa-list-ul mr-2"></i>
-                        See Provinces/City List
+                        <span x-text="$store.i18n.t('landing/landing.see_provinces_list')">{{ __('landing/landing.see_provinces_list') }}</span>
                     </a>
                 </div>
             </div>
@@ -283,7 +310,8 @@
                 @empty
                     <div
                         class="col-span-full text-center py-16 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-300">
-                        <p class="text-gray-500 mb-4">No provinces added yet.</p>
+                        <p class="text-gray-500 mb-4"
+                            x-text="$store.i18n.t('landing/landing.no_provinces')">{{ __('landing/landing.no_provinces') }}</p>
                     </div>
                 @endforelse
             </div>
@@ -292,7 +320,8 @@
     {{-- 6. Discover Cambodia --}}
     <section id="lifestyle" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 text-center mb-16">
-            <h2 class="font-serif text-4xl italic text-gray-800">Discover Cambodia</h2>
+            <h2 class="font-serif text-4xl italic text-gray-800"
+                x-text="$store.i18n.t('landing/landing.discover_cambodia_title')">{{ __('landing/landing.discover_cambodia_title') }}</h2>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -320,8 +349,10 @@
 
                 <!-- text below -->
                 <div class="p-6 bg-white">
-                    <h4 class="font-serif text-2xl mb-2">Food & Drink</h4>
-                    <p class="text-black">Taste the flavor of Khmer cuisine.</p>
+                    <h4 class="font-serif text-2xl mb-2"
+                        x-text="$store.i18n.t('landing/landing.food_drink_title')">{{ __('landing/landing.food_drink_title') }}</h4>
+                    <p class="text-black"
+                        x-text="$store.i18n.t('landing/landing.food_drink_desc')">{{ __('landing/landing.food_drink_desc') }}</p>
                 </div>
 
             </div>
@@ -348,9 +379,10 @@
 
                 <!-- text below -->
                 <div class="p-6 bg-white">
-                    <h4 class="font-serif text-2xl mb-2 text-gray-900">Local Life</h4>
-                    <p class="text-black">Meet the friendly people everywhere that always bring smiling face for you.
-                    </p>
+                    <h4 class="font-serif text-2xl mb-2 text-gray-900"
+                        x-text="$store.i18n.t('landing/landing.local_life_title')">{{ __('landing/landing.local_life_title') }}</h4>
+                    <p class="text-black"
+                        x-text="$store.i18n.t('landing/landing.local_life_desc')">{{ __('landing/landing.local_life_desc') }}</p>
                 </div>
 
             </div>
@@ -377,8 +409,10 @@
 
                 <!-- text below -->
                 <div class="p-6 bg-white">
-                    <h4 class="font-serif text-2xl mb-2 text-gray-900">Culture</h4>
-                    <p class="text-gray-600">Experience the warm culture of wonder land.</p>
+                    <h4 class="font-serif text-2xl mb-2 text-gray-900"
+                        x-text="$store.i18n.t('landing/landing.culture_title')">{{ __('landing/landing.culture_title') }}</h4>
+                    <p class="text-gray-600"
+                        x-text="$store.i18n.t('landing/landing.culture_desc')">{{ __('landing/landing.culture_desc') }}</p>
                 </div>
 
             </div>
@@ -388,7 +422,8 @@
     <section class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
-                <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mb-4">Good to Know</h2>
+                <h2 class="font-serif text-3xl md:text-4xl text-gray-900 mb-4"
+                    x-text="$store.i18n.t('landing/landing.good_to_know_title')">{{ __('landing/landing.good_to_know_title') }}</h2>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -402,8 +437,10 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Currency</h3>
-                    <p class="text-sm text-gray-500">Riel (៛) & USD ($) are accepted everywhere.</p>
+                    <h3 class="font-bold text-lg mb-2"
+                        x-text="$store.i18n.t('landing/landing.currency_title')">{{ __('landing/landing.currency_title') }}</h3>
+                    <p class="text-sm text-gray-500"
+                        x-text="$store.i18n.t('landing/landing.currency_desc')">{{ __('landing/landing.currency_desc') }}</p>
                 </div>
 
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="100">
@@ -415,8 +452,10 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Best Time</h3>
-                    <p class="text-sm text-gray-500">Nov - Feb is cool and dry. Perfect for temples.</p>
+                    <h3 class="font-bold text-lg mb-2"
+                        x-text="$store.i18n.t('landing/landing.best_time_title')">{{ __('landing/landing.best_time_title') }}</h3>
+                    <p class="text-sm text-gray-500"
+                        x-text="$store.i18n.t('landing/landing.best_time_desc')">{{ __('landing/landing.best_time_desc') }}</p>
                 </div>
 
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="200">
@@ -428,8 +467,10 @@
                             </path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Visa</h3>
-                    <p class="text-sm text-gray-500">Visa on Arrival available at all major airports.</p>
+                    <h3 class="font-bold text-lg mb-2"
+                        x-text="$store.i18n.t('landing/landing.visa_title')">{{ __('landing/landing.visa_title') }}</h3>
+                    <p class="text-sm text-gray-500"
+                        x-text="$store.i18n.t('landing/landing.visa_desc')">{{ __('landing/landing.visa_desc') }}</p>
                 </div>
 
                 <div class="text-center group p-6" data-aos="zoom-in" data-aos-delay="300">
@@ -440,8 +481,10 @@
                                 d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                         </svg>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Transport</h3>
-                    <p class="text-sm text-gray-500">Use PassApp or Grab for easy TukTuk rides.</p>
+                    <h3 class="font-bold text-lg mb-2"
+                        x-text="$store.i18n.t('landing/landing.transport_title')">{{ __('landing/landing.transport_title') }}</h3>
+                    <p class="text-sm text-gray-500"
+                        x-text="$store.i18n.t('landing/landing.transport_desc')">{{ __('landing/landing.transport_desc') }}</p>
                 </div>
             </div>
         </div>
