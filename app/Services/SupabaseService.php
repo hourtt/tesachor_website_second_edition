@@ -26,9 +26,9 @@ class SupabaseService
     /**
      * Upload a single image to Supabase Storage and return its public URL.
      *
-     * @param  UploadedFile  $file        The uploaded file.
-     * @param  string        $folder      Storage folder/path prefix (e.g. 'provinces').
-     * @return string                     The stored path (local) or public URL (Supabase).
+     * @param  UploadedFile  $file  The uploaded file.
+     * @param  string  $folder  Storage folder/path prefix (e.g. 'provinces').
+     * @return string The stored path (local) or public URL (Supabase).
      *
      * TODO(SUPABASE): Replace body with:
      *   $path = $folder . '/' . Str::uuid() . '.' . $file->getClientOriginalExtension();
@@ -59,7 +59,7 @@ class SupabaseService
      * Get the public URL for a stored image.
      *
      * @param  string  $path  The stored path.
-     * @return string         The public URL.
+     * @return string The public URL.
      *
      * TODO(SUPABASE): Replace body with:
      *   return config('supabase.storage_public_url') . '/object/public/' . config('supabase.bucket') . '/' . $path;
@@ -72,9 +72,9 @@ class SupabaseService
     /**
      * Synchronize a user's role and active status to Supabase Auth.
      *
-     * @param  int|string  $userId    The local user ID.
-     * @param  bool        $isActive  Whether the user is active.
-     * @param  string      $role      The user's role name.
+     * @param  int|string  $userId  The local user ID.
+     * @param  bool  $isActive  Whether the user is active.
+     * @param  string  $role  The user's role name.
      *
      * TODO(SUPABASE): Replace body with a call to Supabase Admin API:
      *   POST /auth/v1/admin/users/{userId}
@@ -89,9 +89,7 @@ class SupabaseService
     /**
      * Create a new Supabase Auth user (called on registration).
      *
-     * @param  string  $email
-     * @param  string  $password
-     * @return array|null  The Supabase user object or null on failure.
+     * @return array|null The Supabase user object or null on failure.
      *
      * TODO(SUPABASE): Replace with:
      *   POST /auth/v1/admin/users  { email, password, email_confirm: true }

@@ -6,7 +6,6 @@ use App\Models\User;
 
 class ProfileService
 {
-   
     public function update(User $user, array $data): User
     {
         $user->fill($data);
@@ -16,9 +15,12 @@ class ProfileService
         }
 
         $user->save();
+
         return $user;
     }
-    public function delete(User $user){
-          $user->delete();
+
+    public function delete(User $user)
+    {
+        $user->delete();
     }
 }

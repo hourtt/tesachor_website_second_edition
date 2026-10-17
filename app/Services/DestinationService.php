@@ -3,9 +3,9 @@
 namespace App\Services;
 
 use App\Models\Destination;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DestinationService
 {
@@ -41,7 +41,7 @@ class DestinationService
         }
 
         if (! empty($data['highlights'])) {
-            $data['highlights'] = array_values(array_filter($data['highlights'], fn($value) => ! is_null($value) && $value !== ''));
+            $data['highlights'] = array_values(array_filter($data['highlights'], fn ($value) => ! is_null($value) && $value !== ''));
         }
 
         $data['slug'] = Str::slug($data['place_name']);
@@ -74,7 +74,7 @@ class DestinationService
         }
 
         if (isset($data['highlights'])) {
-            $data['highlights'] = array_values(array_filter($data['highlights'], fn($value) => ! is_null($value) && $value !== ''));
+            $data['highlights'] = array_values(array_filter($data['highlights'], fn ($value) => ! is_null($value) && $value !== ''));
         }
 
         if ($destination->place_name !== $data['place_name']) {
@@ -82,6 +82,7 @@ class DestinationService
         }
 
         $destination->update($data);
+
         return $destination;
     }
 

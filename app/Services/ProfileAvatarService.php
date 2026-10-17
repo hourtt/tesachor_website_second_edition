@@ -4,26 +4,25 @@ namespace App\Services;
 
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
-use RuntimeException;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 
 class ProfileAvatarService
 {
-
     // : User is PHP return type that allow you to specify the exact data type a function or class method must return
 
     // if we define : User the function must return a User object or it will throw an error
 
-    //Request (Illuminate\Http\Request) represents the whole web request: form fields, headers, session, authenticated user, and uploaded files.
+    // Request (Illuminate\Http\Request) represents the whole web request: form fields, headers, session, authenticated user, and uploaded files.
 
-    //UploadedFile (Illuminate\Http\UploadedFile) represents one uploaded file. In your controller, $request->file('avatar') gives you that file (or null if none was uploaded).
+    // UploadedFile (Illuminate\Http\UploadedFile) represents one uploaded file. In your controller, $request->file('avatar') gives you that file (or null if none was uploaded).
     public function updateAvatar(User $user, UploadedFile $avatar): User
     {
         $disk = Storage::disk('supabase_avatar');
         $oldPath = $user->avatar_path;
         $newPath = $disk->putFile("avatars/{$user->id}", $avatar);
 
-        if (!$newPath) {
+        if (! $newPath) {
             throw new RuntimeException('Failed to upload the avatar');
         }
 
@@ -34,6 +33,7 @@ class ProfileAvatarService
         if ($oldPath && $oldPath !== $newPath) {
             $disk->delete($oldPath);
         }
+
         return $user;
     }
 
@@ -43,7 +43,7 @@ class ProfileAvatarService
         $disk = Storage::disk('supabase_avatar');
 
         // if no path in db, nothing to delete
-        if (!$oldPath) {
+        if (! $oldPath) {
             return;
         }
 
