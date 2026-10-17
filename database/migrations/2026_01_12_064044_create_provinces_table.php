@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('name_in_khmer');
-            $table->string('slug')->unique(); //* For URL: tesachor.com/siem-reap
+            $table->string('slug')->unique(); // * For URL: tesachor.com/siem-reap
             $table->string('thumbnail')->nullable();
             $table->timestamps();
         });
