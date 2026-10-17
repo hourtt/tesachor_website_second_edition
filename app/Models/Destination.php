@@ -22,11 +22,12 @@ class Destination extends Model
         'highlights',
         'gallery_images',
     ];
-    //* $casts automatically converts model attributes to specific PHP data types
+
+    // * $casts automatically converts model attributes to specific PHP data types
     protected $casts = [
         'highlights' => 'array',
         'gallery_images' => 'array',
-        'is_recommended' => 'boolean'
+        'is_recommended' => 'boolean',
 
     ];
 

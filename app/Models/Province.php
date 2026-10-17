@@ -14,7 +14,7 @@ class Province extends Model
         'thumbnail',
     ];
 
-    //* set the name as plural because one province has many places to visit
+    // * set the name as plural because one province has many places to visit
     public function destinations()
     {
         return $this->hasMany(Destination::class);
