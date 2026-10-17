@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DestinationController as AdminDestination;
 // * New Admin Controllers
@@ -14,6 +15,19 @@ use App\Http\Controllers\Public\ProvinceController as PublicProvince;
 // * Auth Controllers
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+// LOCALE SWITCH ROUTE
+Route::get('/lang/{locale}', function (Request $request, string $locale) {
+    if (in_array($locale, ['en', 'km'])) {
+        session(['locale' => $locale]);
+    }
+
+    if ($request->ajax() || $request->wantsJson()) {
+        return response()->json(['status' => 'success', 'locale' => $locale]);
+    }
+
+    return redirect()->back(fallback: route('public.landing'));
+})->name('locale.switch');
 
 // SHARED PUBLIC ROUTES (Accessible to both Guests and Authenticated Users)
 Route::name('public.')->group(function () {
