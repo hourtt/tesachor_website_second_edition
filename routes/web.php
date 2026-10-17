@@ -1,23 +1,19 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-
-//* New Admin Controllers
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
-use App\Http\Controllers\Admin\ProvinceController as AdminProvince;
 use App\Http\Controllers\Admin\DestinationController as AdminDestination;
+// * New Admin Controllers
+use App\Http\Controllers\Admin\ProvinceController as AdminProvince;
 use App\Http\Controllers\Admin\UserController as AdminUser;
-
-//* Shared Public Controllers
-use App\Http\Controllers\Public\LandingController;
-use App\Http\Controllers\Public\DestinationController as PublicDestination;
-use App\Http\Controllers\Public\ProvinceController as PublicProvince;
-
-//* Auth Controllers
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\ProfileAvatarController;
-
+// * Shared Public Controllers
+use App\Http\Controllers\Public\DestinationController as PublicDestination;
+use App\Http\Controllers\Public\LandingController;
+use App\Http\Controllers\Public\ProvinceController as PublicProvince;
+// * Auth Controllers
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 // SHARED PUBLIC ROUTES (Accessible to both Guests and Authenticated Users)
 Route::name('public.')->group(function () {
@@ -54,4 +50,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile/avatar', [ProfileAvatarController::class, 'destroy'])->name('profile.avatar.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

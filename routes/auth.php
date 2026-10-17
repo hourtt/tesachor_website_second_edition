@@ -7,10 +7,10 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Auth\ProfileController;
 
 Route::middleware('guest')->group(function () {
 
@@ -33,7 +33,7 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
-Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function () { 
+Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function () {
     // Note: 'auth' middleware usually defaults to 'web' guard. We might need handling for 'auth:web,admins' or similar in global middleware or explicitly here if routes are shared.
     // However, for typical Laravel setup, we might need separate groups or a unified middleware if we want generic access.
     // Given "Unified Auth System", we try to rely on the controller logic finding the user from request, but middleware filters access.
@@ -68,6 +68,3 @@ Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function (
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
-
