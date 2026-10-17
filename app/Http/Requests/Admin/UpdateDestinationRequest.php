@@ -14,19 +14,19 @@ class UpdateDestinationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'province_id'       => 'required|exists:provinces,id',
-            'place_name'        => 'required|string|max:255',
+            'province_id' => 'required|exists:provinces,id',
+            'place_name' => 'required|string|max:255',
             'short_description' => 'required|string|max:500',
-            'thumbnail'         => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
-            'rating'            => 'nullable|numeric|min:0|max:5',
-            'is_recommended'    => 'boolean',
+            'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
+            'rating' => 'nullable|numeric|min:0|max:5',
+            'is_recommended' => 'boolean',
             'place_description' => 'required|string',
-            'place_history'     => 'nullable|string',
+            'place_history' => 'nullable|string',
             'place_information' => 'nullable|string',
-            'highlights'        => 'nullable|array',
-            'highlights.*'      => 'string|max:255',
-            'gallery_images'    => 'nullable|array|max:10',
-            'gallery_images.*'  => 'image|mimes:jpeg,png,jpg,gif,webp|max:10240',
+            'highlights' => 'nullable|array',
+            'highlights.*' => 'string|max:255',
+            'gallery_images' => 'nullable|array|max:10',
+            'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:10240',
         ];
     }
 
@@ -40,9 +40,9 @@ class UpdateDestinationRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'thumbnail.max'            => 'The cover image must not exceed 10 MB.',
-            'gallery_images.max'       => 'You may upload up to 10 gallery images.',
-            'gallery_images.*.max'     => 'Each gallery image must not exceed 10 MB.',
+            'thumbnail.max' => 'The cover image must not exceed 10 MB.',
+            'gallery_images.max' => 'You may upload up to 10 gallery images.',
+            'gallery_images.*.max' => 'Each gallery image must not exceed 10 MB.',
             'place_description.required' => 'A full description is required.',
         ];
     }
