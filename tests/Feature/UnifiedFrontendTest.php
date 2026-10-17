@@ -14,8 +14,11 @@ class UnifiedFrontendTest extends TestCase
     use RefreshDatabase;
 
     protected Province $province;
+
     protected Destination $destination;
+
     protected User $user;
+
     protected User $admin;
 
     protected function setUp(): void
