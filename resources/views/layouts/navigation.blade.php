@@ -1,24 +1,26 @@
 @php
+    use App\Models\User;
+
     // 1. Initialize variables
-    $user = null;
     $dashboard = 'users.login';
     $profile = 'profile.edit';
     $logout = 'logout';
+    $user = Auth::user();
+    $auth = Auth::check();
 
-    // 2. Check for Admin first
-    if (Auth::check() && Auth::user()->hasRole('admin')) {
-        $user = Auth::user();
+    // 2. Check for Admin first (It checks that $user is a User model and has the admin role before continuing.)
+    if ($auth && $user instanceof User && $user->hasRole('admin')) {
         $dashboard = 'admins.dashboard';
         $profile = 'admins.profile.edit';
         $logout = 'logout';
     }
-    // 3. Check for Regular User second
-    elseif (Auth::check()) {
-        $user = Auth::user();
+    // 3. Check for Regular User second (It checks that $user is a User model before continuing.)
+    elseif ($auth && $user instanceof User) {
         $dashboard = 'public.landing';
         $profile = 'profile.edit';
         $logout = 'logout';
     }
+
     $isProfilePage = request()->routeIs('*.profile.*', 'profile.*');
 
     $navItems = [
@@ -28,6 +30,7 @@
         ['id' => 'provinces', 'label' => __('navbar.provinces')],
         ['id' => 'lifestyle', 'label' => __('navbar.lifestyle')],
     ];
+
     $navTranslations = [
         'en' => [
             'navbar' => trans('navbar', [], 'en'),
@@ -40,12 +43,14 @@
             'landing/landing' => trans('landing/landing', [], 'km'),
         ],
     ];
+
     foreach (['en', 'km'] as $loc) {
         $landingArr = trans('landing/landing', [], $loc);
         if (is_array($landingArr)) {
             $navTranslations[$loc] += $landingArr;
         }
     }
+
 @endphp
 
 <script>
@@ -73,10 +78,12 @@
             observer.observe(section);
         });
     }
-}" @scroll.window="scrolled = (window.pageYOffset > 20)" :class="{
+}" @scroll.window="scrolled = (window.pageYOffset > 20)"
+    :class="{
         'bg-white/90 backdrop-blur-md shadow-sm': scrolled || forceSolid,
         'bg-transparent text-white': !(scrolled || forceSolid)
-    }" class="fixed w-full z-50 transition-all duration-300 top-0 left-0">
+    }"
+    class="fixed w-full z-50 transition-all duration-300 top-0 left-0">
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -86,7 +93,7 @@
                     @php
                         // Determine the logo link based on authentication status
                         $logoRoute = 'public.landing'; // Default for visitors & regular users
-                        if (Auth::check() && Auth::user()->hasRole('admin')) {
+                        if ($user instanceof User && $user->hasRole('admin')) {
                             $logoRoute = 'admins.dashboard';
                         }
                     @endphp
@@ -101,8 +108,9 @@
             <div class="hidden sm:flex space-x-8 items-center">
                 @foreach ($navItems as $navItem)
                     <a href="#{{ $navItem['id'] }}" @click="activeSection = '{{ $navItem['id'] }}'"
-                        class="text-sm transition-colors duration-200 relative group" :class="activeSection == '{{ $navItem['id'] }}' ? 'text-blue-500' : ((scrolled || forceSolid) ?
-                                'text-gray-900' : 'text-gray-100')">
+                        class="text-sm transition-colors duration-200 relative group"
+                        :class="activeSection == '{{ $navItem['id'] }}' ? 'text-blue-500' : ((scrolled || forceSolid) ?
+                            'text-gray-900' : 'text-gray-100')">
                         <span x-text="$store.i18n.t('navbar.{{ $navItem['id'] }}')">{{ $navItem['label'] }}</span>
                         <span
                             class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"
@@ -113,14 +121,16 @@
 
             {{-- *Right Side (Desktop)* --}}
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-4">
-                @unless(Auth::check() && Auth::user()->hasRole('admin'))
+                @unless ($auth && $user instanceof User && $user->hasRole('admin'))
                     {{-- Language Switcher (Desktop) --}}
                     <div class="inline-flex items-center p-1 rounded-xl transition-all duration-300"
-                        :class="(scrolled || forceSolid) ? 'bg-gray-100 text-gray-700 border border-gray-200/60' : 'bg-white/15 backdrop-blur-md text-white border border-white/20'">
+                        :class="(scrolled || forceSolid) ? 'bg-gray-100 text-gray-700 border border-gray-200/60' :
+                        'bg-white/15 backdrop-blur-md text-white border border-white/20'">
                         {{-- Left Icon --}}
                         <span class="px-2 py-1 flex items-center opacity-80"
                             :class="(scrolled || forceSolid) ? 'text-gray-500' : 'text-white'">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <path d="m5 8 6 6" />
                                 <path d="m4 14 6-6 2-3" />
                                 <path d="M2 5h12" />
@@ -131,23 +141,23 @@
                         </span>
 
                         {{-- EN Option --}}
-                        <button type="button"
-                            @click="$store.i18n.switchLang('en')"
+                        <button type="button" @click="$store.i18n.switchLang('en')"
                             class="px-2.5 py-1 text-xs rounded-md transition-all duration-300 ease-out cursor-pointer select-none"
-                            :class="$store.i18n.activeButton === 'en'
-                                ? 'bg-white text-gray-900 shadow-sm font-semibold'
-                                : ((scrolled || forceSolid) ? 'text-gray-500 hover:text-gray-900 font-medium' : 'text-white/80 hover:text-white font-medium')">
-                            EN
+                            :class="$store.i18n.activeButton === 'en' ?
+                                'bg-white text-gray-900 shadow-sm font-semibold' :
+                                ((scrolled || forceSolid) ? 'text-gray-500 hover:text-gray-900 font-medium' :
+                                    'text-white/80 hover:text-white font-medium')">
+                            En
                         </button>
 
                         {{-- KM Option --}}
-                        <button type="button"
-                            @click="$store.i18n.switchLang('km')"
+                        <button type="button" @click="$store.i18n.switchLang('km')"
                             class="px-2.5 py-1 text-xs rounded-md transition-all duration-300 ease-out cursor-pointer select-none"
-                            :class="$store.i18n.activeButton === 'km'
-                                ? 'bg-white text-gray-900 shadow-sm font-semibold'
-                                : ((scrolled || forceSolid) ? 'text-gray-500 hover:text-gray-900 font-medium' : 'text-white/80 hover:text-white font-medium')">
-                            KM
+                            :class="$store.i18n.activeButton === 'km' ?
+                                'bg-white text-gray-900 shadow-sm font-semibold' :
+                                ((scrolled || forceSolid) ? 'text-gray-500 hover:text-gray-900 font-medium' :
+                                    'text-white/80 hover:text-white font-medium')">
+                            Km
                         </button>
                     </div>
                 @endunless
@@ -159,9 +169,11 @@
                                 class="inline-flex items-center gap-2 px-3 py-1.5 text-sm leading-4 hover:text-blue-500 focus:outline-none transition ease-in-out duration-150"
                                 :class="{ 'text-gray-600': scrolled || forceSolid, 'text-gray-100': !(scrolled || forceSolid) }">
                                 @if ($user->avatar_url)
-                                    <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-7 h-7 rounded-full object-cover border border-gray-200">
+                                    <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
+                                        class="w-7 h-7 rounded-full object-cover border border-gray-200">
                                 @else
-                                    <span class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">
+                                    <span
+                                        class="w-7 h-7 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">
                                         {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </span>
                                 @endif
@@ -246,21 +258,23 @@
                 <a href="#{{ $navItem['id'] }}" @click="open = false"
                     class="block w-full ps-3 pe-4 py-2 border-l-4 text-start text-base transition duration-150 ease-in-out"
                     :class="activeSection === '{{ $navItem['id'] }}'
-                            ?
-                            'border-blue-500 text-blue-700 bg-blue-50' :
-                            'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'">
+                        ?
+                        'border-blue-500 text-blue-700 bg-blue-50' :
+                        'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300'">
                     <span x-text="$store.i18n.t('navbar.{{ $navItem['id'] }}')">{{ $navItem['label'] }}</span>
                 </a>
             @endforeach
         </div>
 
-        @unless(Auth::check() && Auth::user()->hasRole('admin'))
+        @unless ($auth && $user instanceof User && $user->hasRole('admin'))
             {{-- Language Switcher (Mobile) --}}
             <div class="border-t border-gray-100 px-4 py-3 flex items-center justify-between">
-                <span class="text-sm font-medium text-gray-600" x-text="$store.i18n.t('navbar.language')">{{ __('navbar.language') }}</span>
+                <span class="text-sm font-medium text-gray-600"
+                    x-text="$store.i18n.t('navbar.language')">{{ __('navbar.language') }}</span>
                 <div class="inline-flex items-center p-1 rounded-xl bg-gray-100 text-gray-700 border border-gray-200/60">
                     <span class="px-2 py-1 flex items-center text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m5 8 6 6" />
                             <path d="m4 14 6-6 2-3" />
                             <path d="M2 5h12" />
@@ -269,16 +283,16 @@
                             <path d="M14 18h6" />
                         </svg>
                     </span>
-                    <button type="button"
-                        @click="$store.i18n.switchLang('en')"
+                    <button type="button" @click="$store.i18n.switchLang('en')"
                         class="px-2.5 py-1 text-xs rounded-md transition-all duration-300 ease-out cursor-pointer select-none"
-                        :class="$store.i18n.activeButton === 'en' ? 'bg-white text-gray-900 shadow-sm font-semibold' : 'text-gray-500 hover:text-gray-900 font-medium'">
+                        :class="$store.i18n.activeButton === 'en' ? 'bg-white text-gray-900 shadow-sm font-semibold' :
+                            'text-gray-500 hover:text-gray-900 font-medium'">
                         EN
                     </button>
-                    <button type="button"
-                        @click="$store.i18n.switchLang('km')"
+                    <button type="button" @click="$store.i18n.switchLang('km')"
                         class="px-2.5 py-1 text-xs rounded-md transition-all duration-300 ease-out cursor-pointer select-none"
-                        :class="$store.i18n.activeButton === 'km' ? 'bg-white text-gray-900 shadow-sm font-semibold' : 'text-gray-500 hover:text-gray-900 font-medium'">
+                        :class="$store.i18n.activeButton === 'km' ? 'bg-white text-gray-900 shadow-sm font-semibold' :
+                            'text-gray-500 hover:text-gray-900 font-medium'">
                         KM
                     </button>
                 </div>
@@ -290,9 +304,11 @@
             @if ($user)
                 <div class="px-4 py-3 bg-gray-50 flex items-center gap-3 border-b border-gray-100">
                     @if ($user->avatar_url)
-                        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-10 h-10 rounded-full object-cover border border-gray-200 shrink-0">
+                        <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
+                            class="w-10 h-10 rounded-full object-cover border border-gray-200 shrink-0">
                     @else
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 text-sm font-bold flex items-center justify-center shrink-0">
+                        <div
+                            class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 text-sm font-bold flex items-center justify-center shrink-0">
                             {{ strtoupper(substr($user->name, 0, 1)) }}
                         </div>
                     @endif
