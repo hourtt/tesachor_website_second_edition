@@ -9,7 +9,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
@@ -46,9 +45,10 @@ class ProfileController extends Controller
 
         if ($request->routeIs('admins.*')) {
             $redirect = Redirect::route('admins.profile.edit')->with('status', 'profile-updated');
-            if ($request->filled('email') && !$request->filled('name')) {
+            if ($request->filled('email') && ! $request->filled('name')) {
                 $redirect->with('email_updated', true);
             }
+
             return $redirect;
         }
 

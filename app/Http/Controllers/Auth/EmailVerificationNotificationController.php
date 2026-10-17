@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class EmailVerificationNotificationController extends Controller
 {
@@ -18,7 +17,7 @@ class EmailVerificationNotificationController extends Controller
         $user = $request->user($guard);
 
         if ($user->hasVerifiedEmail()) {
-             return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'public.landing', absolute: false));
+            return redirect()->intended(route($guard === 'admins' ? 'admins.dashboard' : 'public.landing', absolute: false));
         }
 
         $user->sendEmailVerificationNotification();

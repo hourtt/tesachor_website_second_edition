@@ -17,6 +17,7 @@ class ProfileAvatarController extends Controller
         ]);
 
         $profileAvatarService->updateAvatar($user, $requestFile);
+
         return back()->with('status', 'avatar-updated');
     }
 

@@ -27,16 +27,17 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate(); // We need to modify the LoginRequest or handle manual auth here
         $request->session()->regenerate();
 
-        //* Admin dashboard
+        // * Admin dashboard
         if (Auth::check() && Auth::user()->hasRole('admin')) {
             return redirect()->intended(route('admins.dashboard'));
         }
 
-        //* User landing
+        // * User landing
         if (Auth::check()) {
-             return redirect()->intended(route('public.landing', absolute: false));
+            return redirect()->intended(route('public.landing', absolute: false));
         }
-        //* Guest landing
+
+        // * Guest landing
         return redirect()->route('public.landing');
     }
 
