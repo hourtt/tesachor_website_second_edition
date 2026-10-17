@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+
 return [
 
     /*
@@ -42,8 +44,6 @@ return [
             'provider' => 'users',
         ],
 
-
-
     ],
 
     /*
@@ -66,9 +66,8 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\User::class),
+            'model' => env('AUTH_MODEL', User::class),
         ],
-
 
         // 'users' => [
         //     'driver' => 'database',
@@ -103,7 +102,7 @@ return [
             'throttle' => 60,
         ],
 
-        //* add admin password reset config 21/Dec 9:57 AM
+        // * add admin password reset config 21/Dec 9:57 AM
         'admins' => [
             'provider' => 'admins',
             'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'admins_password_reset_tokens'),

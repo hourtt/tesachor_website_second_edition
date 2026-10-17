@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Models\Admin;
 use Illuminate\Auth\Notifications\ResetPassword;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
