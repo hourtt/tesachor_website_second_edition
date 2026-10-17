@@ -11,12 +11,12 @@ class PreventBackHistory
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  Closure(Request): (Response)  $next
      */
     public function handle(Request $request, Closure $next): Response
     {
         $response = $next($request);
-        //* After we apply this redirect it will prevent the back history 
+        // * After we apply this redirect it will prevent the back history
         if ($response instanceof Response) {
             $response->headers->set('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
             $response->headers->set('Pragma', 'no-cache');
