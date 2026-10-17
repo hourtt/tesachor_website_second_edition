@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDestinationRequest;
 use App\Http\Requests\Admin\UpdateDestinationRequest;
+use App\Models\Destination;
 use App\Models\Province;
 use App\Services\DestinationService;
+
 // TODO(SUPABASE): inject SupabaseService for image upload/delete/gallery
 // use App\Services\SupabaseService;
 
@@ -19,7 +21,7 @@ class DestinationController extends Controller
 
     public function index()
     {
-        $destinations = \App\Models\Destination::with('province')
+        $destinations = Destination::with('province')
             ->latest()
             ->paginate(15);
 
@@ -28,7 +30,7 @@ class DestinationController extends Controller
 
     public function create()
     {
-        $provinces     = Province::orderBy('name')->get();
+        $provinces = Province::orderBy('name')->get();
         $targetProvince = request()->has('province_id')
             ? Province::find(request()->province_id)
             : null;
@@ -56,13 +58,15 @@ class DestinationController extends Controller
     public function show(string $id)
     {
         $destination = $this->destinationService->getDestinationByIdOrSlug($id);
+
         return view('admin.destinations.show', compact('destination'));
     }
 
     public function edit(string $id)
     {
         $destination = $this->destinationService->getDestinationByIdOrSlug($id);
-        $provinces   = Province::orderBy('name')->get();
+        $provinces = Province::orderBy('name')->get();
+
         return view('admin.destinations.edit', compact('destination', 'provinces'));
     }
 

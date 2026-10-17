@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreProvinceRequest;
 use App\Http\Requests\Admin\UpdateProvinceRequest;
 use App\Services\ProvinceService;
+
 // TODO(SUPABASE): inject SupabaseService here for image upload/delete
 // use App\Services\SupabaseService;
 
@@ -19,6 +20,7 @@ class ProvinceController extends Controller
     public function index()
     {
         $provinces = $this->provinceService->getProvincesPaginated(12);
+
         return view('admin.provinces.index', compact('provinces'));
     }
 
@@ -44,12 +46,14 @@ class ProvinceController extends Controller
     public function show(string $slug)
     {
         $province = $this->provinceService->getProvinceByIdOrSlug($slug);
+
         return view('admin.provinces.show', compact('province'));
     }
 
     public function edit(string $slug)
     {
         $province = $this->provinceService->getProvinceByIdOrSlug($slug);
+
         return view('admin.provinces.edit', compact('province'));
     }
 
@@ -75,7 +79,7 @@ class ProvinceController extends Controller
         $province = $this->provinceService->getProvinceByIdOrSlug($slug);
 
         // TODO(SUPABASE): also call $this->supabase->deleteImage($province->thumbnail)
-        if (!$this->provinceService->deleteProvince($province)) {
+        if (! $this->provinceService->deleteProvince($province)) {
             return redirect()->back()
                 ->with('error', 'Cannot delete province because it has destinations.');
         }

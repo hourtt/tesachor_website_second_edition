@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+
 // TODO(SUPABASE): inject SupabaseService for user sync when role/status changes
 // use App\Services\SupabaseService;
 
@@ -26,6 +27,7 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
+
         return view('admin.users.edit', compact('user', 'roles'));
     }
 
@@ -41,7 +43,7 @@ class UserController extends Controller
         }
 
         $data = $request->validate([
-            'role'      => 'required|string|exists:roles,name',
+            'role' => 'required|string|exists:roles,name',
             'is_active' => 'boolean',
         ]);
 
@@ -56,7 +58,7 @@ class UserController extends Controller
         //   $this->supabase->syncUserStatus($user->id, $isActive, $data['role']);
 
         // If deactivating, invalidate all their sessions immediately
-        if (!$isActive) {
+        if (! $isActive) {
             DB::table('sessions')
                 ->where('user_id', $user->id)
                 ->delete();
