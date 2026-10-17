@@ -18,9 +18,10 @@ class ProfileAvatarService
     // UploadedFile (Illuminate\Http\UploadedFile) represents one uploaded file. In your controller, $request->file('avatar') gives you that file (or null if none was uploaded).
     public function updateAvatar(User $user, UploadedFile $avatar): User
     {
+        $userId = (string) $user->getKey();
         $disk = Storage::disk('supabase_avatar');
         $oldPath = $user->avatar_path;
-        $newPath = $disk->putFile("avatars/{$user->id}", $avatar);
+        $newPath = $disk->putFile("avatars/{$userId}", $avatar);
 
         if (! $newPath) {
             throw new RuntimeException('Failed to upload the avatar');
