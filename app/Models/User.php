@@ -11,7 +11,14 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 
-/** @property string|null $avatar_path */
+
+/** @property string|null $avatar_path
+ *  @property string|null $avatar_url
+ * @property string $name
+ * @property string $email
+ * @property string $password
+ * @property string $is_active
+ */
 
 class User extends Authenticatable
 {
