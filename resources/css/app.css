@@ -141,3 +141,16 @@
 [x-cloak] {
     display: none !important;
 }
+
+/* Smooth Cross-Fade Transition for Language Switching */
+[x-text],
+[x-html] {
+    transition: opacity 160ms ease-in-out, transform 160ms ease-in-out;
+    will-change: opacity, transform;
+}
+
+body.lang-switching [x-text],
+body.lang-switching [x-html] {
+    opacity: 0 !important;
+    transform: translateY(-2px);
+}
