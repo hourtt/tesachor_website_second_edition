@@ -11,6 +11,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 
+/** @property string|null $avatar_path */
+
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
