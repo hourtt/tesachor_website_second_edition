@@ -97,9 +97,9 @@
                             $logoRoute = 'admins.dashboard';
                         }
                     @endphp
-                    <a href="{{ route($logoRoute) }}" class="font-serif text-2xl font-bold tracking-wider"
-                        :class="{ 'text-gray-900': scrolled || forceSolid, 'text-gray-100': !(scrolled || forceSolid) }">
-                        Tesachor
+                    <a href="{{ route($logoRoute) }}" class="flex items-center gap-2.5 group">
+                        <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
+                            class="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-sm">
                     </a>
                 </div>
             </div>

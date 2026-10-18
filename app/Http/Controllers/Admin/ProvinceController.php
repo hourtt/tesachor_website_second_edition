@@ -14,7 +14,7 @@ class ProvinceController extends Controller
 {
     public function __construct(
         protected ProvinceService $provinceService,
-        // TODO(SUPABASE): protected SupabaseService $supabase,
+       
     ) {
     }
 

@@ -29,8 +29,9 @@
                 {{-- Center: Tesachor Logo --}}
                 <div class="absolute inset-x-0 flex items-center justify-center pointer-events-none">
                     <a href="{{ $dashboardRoute }}"
-                        class="pointer-events-auto font-serif text-2xl sm:text-3xl font-bold tracking-wider text-gray-900 hover:text-blue-600 transition-colors">
-                        Tesachor
+                        class="pointer-events-auto flex items-center justify-center transition-transform duration-200 hover:scale-105 group">
+                        <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
+                            class="h-9 w-auto object-contain">
                     </a>
                 </div>
 

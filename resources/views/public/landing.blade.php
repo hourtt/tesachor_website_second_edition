@@ -17,12 +17,14 @@
                 x-text="$store.i18n.t('landing/landing.headline')">
                 {{ __('landing/landing.headline') }}
             </h1>
+
             {{-- Animation: fade-up (Subtitle rises from bottom) --}}
             <p class="text-lg md:text-2xl font-light tracking-[0.2em] font-variant: small-caps mb-8 text-gray-100"
                 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"
                 x-text="$store.i18n.t('landing/landing.subtitle')">
                 {{ __('landing/landing.subtitle') }}
             </p>
+            
             {{-- Call to Action --}}
             <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
                 <a href="#travel"
