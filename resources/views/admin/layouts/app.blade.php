@@ -5,12 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? 'Admin Panel' }} — Tesachor</title>
+    <title>{{ $title ?? 'Admin Panel' }}</title>
 
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- Preload Fonts -->
+    <link rel="preload" href="{{ asset('fonts/english/Roboto-Regular.ttf') }}" as="font" type="font/ttf"
+        crossorigin="anonymous">
+    <link rel="preload" href="{{ asset('fonts/english/Roboto-Bold.ttf') }}" as="font" type="font/ttf"
+        crossorigin="anonymous">
+    <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Regular.ttf') }}" as="font" type="font/ttf"
+        crossorigin="anonymous">
+    <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Bold.ttf') }}" as="font" type="font/ttf"
+        crossorigin="anonymous">
+
     <link
-        href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Inter:wght@300;400;500;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Inter:wght@300;400;500;600;700&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -36,16 +44,11 @@
 
             {{-- Logo & Mobile Close --}}
             <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-sm">
-                        <span class="text-white font-bold text-sm font-serif">T</span>
-                    </div>
-                    <div>
-                        <span class="font-serif font-bold text-gray-900 text-lg tracking-wide">Tesachor</span>
-                        <p class="text-[10px] text-gray-500 font-semibold capitalize tracking-widest -mt-0.5">Admin Panel
-                        </p>
-                    </div>
-                </div>
+                <a href="{{ route('admins.dashboard') }}" class="flex items-center gap-3 group">
+                    <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
+                        class="w-9 h-9 object-contain drop-shadow-sm flex-shrink-0 transition-transform duration-200 group-hover:scale-105">
+                    <p class="text-xs font-bold text-gray-700 uppercase tracking-wider">Admin Panel</p>
+                </a>
 
                 {{-- Close button for mobile drawer --}}
                 <button type="button" @click="sidebarOpen = false"

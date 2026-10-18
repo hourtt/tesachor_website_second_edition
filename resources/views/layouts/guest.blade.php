@@ -9,12 +9,16 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Preload Fonts -->
-    <link rel="preload" href="{{ asset('fonts/Hanuman-Regular.ttf') }}" as="font" type="font/ttf" crossorigin="anonymous">
-    <link rel="preload" href="{{ asset('fonts/Hanuman-Bold.ttf') }}" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="{{ asset('fonts/english/Roboto-Regular.ttf') }}" as="font" type="font/ttf"
+        crossorigin="anonymous">
+    <link rel="preload" href="{{ asset('fonts/english/Roboto-Bold.ttf') }}" as="font" type="font/ttf"
+        crossorigin="anonymous">
+    <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Regular.ttf') }}" as="font" type="font/ttf"
+        crossorigin="anonymous">
+    <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Bold.ttf') }}" as="font" type="font/ttf"
+        crossorigin="anonymous">
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link
         href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap"
         rel="stylesheet">
@@ -27,13 +31,10 @@
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
             <a href="/">
-                {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
-                <h4 class="font-serif text-5xl md:text-7xl  tracking-tight mb-4 drop-shadow-lg">
-                    Tesachor
-                </h4>
+                <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
+                    class="w-16 h-16 object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-105">
             </a>
         </div>
-
         <!-- Updated Form Container -->
         <div class="w-11/12 sm:w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden rounded-lg">
             {{ $slot }}

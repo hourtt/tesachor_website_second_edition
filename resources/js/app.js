@@ -10,10 +10,29 @@ import "./image-cropper";
 import "./destination-form";
 window.Alpine = Alpine;
 
+const savedLocale = (() => {
+    try {
+        const item = localStorage.getItem("locale");
+        return item === "km" || item === "en" ? item : null;
+    } catch (e) {
+        return null;
+    }
+})();
+
+const initialLocale = savedLocale || document.documentElement.lang || "en";
+if (document.documentElement.lang !== initialLocale) {
+    document.documentElement.lang = initialLocale;
+    if (savedLocale) {
+        fetch("/lang/" + savedLocale, {
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        }).catch(() => {});
+    }
+}
+
 // Register Alpine global i18n store for reactive instant language switching with cross-fade
 Alpine.store("i18n", {
-    locale: document.documentElement.lang || "en",
-    activeButton: document.documentElement.lang || "en",
+    locale: initialLocale,
+    activeButton: initialLocale,
     isSwitching: false,
     t(key) {
         if (!window.translations || !window.translations[this.locale]) {

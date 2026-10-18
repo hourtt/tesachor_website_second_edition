@@ -13,12 +13,15 @@ export default {
         extend: {
             fontFamily: {
                 sans: [
-                    "Kantumruy Pro",
-                    "Hanuman",
-                    "Figtree",
+                    "var(--font-sans)",
+                    "Roboto",
                     ...defaultTheme.fontFamily.sans,
                 ],
-                playfair: ['"Playfair Display"', "serif"],
+                serif: ["var(--font-serif)", ...defaultTheme.fontFamily.serif],
+                playfair: ['"Playfair Display"', "var(--font-serif)", "serif"],
+                roboto: ['"Roboto"', ...defaultTheme.fontFamily.sans],
+                'roboto-condensed': ['"Roboto Condensed"', ...defaultTheme.fontFamily.sans],
+                'roboto-semicondensed': ['"Roboto SemiCondensed"', ...defaultTheme.fontFamily.sans],
                 khmer: ['"Kantumruy Pro"', "Hanuman", "serif"],
             },
         },
