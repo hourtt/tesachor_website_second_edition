@@ -1,17 +1,17 @@
 <?php
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DestinationController as AdminDestination;
-// * New Admin Controllers
 use App\Http\Controllers\Admin\ProvinceController as AdminProvince;
+// * New Admin Controllers
 use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\ProfileAvatarController;
-// * Shared Public Controllers
 use App\Http\Controllers\Public\DestinationController as PublicDestination;
+// * Shared Public Controllers
 use App\Http\Controllers\Public\LandingController;
 use App\Http\Controllers\Public\ProvinceController as PublicProvince;
+use Illuminate\Http\Request;
 // * Auth Controllers
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;

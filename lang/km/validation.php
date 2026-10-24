@@ -12,7 +12,7 @@ return [
     | as the size rules. Feel free to tweak each of these messages here.
     |
     */
-    
+
     'accepted' => 'សូមយល់ព្រមលើ :attribute field។',
     'accepted_if' => 'សូមយល់ព្រមលើ :attribute field នៅពេល :other មានតម្លៃ :value។',
     'active_url' => ':attribute field ត្រូវតែជា URL ត្រឹមត្រូវ។',

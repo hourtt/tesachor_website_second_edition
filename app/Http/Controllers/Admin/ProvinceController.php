@@ -14,9 +14,7 @@ class ProvinceController extends Controller
 {
     public function __construct(
         protected ProvinceService $provinceService,
-       
-    ) {
-    }
+    ) {}
 
     public function index()
     {

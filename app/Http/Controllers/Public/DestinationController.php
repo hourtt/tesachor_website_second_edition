@@ -7,9 +7,7 @@ use App\Services\DestinationService;
 
 class DestinationController extends Controller
 {
-    public function __construct(protected DestinationService $destinationService)
-    {
-    }
+    public function __construct(protected DestinationService $destinationService) {}
 
     public function show(string $id)
     {
