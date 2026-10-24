@@ -18,7 +18,7 @@
                 <div class="flex items-center z-10">
                     <a href="{{ $dashboardRoute }}"
                         class="group inline-flex items-center gap-1.5 sm:gap-2.5 px-3 py-1.5 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl text-xs sm:text-sm font-semibold text-gray-700 bg-gray-50 hover:bg-gray-100 hover:text-blue-600 border border-gray-200/80 hover:border-gray-300 shadow-2xs transition-all duration-200 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <svg class="w-4 h-4 text-gray-500 transition-transform duration-200 group-hover:-translate-x-1 group-hover:text-blue-600 flex-shrink-0"
+                        <svg class="w-4 h-4 text-gray-500 transition-transform duration-200 group-hover:-translate-x-1 group-hover:text-blue-600 shrink-0"
                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                         </svg>

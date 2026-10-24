@@ -1,11 +1,11 @@
-/* ==========================================================================
+/* 
    Khmer Fonts: Hanuman & Kantumruy Pro
    Source: public/fonts/khmer/hanuman/ & public/fonts/khmer/kantumruy_pro/
-   ========================================================================== */
+    */
 
-/* --------------------------------------------------------------------------
+/* 
    Hanuman
-   -------------------------------------------------------------------------- */
+    */
 @font-face {
     font-family: "Hanuman";
     src: url("/fonts/khmer/hanuman/Hanuman-Thin.ttf") format("truetype");
@@ -78,12 +78,13 @@
     font-display: swap;
 }
 
-/* --------------------------------------------------------------------------
+/* 
    Kantumruy Pro
-   -------------------------------------------------------------------------- */
+    */
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Thin.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Thin.ttf")
+        format("truetype");
     font-weight: 100;
     font-style: normal;
     font-display: swap;
@@ -91,7 +92,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-ThinItalic.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-ThinItalic.ttf")
+        format("truetype");
     font-weight: 100;
     font-style: italic;
     font-display: swap;
@@ -99,7 +101,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-ExtraLight.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-ExtraLight.ttf")
+        format("truetype");
     font-weight: 200;
     font-style: normal;
     font-display: swap;
@@ -107,7 +110,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-ExtraLightItalic.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-ExtraLightItalic.ttf")
+        format("truetype");
     font-weight: 200;
     font-style: italic;
     font-display: swap;
@@ -115,7 +119,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Light.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Light.ttf")
+        format("truetype");
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -123,7 +128,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-LightItalic.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-LightItalic.ttf")
+        format("truetype");
     font-weight: 300;
     font-style: italic;
     font-display: swap;
@@ -131,7 +137,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Regular.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Regular.ttf")
+        format("truetype");
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -139,7 +146,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Italic.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Italic.ttf")
+        format("truetype");
     font-weight: 400;
     font-style: italic;
     font-display: swap;
@@ -147,7 +155,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Medium.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Medium.ttf")
+        format("truetype");
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -155,7 +164,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-MediumItalic.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-MediumItalic.ttf")
+        format("truetype");
     font-weight: 500;
     font-style: italic;
     font-display: swap;
@@ -163,7 +173,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-SemiBold.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-SemiBold.ttf")
+        format("truetype");
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -171,7 +182,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-SemiBoldItalic.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-SemiBoldItalic.ttf")
+        format("truetype");
     font-weight: 600;
     font-style: italic;
     font-display: swap;
@@ -179,7 +191,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Bold.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-Bold.ttf")
+        format("truetype");
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -187,7 +200,8 @@
 
 @font-face {
     font-family: "Kantumruy Pro";
-    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-BoldItalic.ttf") format("truetype");
+    src: url("/fonts/khmer/kantumruy_pro/KantumruyPro-BoldItalic.ttf")
+        format("truetype");
     font-weight: 700;
     font-style: italic;
     font-display: swap;
