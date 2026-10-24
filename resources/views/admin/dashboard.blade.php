@@ -77,12 +77,12 @@
                 @forelse ($recentProvinces as $province)
                     <div class="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors">
                         <img src="{{ asset('storage/' . $province->thumbnail) }}" alt="{{ $province->name }}"
-                            class="w-10 h-10 rounded-xl object-cover flex-shrink-0 border border-gray-100">
+                            class="w-10 h-10 rounded-xl object-cover shrink-0 border border-gray-100">
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-900 truncate">{{ $province->name }}</p>
                             <p class="text-xs text-gray-400">{{ $province->destinations->count() }} destinations</p>
                         </div>
-                        <div class="flex gap-2 flex-shrink-0">
+                        <div class="flex gap-2 shrink-0">
                             <a href="{{ route('admins.provinces.show', $province->slug) }}"
                                 class="text-gray-400 hover:text-blue-500 transition-colors text-sm">
                                 <i class="fa-solid fa-eye"></i>
@@ -115,12 +115,12 @@
                 @forelse ($recentDestinations as $destination)
                     <div class="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors">
                         <img src="{{ asset('storage/' . $destination->thumbnail) }}" alt="{{ $destination->place_name }}"
-                            class="w-10 h-10 rounded-xl object-cover flex-shrink-0 border border-gray-100">
+                            class="w-10 h-10 rounded-xl object-cover shrink-0 border border-gray-100">
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-900 truncate">{{ $destination->place_name }}</p>
                             <p class="text-xs text-gray-400 truncate">{{ $destination->province->name ?? '—' }}</p>
                         </div>
-                        <div class="flex items-center gap-2 flex-shrink-0">
+                        <div class="flex items-center gap-2 shrink-0">
                             @if ($destination->is_recommended)
                                 <span class="text-[10px] font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">Featured</span>
                             @endif

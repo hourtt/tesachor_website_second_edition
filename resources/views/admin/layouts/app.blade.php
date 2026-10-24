@@ -40,13 +40,13 @@
         {{--  SIDEBAR  --}}
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
             class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col
-                   transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen lg:self-start lg:flex-shrink-0 shadow-xl lg:shadow-none">
+                   transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen lg:self-start lg:shrink-0 shadow-xl lg:shadow-none">
 
             {{-- Logo & Mobile Close --}}
             <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                 <a href="{{ route('admins.dashboard') }}" class="flex items-center gap-3 group">
                     <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
-                        class="w-9 h-9 object-contain drop-shadow-sm flex-shrink-0 transition-transform duration-200 group-hover:scale-105">
+                        class="w-9 h-9 object-contain drop-shadow-sm shrink-0 transition-transform duration-200 group-hover:scale-105">
                     <p class="text-xs font-bold text-gray-700 uppercase tracking-wider">Admin Panel</p>
                 </a>
 
@@ -127,7 +127,7 @@
                     <a href="{{ route('admins.profile.edit') }}"
                         class="flex items-center gap-3 flex-1 min-w-0 p-2 rounded-xl transition-all duration-200 group cursor-pointer focus:outline-hidden {{ $isProfile ? 'bg-blue-50/80 ring-1 ring-blue-100' : 'hover:bg-gray-50' }}"
                         title="Edit profile settings">
-                        <div class="relative flex-shrink-0">
+                        <div class="relative shrink-0">
                             @if (Auth::user()->avatar_url)
                                 <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}"
                                     class="w-10 h-10 rounded-full object-cover border-2 {{ $isProfile ? 'border-blue-500 ring-2 ring-blue-100' : 'border-blue-100' }} shadow-2xs group-hover:border-blue-500 group-hover:ring-2 group-hover:ring-blue-100 transition-all duration-200">
@@ -144,14 +144,14 @@
                                     {{ Auth::user()->name }}
                                 </p>
                                 <i
-                                    class="fa-solid fa-pen-to-square text-[10px] text-blue-500 {{ $isProfile ? 'opacity-100' : 'opacity-0 -translate-x-1' }} group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 flex-shrink-0"></i>
+                                    class="fa-solid fa-pen-to-square text-[10px] text-blue-500 {{ $isProfile ? 'opacity-100' : 'opacity-0 -translate-x-1' }} group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 shrink-0"></i>
                             </div>
                             <p class="text-xs text-gray-400 truncate">Administrator</p>
                         </div>
                     </a>
 
                     <button type="button" @click="logoutModalOpen = true" title="Sign out"
-                        class="text-gray-400 hover:text-red-600 hover:bg-red-50 p-2.5 rounded-xl transition-all duration-200 flex-shrink-0 focus:outline-hidden focus:ring-2 focus:ring-red-100 cursor-pointer">
+                        class="text-gray-400 hover:text-red-600 hover:bg-red-50 p-2.5 rounded-xl transition-all duration-200 shrink-0 focus:outline-hidden focus:ring-2 focus:ring-red-100 cursor-pointer">
                         <i class="fa-solid fa-right-from-bracket text-sm"></i>
                     </button>
                 </div>
@@ -207,10 +207,10 @@
                     @if (session('success'))
                         <div x-data="{ show: true }" x-show="show" x-transition
                             class="flex items-center gap-3 p-4 bg-green-50 border border-green-200 text-green-800 rounded-xl text-sm shadow-2xs">
-                            <i class="fa-solid fa-circle-check text-green-500 flex-shrink-0"></i>
+                            <i class="fa-solid fa-circle-check text-green-500 shrink-0"></i>
                             <span class="font-medium">{{ session('success') }}</span>
                             <button @click="show = false"
-                                class="ml-auto text-green-400 hover:text-green-600 flex-shrink-0 cursor-pointer">
+                                class="ml-auto text-green-400 hover:text-green-600 shrink-0 cursor-pointer">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
@@ -228,10 +228,10 @@
                         @endphp
                         <div x-data="{ show: true }" x-show="show" x-transition
                             class="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm shadow-2xs">
-                            <i class="fa-solid fa-circle-check text-emerald-500 flex-shrink-0"></i>
+                            <i class="fa-solid fa-circle-check text-emerald-500 shrink-0"></i>
                             <span class="font-medium">{{ $statusText }}</span>
                             <button @click="show = false"
-                                class="ml-auto text-emerald-400 hover:text-emerald-600 flex-shrink-0 cursor-pointer">
+                                class="ml-auto text-emerald-400 hover:text-emerald-600 shrink-0 cursor-pointer">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
@@ -239,10 +239,10 @@
                     @if (session('error'))
                         <div x-data="{ show: true }" x-show="show" x-transition
                             class="flex items-center gap-3 p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-sm shadow-2xs">
-                            <i class="fa-solid fa-circle-exclamation text-red-500 flex-shrink-0"></i>
+                            <i class="fa-solid fa-circle-exclamation text-red-500 shrink-0"></i>
                             <span class="font-medium">{{ session('error') }}</span>
                             <button @click="show = false"
-                                class="ml-auto text-red-400 hover:text-red-600 flex-shrink-0 cursor-pointer">
+                                class="ml-auto text-red-400 hover:text-red-600 shrink-0 cursor-pointer">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
                         </div>
@@ -284,7 +284,7 @@
                     <div class="flex items-start gap-4">
                         {{-- Warning Icon Container --}}
                         <div
-                            class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center ring-8 ring-red-50/60 shadow-xs flex-shrink-0">
+                            class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center ring-8 ring-red-50/60 shadow-xs shrink-0">
                             <i class="fa-solid fa-right-from-bracket text-lg"></i>
                         </div>
 
