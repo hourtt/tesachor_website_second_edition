@@ -1,6 +1,7 @@
 @import "./fonts-english.css";
-
 @import "./font-khmer.css";
+@import "tailwindcss";
+@config "../../tailwind.config.js";
 
 
 /* Language-specific Typography & Font Variables */
@@ -24,9 +25,6 @@ html[lang="km"],
     --font-serif: "Kantumruy Pro", "Hanuman", "Playfair Display", serif;
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* Base HTML & Body Font Family */
 html {
