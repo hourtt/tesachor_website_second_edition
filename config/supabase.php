@@ -20,51 +20,51 @@
 return [
 
     /*
-    |--------------------------------------------------------------------------
+    |
     | Supabase Project URL
-    |--------------------------------------------------------------------------
+    |
     | Your Supabase project's base URL, e.g. https://abcdefghijklmnop.supabase.co
     */
     'url' => env('SUPABASE_URL', ''),
 
     /*
-    |--------------------------------------------------------------------------
+    |
     | Supabase Anon Key (Public)
-    |--------------------------------------------------------------------------
+    |
     | Safe to use client-side; limited by Row Level Security policies.
     */
     'key' => env('SUPABASE_KEY', ''),
 
     /*
-    |--------------------------------------------------------------------------
+    |
     | Supabase Service Role Key (Private)
-    |--------------------------------------------------------------------------
+    |
     | Full admin access — NEVER expose this in front-end code or commit it.
     | Use only in server-side code (e.g. SupabaseService methods).
     */
     'service_role_key' => env('SUPABASE_SERVICE_ROLE_KEY', ''),
 
     /*
-    |--------------------------------------------------------------------------
+    |
     | Storage Bucket
-    |--------------------------------------------------------------------------
+    |
     | The name of the Supabase Storage bucket used for media uploads.
     */
     'bucket' => env('SUPABASE_BUCKET', 'media'),
 
     /*
-    |--------------------------------------------------------------------------
+    |
     | Storage Public URL
-    |--------------------------------------------------------------------------
+    |
     | Base URL for constructing public file URLs.
     | Typically: {SUPABASE_URL}/storage/v1
     */
     'storage_public_url' => env('SUPABASE_STORAGE_PUBLIC_URL', ''),
 
     /*
-    |--------------------------------------------------------------------------
+    |
     | Database (Supabase Postgres)
-    |--------------------------------------------------------------------------
+    |
     | If you connect to Supabase's managed Postgres instead of local MySQL.
     | Set these in .env and update config/database.php accordingly.
     | TODO(SUPABASE): switch DB_CONNECTION to 'pgsql' and fill these values.
