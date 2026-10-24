@@ -23,7 +23,11 @@ class LandingController extends Controller
 
         $provinces = $this->provinceService->getProvincesPaginated(8);
         $destinations = $this->destinationService->getRecommendedDestinations(6);
+        $cards = config('landing.cards');
+        $discover_cambodia_cards = config('landing.discover_cambodia_cards');
+        $features = config('landing.features');
+        $tips = config('landing.tips');
 
-        return view('public.landing', compact('provinces', 'destinations'));
+        return view('public.landing', compact('provinces', 'destinations', 'cards', 'discover_cambodia_cards', 'features', 'tips'));
     }
 }
