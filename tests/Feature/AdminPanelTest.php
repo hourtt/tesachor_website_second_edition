@@ -122,6 +122,60 @@ class AdminPanelTest extends TestCase
         ]);
     }
 
+    public function test_store_province_fails_when_name_in_khmer_contains_non_khmer_characters(): void
+    {
+        $file = UploadedFile::fake()->create('kampot.jpg', 100, 'image/jpeg');
+
+        // English characters rejected
+        $response = $this->actingAs($this->admin)->post(route('admins.provinces.store'), [
+            'name' => 'Kampot',
+            'name_in_khmer' => 'Kampot',
+            'thumbnail' => $file,
+        ]);
+
+        $response->assertSessionHasErrors(['name_in_khmer']);
+
+        // Digits rejected
+        $responseWithDigits = $this->actingAs($this->admin)->post(route('admins.provinces.store'), [
+            'name' => 'Kampot Two',
+            'name_in_khmer' => 'កំពត 123',
+            'thumbnail' => $file,
+        ]);
+
+        $responseWithDigits->assertSessionHasErrors(['name_in_khmer']);
+    }
+
+    public function test_store_province_requires_name_in_khmer(): void
+    {
+        $file = UploadedFile::fake()->create('kampot.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($this->admin)->post(route('admins.provinces.store'), [
+            'name' => 'Kampot',
+            'name_in_khmer' => '',
+            'thumbnail' => $file,
+        ]);
+
+        $response->assertSessionHasErrors(['name_in_khmer']);
+    }
+
+    public function test_store_province_accepts_khmer_name_with_spaces(): void
+    {
+        $file = UploadedFile::fake()->create('banteay_meanchey.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($this->admin)->post(route('admins.provinces.store'), [
+            'name' => 'Banteay Meanchey',
+            'name_in_khmer' => 'បន្ទាយ មានជ័យ',
+            'thumbnail' => $file,
+        ]);
+
+        $response->assertRedirect(route('admins.provinces.index'));
+        $this->assertDatabaseHas('provinces', [
+            'name' => 'Banteay Meanchey',
+            'name_in_khmer' => 'បន្ទាយ មានជ័យ',
+            'slug' => 'banteay-meanchey',
+        ]);
+    }
+
     public function test_admin_can_view_province_show(): void
     {
         $province = Province::create([
@@ -172,6 +226,23 @@ class AdminPanelTest extends TestCase
             'name' => 'Pursat Updated',
             'name_in_khmer' => 'ពោធិ៍សាត់ថ្មី',
         ]);
+    }
+
+    public function test_update_province_fails_when_name_in_khmer_contains_non_khmer_characters(): void
+    {
+        $province = Province::create([
+            'name' => 'Pursat',
+            'name_in_khmer' => 'ពោធិ៍សាត់',
+            'slug' => 'pursat',
+            'thumbnail' => 'provinces/pursat.jpg',
+        ]);
+
+        $response = $this->actingAs($this->admin)->put(route('admins.provinces.update', $province->slug), [
+            'name' => 'Pursat Updated',
+            'name_in_khmer' => 'Invalid Khmer 123',
+        ]);
+
+        $response->assertSessionHasErrors(['name_in_khmer']);
     }
 
     public function test_admin_can_delete_province_without_destinations(): void

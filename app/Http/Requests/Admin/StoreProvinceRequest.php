@@ -15,7 +15,12 @@ class StoreProvinceRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:provinces,name',
-            'name_in_khmer' => 'required|string|max:255',
+            'name_in_khmer' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^[\x{1780}-\x{17B3}\x{17B6}-\x{17D3}\s]+$/u',
+            ],
             'thumbnail' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
         ];
     }
@@ -26,6 +31,7 @@ class StoreProvinceRequest extends FormRequest
             'thumbnail.required' => 'A cover image is required for the province.',
             'thumbnail.max' => 'The cover image must not exceed 4 MB.',
             'name.unique' => 'A province with this name already exists.',
+            'name_in_khmer.regex' => 'The Khmer name must contain only Khmer letters, marks, and spaces.',
         ];
     }
 }

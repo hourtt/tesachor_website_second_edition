@@ -20,7 +20,7 @@
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (English)</label>
                         <input type="text" name="name" value="{{ old('name') }}" required
-                            class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition"
+                            class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition capitalize"
                             placeholder="e.g. Siem Reap">
                         @error('name')
                             <p class="text-white-500 text-xs mt-1">{{ $message }}</p>
@@ -31,6 +31,7 @@
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (Khmer)</label>
                         <input type="text" name="name_in_khmer" value="{{ old('name_in_khmer') }}" required
+                            pattern="[\u1780-\u17B3\u17B6-\u17D3 ]+" title="Enter Khmer letters only"
                             class="font-khmer font-normal w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition"
                             placeholder="e.g. សៀមរាប">
                         @error('name_in_khmer')
@@ -50,8 +51,7 @@
                                     src="https://placehold.co/300x300?text=Preview">
                                 <div id="edit_overlay"
                                     class="hidden absolute inset-0 bg-black/50 items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
-                                    style="display: none;"
-                                    onclick="reOpenCropper()">
+                                    style="display: none;" onclick="reOpenCropper()">
                                     <span class="text-white text-xs font-bold bg-black/60 px-3 py-1.5 rounded-lg">
                                         <i class="fa-solid fa-pen mr-1"></i> Edit Crop
                                     </span>
@@ -85,7 +85,7 @@
                         Cancel
                     </a>
                     <button type="submit"
-                        class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm">
+                        class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm cursor-pointer">
                         Save Province
                     </button>
                 </div>
@@ -94,7 +94,8 @@
     </div>
 
     {{-- Cropper Modal --}}
-    <div id="cropper_modal" class="fixed inset-0 z-50 hidden bg-black/80 items-center justify-center p-4" style="display: none;">
+    <div id="cropper_modal" class="fixed inset-0 z-50 hidden bg-black/80 items-center justify-center p-4"
+        style="display: none;">
         <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center">
                 <h3 class="font-bold text-gray-800">Crop Image</h3>
