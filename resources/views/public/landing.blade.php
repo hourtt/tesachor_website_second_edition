@@ -179,7 +179,7 @@
                     data-aos="zoom-in-up" data-aos-delay="{{ $index * 100 }}">
 
                     <div class="relative h-64 overflow-hidden">
-                        <img src="{{ asset("storage/{$tour->thumbnail}") }}" alt="{{ $tour->place_name }}"
+                        <img src="{{ asset('storage/' . $tour->thumbnail) }}" alt="{{ $tour->place_name }}"
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
 
@@ -241,7 +241,7 @@
                     data-aos="flip-left" data-aos-delay="{{ $index * 50 }}">
 
                     {{-- Full Image Background --}}
-                    <img src="{{ asset("storage/{$province->thumbnail}") }}" alt="{{ $province->name }}"
+                    <img src="{{ asset('storage/' . $province->thumbnail) }}" alt="{{ $province->name }}"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
 
                     {{-- Gradient Overlay --}}
@@ -283,7 +283,7 @@
                         class="group h-full bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out cursor-pointer flex flex-col">
                         <!-- image -->
                         <div class="relative h-56 overflow-hidden">
-                            <img src="{{ asset("storage/{$card['image']}") }}" alt="{{ $card['alt'] }}"
+                            <img src="{{ asset('storage/' . $card['image']) }}" alt="{{ $card['alt'] }}"
                                 class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 will-change-transform" />
 
                             <!-- dark overlay -->
