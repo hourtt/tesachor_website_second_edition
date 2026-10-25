@@ -10,6 +10,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+
 
 /** @property string|null $avatar_path
  * @property string|null $avatar_url
@@ -51,26 +53,31 @@ class User extends Authenticatable
     /**
      * Get the public avatar URL from Supabase storage.
      */
-    public function getAvatarUrlAttribute(): ?string
+
+    protected function avatarUrl(): Attribute
     {
-        if (! $this->avatar_path) {
-            return null;
-        }
-
-        if (str_starts_with($this->avatar_path, 'http://') || str_starts_with($this->avatar_path, 'https://')) {
-            return $this->avatar_path;
-        }
-
-        try {
-            /** @var FilesystemAdapter $disk */
-            $disk = Storage::disk('supabase_avatar');
-
-            return $disk->url($this->avatar_path);
-        } catch (\Throwable $e) {
-            return null;
-        }
+        return Attribute::make(
+            get: function (): ?string {
+                $path = $this->avatar_path;
+                if (!$path) {
+                    return null;
+                }
+                if (
+                    str_starts_with($path, 'http://') ||
+                    str_starts_with($path, 'https://')
+                ) {
+                    return $path;
+                }
+                try {
+                    /** @var FilesystemAdapter $disk */
+                    $disk = Storage::disk('supabase_avatar');
+                    return $disk->url($path);
+                } catch (\Throwable $e) {
+                    return null;
+                }
+            },
+        );
     }
-
     /**
      * The attributes that should be hidden for serialization.
      *

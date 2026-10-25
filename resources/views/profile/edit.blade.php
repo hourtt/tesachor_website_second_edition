@@ -7,6 +7,7 @@
             ? route('admins.dashboard') 
             : route('public.landing');
 
+        // avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute()
         $avatarUrl = $currentUser?->avatar_url;
     @endphp
 

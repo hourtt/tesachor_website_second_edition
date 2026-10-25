@@ -3,7 +3,7 @@
 
     @php
         /** @var \App\Models\User $user */
-        $user = $user ?? Auth::user();
+        $user ??= Auth::user();
     @endphp
 
     @include('admin.profile.partials.script')

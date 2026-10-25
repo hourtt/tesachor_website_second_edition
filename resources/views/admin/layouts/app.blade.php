@@ -128,6 +128,7 @@
                         class="flex items-center gap-3 flex-1 min-w-0 p-2 rounded-xl transition-all duration-200 group cursor-pointer focus:outline-hidden {{ $isProfile ? 'bg-blue-50/80 ring-1 ring-blue-100' : 'hover:bg-gray-50' }}"
                         title="Edit profile settings">
                         <div class="relative shrink-0">
+                            {{-- avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute() --}}
                             @if (Auth::user()->avatar_url)
                                 <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}"
                                     class="w-10 h-10 rounded-full object-cover border-2 {{ $isProfile ? 'border-blue-500 ring-2 ring-blue-100' : 'border-blue-100' }} shadow-2xs group-hover:border-blue-500 group-hover:ring-2 group-hover:ring-blue-100 transition-all duration-200">
@@ -184,6 +185,7 @@
                         <a href="{{ route('admins.profile.edit') }}"
                             class="p-0.5 rounded-full border-2 {{ request()->routeIs('admins.profile.*') ? 'border-blue-600 ring-2 ring-blue-100' : 'border-gray-200 hover:border-blue-400' }} transition-all"
                             title="Profile Settings">
+                            {{-- avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute() --}}
                             @if (Auth::user()?->avatar_url)
                                 <img src="{{ Auth::user()->avatar_url }}" alt="{{ Auth::user()->name }}" class="w-8 h-8 rounded-full object-cover">
                             @else

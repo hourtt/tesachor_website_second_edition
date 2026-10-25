@@ -1,5 +1,5 @@
 @php
-    $user = $user ?? Auth::user();
+    $user ??= Auth::user();
 @endphp
 
 <section x-data="{
@@ -35,6 +35,7 @@
         <div class="relative group">
             {{-- Current Avatar or Fallback --}}
             <div x-show="!photoPreview" class="relative">
+                {{-- avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute() --}}
                 @if ($user->avatar_url)
                     <img src="{{ $user->avatar_url }}"
                          alt="{{ $user->name }}"

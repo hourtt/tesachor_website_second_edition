@@ -21,7 +21,7 @@
     </form>
 
     {{-- Interactive Circular Avatar Trigger --}}
-    <div class="relative group cursor-pointer flex-shrink-0" @click="$refs.avatarFileInput.click()"
+    <div class="relative group cursor-pointer shrink-0" @click="$refs.avatarFileInput.click()"
         role="button" tabindex="0" @keydown.enter.prevent="$refs.avatarFileInput.click()"
         @keydown.space.prevent="$refs.avatarFileInput.click()" title="Click to change profile picture"
         aria-label="Change profile photo">
@@ -29,6 +29,7 @@
         {{-- Circular Avatar Image / Fallback Initials --}}
         <div
             class="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-gray-200 group-hover:border-blue-500 group-hover:ring-4 group-hover:ring-blue-100 shadow-xs transition-all duration-200 bg-gray-50">
+            {{-- avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute() --}}
             @if ($user->avatar_url)
                 <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
                     class="w-full h-full object-cover">
@@ -90,7 +91,7 @@
 @if ($errors->get('avatar'))
     <div
         class="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center gap-2">
-        <i class="fa-solid fa-circle-exclamation text-red-500 flex-shrink-0"></i>
+        <i class="fa-solid fa-circle-exclamation text-red-500 shrink-0"></i>
         <span>{{ $errors->first('avatar') }}</span>
     </div>
 @endif

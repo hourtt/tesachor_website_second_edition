@@ -21,6 +21,7 @@
         {{-- User Summary Header --}}
         <div class="flex items-center gap-4 pb-6 mb-6 border-b border-gray-100">
             <div class="w-14 h-14 rounded-full bg-gray-100 flex items-center justify-center font-bold text-lg text-gray-600 shrink-0">
+                {{-- avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute() --}}
                 @if ($user->avatar_url)
                     <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-full h-full object-cover rounded-full">
                 @else

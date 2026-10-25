@@ -26,7 +26,7 @@ class ProfileController extends Controller
             ]);
         }
 
-        if ($user && $user->hasRole('admin')) {
+        if ($user?->hasRole('admin')) {
             return redirect()->route('admins.profile.edit');
         }
 

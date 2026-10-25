@@ -168,6 +168,7 @@
                             <button
                                 class="inline-flex items-center gap-2 px-3 py-1.5 text-sm leading-4 hover:text-blue-500 focus:outline-none transition ease-in-out duration-150"
                                 :class="{ 'text-gray-600': scrolled || forceSolid, 'text-gray-100': !(scrolled || forceSolid) }">
+                                {{-- avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute() --}}
                                 @if ($user->avatar_url)
                                     <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
                                         class="w-7 h-7 rounded-full object-cover border border-gray-200">
@@ -303,6 +304,7 @@
         <div class="pb-1 border-gray-200">
             @if ($user)
                 <div class="px-4 py-3 bg-gray-50 flex items-center gap-3 border-b border-gray-100">
+                    {{-- avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute() --}}
                     @if ($user->avatar_url)
                         <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
                             class="w-10 h-10 rounded-full object-cover border border-gray-200 shrink-0">

@@ -28,6 +28,7 @@
                             <td class="px-6 py-4">
                                 <div class="flex items-center gap-3">
                                     <div class="w-10 h-10 rounded-full overflow-hidden bg-gray-100 shrink-0 flex items-center justify-center font-bold text-sm text-gray-600">
+                                        {{-- avatar_url is an accessor defined in App\Models\User via getAvatarUrlAttribute() --}}
                                         @if ($user->avatar_url)
                                             <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
                                         @else
