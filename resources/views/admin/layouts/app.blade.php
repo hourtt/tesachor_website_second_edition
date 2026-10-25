@@ -179,11 +179,6 @@
                         </div>
                     </div>
 
-                    {{-- Desktop Page Title --}}
-                    <div class="hidden lg:block">
-                        <h1 class="text-lg font-semibold text-gray-900">{{ $title ?? 'Dashboard' }}</h1>
-                    </div>
-
                     {{-- Mobile Quick Profile Avatar --}}
                     <div class="flex items-center gap-2 lg:hidden">
                         <a href="{{ route('admins.profile.edit') }}"
