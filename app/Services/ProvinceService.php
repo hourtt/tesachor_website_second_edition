@@ -12,7 +12,6 @@ class ProvinceService
 
     protected string $disk = 'supabase_province';
 
-
     public function createProvince(array $data, ?UploadedFile $thumbnail = null): Province
     {
         $province = Province::create([

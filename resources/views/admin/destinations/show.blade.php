@@ -9,7 +9,6 @@
                 <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
                 <span class="text-gray-900 font-medium">{{ $destination->place_name }}</span>
             </div>
-            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">{{ $destination->place_name }}</h1>
         </div>
 
         <div class="flex items-center gap-3">
@@ -45,7 +44,7 @@
                     Recommended
                 </span>
             @endif
-            <h2 class="text-3xl font-bold font-serif">{{ $destination->place_name }}</h2>
+            <h2 class="text-3xl font-bold font-sans">{{ $destination->place_name }}</h2>
             <div class="flex items-center gap-4 mt-2 text-sm text-gray-200">
                 @if ($destination->province)
                     <span class="flex items-center gap-1.5"><i class="fa-solid fa-map-pin text-blue-400"></i> {{ $destination->province->name }}</span>
