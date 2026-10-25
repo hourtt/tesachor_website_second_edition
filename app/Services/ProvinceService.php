@@ -9,40 +9,65 @@ use Illuminate\Support\Str;
 
 class ProvinceService
 {
+
+    protected string $disk = 'supabase_province';
+
+
+    public function createProvince(array $data, ?UploadedFile $thumbnail = null): Province
+    {
+        $province = Province::create([
+            'name' => $data['name'],
+            'name_in_khmer' => $data['name_in_khmer'] ?? null,
+            'slug' => Str::slug($data['name']),
+            'thumbnail' => null,
+        ]);
+
+        if ($thumbnail) {
+            $provinceId = (string) $province->getKey();
+            $disk = Storage::disk($this->disk);
+            // image file path: thumbnails/{province_id}/randomhash.jpg
+            $province->thumbnail = $disk->putFile("thumbnails/{$provinceId}", $thumbnail);
+            $province->save();
+        }
+
+        return $province;
+    }
+
     public function getProvincesPaginated(int $perPage = 8)
     {
         return Province::orderBy('name', 'asc')->paginate($perPage);
     }
 
-    public function getProvinceByIdOrSlug(string $identifier)
+    public function getProvinceByIdOrSlug(string $identifier): Province
     {
         return Province::with('destinations')
-            ->where('id', $identifier)
-            ->orWhere('slug', $identifier)
+            ->where(function ($query) use ($identifier) {
+                if (is_numeric($identifier)) {
+                    $query->where('id', (int) $identifier)
+                        ->orWhere('slug', $identifier);
+                } else {
+                    $query->where('slug', $identifier);
+                }
+            })
             ->firstOrFail();
     }
 
-    public function createProvince(array $data, ?UploadedFile $thumbnail = null)
+    public function updateProvince(Province $province, array $data, ?UploadedFile $thumbnail = null): Province
     {
+        $disk = Storage::disk($this->disk);
+        $provinceId = (string) $province->getKey();
+
         if ($thumbnail) {
-            $data['thumbnail'] = $thumbnail->store('province_thumbnails', 'public');
-        }
-
-        $data['slug'] = Str::slug($data['name']);
-
-        return Province::create($data);
-    }
-
-    public function updateProvince(Province $province, array $data, ?UploadedFile $thumbnail = null)
-    {
-        if ($thumbnail) {
-            if ($province->thumbnail) {
-                Storage::disk('public')->delete($province->thumbnail);
+            if ($province->thumbnail && !str_starts_with($province->thumbnail, 'http://') && !str_starts_with($province->thumbnail, 'https://')) {
+                $disk->delete($province->thumbnail);
             }
-            $data['thumbnail'] = $thumbnail->store('province_thumbnails', 'public');
+            $data['thumbnail'] = $disk->putFile("thumbnails/{$provinceId}", $thumbnail);
+        } else {
+            // Prevent wiping existing thumbnail when no new file is uploaded
+            unset($data['thumbnail']);
         }
 
-        if ($province->name !== $data['name']) {
+        if (isset($data['name']) && $province->name !== $data['name']) {
             $data['slug'] = Str::slug($data['name']);
         }
 
@@ -51,16 +76,16 @@ class ProvinceService
         return $province;
     }
 
-    public function deleteProvince(Province $province)
+    public function deleteProvince(Province $province): bool
     {
         if ($province->destinations()->count() > 0) {
             return false;
         }
 
-        if ($province->thumbnail) {
-            Storage::disk('public')->delete($province->thumbnail);
+        if ($province->thumbnail && !str_starts_with($province->thumbnail, 'http://') && !str_starts_with($province->thumbnail, 'https://')) {
+            Storage::disk($this->disk)->delete($province->thumbnail);
         }
 
-        return $province->delete();
+        return (bool) $province->delete();
     }
 }

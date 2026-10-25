@@ -47,7 +47,7 @@
                             {{-- Preview Box --}}
                             <div class="shrink-0 w-44 h-44 bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group">
                                 <img id="final_preview" class="w-full h-full object-cover"
-                                    src="{{ $province->thumbnail ? asset('storage/' . $province->thumbnail) : 'https://placehold.co/300x300?text=No+Image' }}">
+                                    src="{{ $province->thumbnail_url ?? 'https://placehold.co/300x300?text=No+Image' }}">
                                 <div id="edit_overlay"
                                     class="hidden absolute inset-0 bg-black/50 items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
                                     style="display: none;"

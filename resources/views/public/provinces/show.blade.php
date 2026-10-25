@@ -16,7 +16,7 @@
             <div class="md:flex">
                 {{-- Image --}}
                 <div class="md:w-1/3 h-64 md:h-auto relative group">
-                    <img src="{{ asset('storage/' . $province->thumbnail) }}" alt="{{ $province->name }}"
+                    <img src="{{ $province->thumbnail_url }}" alt="{{ $province->name }}"
                         class="w-full h-full object-cover transition duration-700 group-hover:scale-105">
                     <div class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition"></div>
                 </div>
@@ -46,15 +46,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             @forelse($province->destinations as $destination)
                 <div
-                    class="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
+                    class="group relative aspect-4/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer">
 
                     {{-- 1. Background Image --}}
-                    <img src="{{ asset('storage/' . $destination->thumbnail) }}" alt="{{ $destination->place_name }}"
+                    <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
                     {{-- 2. Gradient Overlay (Bottom Up) --}}
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                        class="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
                     </div>
 
                     {{-- 3. Top Action Buttons (Edit / View) --}}
@@ -92,7 +92,7 @@
 
                         {{-- Hover Decoration --}}
                         <div
-                            class="w-8 h-0.5 bg-blue-500 mx-auto mt-3 rounded-full w-0 group-hover:w-12 transition-all duration-500">
+                            class="w-0 h-0.5 bg-blue-500 mx-auto mt-3 rounded-full group-hover:w-12 transition-all duration-500">
                         </div>
                     </div>
 

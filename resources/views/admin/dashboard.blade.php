@@ -76,7 +76,7 @@
             <div class="divide-y divide-gray-50">
                 @forelse ($recentProvinces as $province)
                     <div class="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors">
-                        <img src="{{ asset('storage/' . $province->thumbnail) }}" alt="{{ $province->name }}"
+                        <img src="{{ $province->thumbnail_url ?? 'https://placehold.co/100x100?text=No+Image' }}" alt="{{ $province->name }}"
                             class="w-10 h-10 rounded-xl object-cover shrink-0 border border-gray-100">
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-900 truncate">{{ $province->name }}</p>
@@ -114,7 +114,7 @@
             <div class="divide-y divide-gray-50">
                 @forelse ($recentDestinations as $destination)
                     <div class="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors">
-                        <img src="{{ asset('storage/' . $destination->thumbnail) }}" alt="{{ $destination->place_name }}"
+                        <img src="{{ $destination->thumbnail_url ?? 'https://placehold.co/100x100?text=No+Image' }}" alt="{{ $destination->place_name }}"
                             class="w-10 h-10 rounded-xl object-cover shrink-0 border border-gray-100">
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-900 truncate">{{ $destination->place_name }}</p>

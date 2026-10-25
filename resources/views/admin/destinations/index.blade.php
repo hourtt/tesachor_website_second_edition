@@ -30,7 +30,7 @@
                                     <div class="flex items-center gap-3">
                                         <div class="w-12 h-12 rounded-xl overflow-hidden bg-gray-100 shrink-0 border border-gray-100">
                                             @if ($destination->thumbnail)
-                                                <img src="{{ asset('storage/' . $destination->thumbnail) }}" alt="{{ $destination->place_name }}" class="w-full h-full object-cover">
+                                                <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}" class="w-full h-full object-cover">
                                             @else
                                                 <div class="w-full h-full flex items-center justify-center text-gray-400">
                                                     <i class="fa-regular fa-image"></i>

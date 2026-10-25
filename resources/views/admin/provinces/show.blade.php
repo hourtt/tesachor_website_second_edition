@@ -37,7 +37,7 @@
     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-8">
         <div class="md:flex">
             <div class="md:w-1/3 h-64 md:h-auto relative group">
-                <img src="{{ asset('storage/' . $province->thumbnail) }}" alt="{{ $province->name }}"
+                <img src="{{ $province->thumbnail_url }}" alt="{{ $province->name }}"
                     class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black/10"></div>
             </div>
@@ -71,11 +71,11 @@
     {{-- Destinations Grid --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         @forelse($province->destinations as $destination)
-            <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gray-100">
-                <img src="{{ asset('storage/' . $destination->thumbnail) }}" alt="{{ $destination->place_name }}"
+            <div class="group relative aspect-4/5 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gray-100">
+                <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}"
                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
 
                 <div class="absolute top-3 right-3 flex flex-col gap-2 translate-x-12 group-hover:translate-x-0 transition-transform duration-300 z-10">
                     <a href="{{ route('admins.destinations.edit', $destination->slug) }}"

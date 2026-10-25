@@ -32,13 +32,13 @@
     {{-- Destination Hero Preview --}}
     <div class="relative w-full h-80 rounded-2xl overflow-hidden mb-8 shadow-sm">
         @if ($destination->thumbnail)
-            <img src="{{ asset('storage/' . $destination->thumbnail) }}" alt="{{ $destination->place_name }}" class="w-full h-full object-cover">
+            <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}" class="w-full h-full object-cover">
         @else
             <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
                 <i class="fa-regular fa-image text-3xl"></i>
             </div>
         @endif
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
         <div class="absolute bottom-0 left-0 p-6 sm:p-8 text-white">
             @if ($destination->is_recommended)
                 <span class="bg-amber-500 text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider mb-2 inline-block">
@@ -48,7 +48,7 @@
             <h2 class="text-3xl font-bold font-serif">{{ $destination->place_name }}</h2>
             <div class="flex items-center gap-4 mt-2 text-sm text-gray-200">
                 @if ($destination->province)
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-map-pin text-white-400"></i> {{ $destination->province->name }}</span>
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-map-pin text-blue-400"></i> {{ $destination->province->name }}</span>
                 @endif
                 @if ($destination->rating)
                     <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-yellow-400"></i> {{ $destination->rating }} / 5.0</span>
@@ -112,9 +112,9 @@
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Gallery ({{ count($destination->gallery_images) }})</h3>
                     <div class="grid grid-cols-2 gap-3">
-                        @foreach ($destination->gallery_images as $gImg)
+                        @foreach ($destination->gallery_urls as $gUrl)
                             <div class="h-24 rounded-xl overflow-hidden border border-gray-100">
-                                <img src="{{ asset('storage/' . $gImg) }}" class="w-full h-full object-cover">
+                                <img src="{{ $gUrl }}" class="w-full h-full object-cover">
                             </div>
                         @endforeach
                     </div>

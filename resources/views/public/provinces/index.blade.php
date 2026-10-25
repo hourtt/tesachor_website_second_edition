@@ -25,15 +25,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
             @forelse($provinces as $province)
                 <div
-                    class="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gray-100">
+                    class="group relative aspect-3/4 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gray-100">
 
                     {{-- 1. Full Background Image --}}
-                    <img src="{{ asset('storage/' . $province->thumbnail) }}" alt="{{ $province->name }}"
+                    <img src="{{ $province->thumbnail_url }}" alt="{{ $province->name }}"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
                     {{-- 2. Gradient Overlay --}}
                     <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                        class="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity cursor-pointer">
                     </div>
 
                     {{-- 4. Destination Count Badge (Top Left) --}}

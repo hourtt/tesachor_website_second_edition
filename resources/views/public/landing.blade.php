@@ -179,7 +179,7 @@
                     data-aos="zoom-in-up" data-aos-delay="{{ $index * 100 }}">
 
                     <div class="relative h-64 overflow-hidden">
-                        <img src="{{ asset('storage/' . $tour->thumbnail) }}" alt="{{ $tour->place_name }}"
+                        <img src="{{ $tour->thumbnail_url }}" alt="{{ $tour->place_name }}"
                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
 
@@ -241,7 +241,7 @@
                     data-aos="flip-left" data-aos-delay="{{ $index * 50 }}">
 
                     {{-- Full Image Background --}}
-                    <img src="{{ asset('storage/' . $province->thumbnail) }}" alt="{{ $province->name }}"
+                    <img src="{{ $province->thumbnail_url }}" alt="{{ $province->name }}"
                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
 
                     {{-- Gradient Overlay --}}

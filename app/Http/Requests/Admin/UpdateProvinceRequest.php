@@ -16,8 +16,15 @@ class UpdateProvinceRequest extends FormRequest
     {
         // We need the province ID to exclude it from unique check.
         // The route parameter could be slug, so we resolve via the service layer —
-        // or we accept it via a hidden input. Simplest: find by slug from route.
-        $provinceId = optional(Province::where('slug', $this->route('province'))->first())->id;
+        $param = (string) $this->route('province');
+        $province = Province::where(function ($query) use ($param) {
+            if (is_numeric($param)) {
+                $query->where('id', (int) $param)->orWhere('slug', $param);
+            } else {
+                $query->where('slug', $param);
+            }
+        })->first();
+        $provinceId = $province?->id;
 
         return [
             'name' => 'required|string|max:255|unique:provinces,name,'.$provinceId,

@@ -12,14 +12,14 @@
     {{-- GRID LAYOUT --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
         @forelse($provinces as $province)
-            <div class="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gray-100">
+            <div class="group relative aspect-3/4 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gray-100">
 
                 {{-- Background Image --}}
-                <img src="{{ asset('storage/' . $province->thumbnail) }}" alt="{{ $province->name }}"
+                <img src="{{ $province->thumbnail_url }}" alt="{{ $province->name }}"
                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
                 {{-- Gradient Overlay --}}
-                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
 
                 {{-- Action Buttons (Top Right) --}}
                 <div class="absolute top-3 right-3 flex flex-col gap-2 translate-x-12 group-hover:translate-x-0 transition-transform duration-300 z-20">
@@ -34,7 +34,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-white-600 transition shadow-sm"
+                            class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition shadow-sm"
                             title="Delete Province">
                             <i class="fa-solid fa-trash text-xs"></i>
                         </button>
@@ -44,7 +44,7 @@
                 {{-- Destination Count Badge (Top Left) --}}
                 <div class="absolute top-3 left-3 z-20">
                     <span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-sm flex items-center gap-1">
-                        <i class="fa-solid fa-map-location-dot text-white-400"></i>
+                        <i class="fa-solid fa-map-location-dot text-white/70"></i>
                         {{ $province->destinations->count() }} {{ Str::plural('Place', $province->destinations->count()) }}
                     </span>
                 </div>

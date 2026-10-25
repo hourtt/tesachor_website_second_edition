@@ -108,7 +108,7 @@
                         </label>
                         <div class="w-full sm:w-1/2 h-40 bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
                             <img id="thumbnail_preview"
-                                src="{{ $destination->thumbnail ? asset('storage/' . $destination->thumbnail) : 'https://placehold.co/600x400?text=No+Image' }}"
+                                src="{{ $destination->thumbnail_url ?? 'https://placehold.co/600x400?text=No+Image' }}"
                                 class="w-full h-full object-cover">
                         </div>
                     </div>
@@ -135,9 +135,9 @@
                         <div class="mb-4">
                             <p class="text-xs text-gray-500 mb-2">Current gallery photos:</p>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                                @foreach ($destination->gallery_images as $img)
+                                @foreach ($destination->gallery_urls as $gUrl)
                                     <div class="h-24 rounded-xl overflow-hidden border border-gray-200">
-                                        <img src="{{ asset('storage/' . $img) }}" class="w-full h-full object-cover">
+                                        <img src="{{ $gUrl }}" class="w-full h-full object-cover">
                                     </div>
                                 @endforeach
                             </div>

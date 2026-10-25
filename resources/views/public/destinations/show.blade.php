@@ -1,17 +1,17 @@
 <x-app-layout :hideNav="true">
     {{-- 1. HERO SECTION --}}
-    <div class="relative w-full h-[70vh] min-h-[500px] group">
+    <div class="relative w-full h-[70vh] min-h-125 group">
         {{-- Hero Image --}}
         <div class="absolute inset-0 overflow-hidden">
             @if ($destination->thumbnail)
-                <img src="{{ asset('storage/' . $destination->thumbnail) }}" alt="{{ $destination->place_name }}"
+                <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}"
                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
             @else
                 <div class="w-full h-full bg-gray-200 flex items-center justify-center">
                     <span class="text-gray-400">No Cover Image</span>
                 </div>
             @endif
-            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
         </div>
 
         {{-- Hero Content --}}
@@ -71,14 +71,14 @@
                 </section>
 
                 {{-- Gallery Images (The Missing Part) --}}
-                @if ($destination->gallery_images && count($destination->gallery_images) > 0)
+                @if ($destination->gallery_urls && count($destination->gallery_urls) > 0)
                     <section>
                         <h2 class="font-serif text-2xl font-bold text-gray-900 mb-6">Photo Gallery</h2>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
-                            @foreach ($destination->gallery_images as $index => $img)
+                            @foreach ($destination->gallery_urls as $index => $imgUrl)
                                 <div
                                     class="relative group overflow-hidden rounded-xl h-48 md:h-64 shadow-sm cursor-pointer">
-                                    <img src="{{ asset('storage/' . $img) }}"
+                                    <img src="{{ $imgUrl }}"
                                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         alt="Gallery image {{ $index + 1 }}">
                                     <div
@@ -198,7 +198,7 @@
                         <a href="{{ route('public.destinations.show', $place->slug) }}"
                             class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
                             <div class="h-48 overflow-hidden relative">
-                                <img src="{{ asset('storage/' . $place->thumbnail) }}" alt="{{ $place->place_name }}"
+                                <img src="{{ $place->thumbnail_url }}" alt="{{ $place->place_name }}"
                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                 @if ($place->is_recommended)
                                     <span

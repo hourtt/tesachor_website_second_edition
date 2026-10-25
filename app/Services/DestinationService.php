@@ -9,11 +9,19 @@ use Illuminate\Support\Str;
 
 class DestinationService
 {
-    public function getDestinationByIdOrSlug(string $identifier)
+    protected string $disk = 'supabase_destination';
+
+    public function getDestinationByIdOrSlug(string $identifier): Destination
     {
         return Destination::with('province')
-            ->where('id', $identifier)
-            ->orWhere('slug', $identifier)
+            ->where(function ($query) use ($identifier) {
+                if (is_numeric($identifier)) {
+                    $query->where('id', (int) $identifier)
+                        ->orWhere('slug', $identifier);
+                } else {
+                    $query->where('slug', $identifier);
+                }
+            })
             ->firstOrFail();
     }
 
@@ -26,58 +34,79 @@ class DestinationService
             ->get();
     }
 
-    public function createDestination(array $data, ?UploadedFile $thumbnail = null, ?array $galleryImages = null)
+    public function createDestination(array $data, ?UploadedFile $thumbnail = null, ?array $galleryImages = null): Destination
     {
+        // Remove file objects from $data before initial DB create
+        unset($data['thumbnail'], $data['gallery_images']);
+
+        if (isset($data['highlights']) && is_array($data['highlights'])) {
+            $data['highlights'] = array_values(array_filter($data['highlights'], fn ($value) => !is_null($value) && trim((string) $value) !== ''));
+        }
+
+        $data['slug'] = Str::slug($data['place_name']);
+
+        $destination = Destination::create($data);
+        $disk = Storage::disk($this->disk);
+        $destinationId = (string) $destination->getKey();
+
         if ($thumbnail) {
-            $data['thumbnail'] = $thumbnail->store('destination_thumbnails', 'public');
+            $destination->thumbnail = $disk->putFile("thumbnails/{$destinationId}", $thumbnail);
         }
 
         if ($galleryImages) {
             $galleryPaths = [];
             foreach ($galleryImages as $file) {
-                $galleryPaths[] = $file->store('destination_gallery', 'public');
+                $galleryPaths[] = $disk->putFile("gallery/{$destinationId}", $file);
             }
-            $data['gallery_images'] = $galleryPaths;
+            $destination->gallery_images = $galleryPaths;
         }
 
-        if (! empty($data['highlights'])) {
-            $data['highlights'] = array_values(array_filter($data['highlights'], fn ($value) => ! is_null($value) && $value !== ''));
+        if ($thumbnail || $galleryImages) {
+            $destination->save();
         }
 
-        $data['slug'] = Str::slug($data['place_name']);
-
-        return Destination::create($data);
+        return $destination;
     }
 
-    public function updateDestination(Destination $destination, array $data, ?UploadedFile $thumbnail = null, ?array $galleryImages = null)
+    public function updateDestination(Destination $destination, array $data, ?UploadedFile $thumbnail = null, ?array $galleryImages = null): Destination
     {
+        $disk = Storage::disk($this->disk);
+        $destinationId = (string) $destination->getKey();
+
         if ($thumbnail) {
-            if ($destination->thumbnail) {
-                Storage::disk('public')->delete($destination->thumbnail);
+            if ($destination->thumbnail && !str_starts_with($destination->thumbnail, 'http://') && !str_starts_with($destination->thumbnail, 'https://')) {
+                $disk->delete($destination->thumbnail);
             }
-            $data['thumbnail'] = $thumbnail->store('destination_thumbnails', 'public');
+            $data['thumbnail'] = $disk->putFile("thumbnails/{$destinationId}", $thumbnail);
+        } else {
+            // Prevent wiping existing thumbnail when no new file is uploaded
+            unset($data['thumbnail']);
         }
 
+        // Gallery images update & cleanup
         if ($galleryImages) {
-            if ($destination->gallery_images) {
+            if ($destination->gallery_images && is_array($destination->gallery_images)) {
                 foreach ($destination->gallery_images as $oldImg) {
-                    if (Storage::disk('public')->exists($oldImg)) {
-                        Storage::disk('public')->delete($oldImg);
+                    if (!str_starts_with($oldImg, 'http://') && !str_starts_with($oldImg, 'https://')) {
+                        $disk->delete($oldImg);
                     }
                 }
             }
             $galleryPaths = [];
             foreach ($galleryImages as $file) {
-                $galleryPaths[] = $file->store('destination_gallery', 'public');
+                $galleryPaths[] = $disk->putFile("gallery/{$destinationId}", $file);
             }
             $data['gallery_images'] = $galleryPaths;
+        } else {
+            // Prevent wiping existing gallery images when no new files are uploaded
+            unset($data['gallery_images']);
         }
 
-        if (isset($data['highlights'])) {
-            $data['highlights'] = array_values(array_filter($data['highlights'], fn ($value) => ! is_null($value) && $value !== ''));
+        if (isset($data['highlights']) && is_array($data['highlights'])) {
+            $data['highlights'] = array_values(array_filter($data['highlights'], fn ($value) => !is_null($value) && trim((string) $value) !== ''));
         }
 
-        if ($destination->place_name !== $data['place_name']) {
+        if (isset($data['place_name']) && $destination->place_name !== $data['place_name']) {
             $data['slug'] = Str::slug($data['place_name']);
         }
 
@@ -86,20 +115,21 @@ class DestinationService
         return $destination;
     }
 
-    public function deleteDestination(Destination $destination)
+    public function deleteDestination(Destination $destination): bool
     {
-        if ($destination->thumbnail) {
-            Storage::disk('public')->delete($destination->thumbnail);
+        $disk = Storage::disk($this->disk);
+        if ($destination->thumbnail && !str_starts_with($destination->thumbnail, 'http://') && !str_starts_with($destination->thumbnail, 'https://')) {
+            $disk->delete($destination->thumbnail);
         }
 
-        if ($destination->gallery_images) {
+        if ($destination->gallery_images && is_array($destination->gallery_images)) {
             foreach ($destination->gallery_images as $img) {
-                if (Storage::disk('public')->exists($img)) {
-                    Storage::disk('public')->delete($img);
+                if (!str_starts_with($img, 'http://') && !str_starts_with($img, 'https://')) {
+                    $disk->delete($img);
                 }
             }
         }
 
-        return $destination->delete();
+        return (bool) $destination->delete();
     }
 }
