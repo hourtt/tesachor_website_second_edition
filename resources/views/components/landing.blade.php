@@ -7,9 +7,9 @@
     <title>Tesachor - Explore Cambodia</title>
 
     <!-- Preload Fonts -->
-    <link rel="preload" href="{{ asset('fonts/english/Roboto-Regular.ttf') }}" as="font" type="font/ttf"
+    <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Regular.ttf') }}" as="font" type="font/ttf"
         crossorigin="anonymous">
-    <link rel="preload" href="{{ asset('fonts/english/Roboto-Bold.ttf') }}" as="font" type="font/ttf"
+    <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Bold.ttf') }}" as="font" type="font/ttf"
         crossorigin="anonymous">
     <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Regular.ttf') }}" as="font" type="font/ttf"
         crossorigin="anonymous">
