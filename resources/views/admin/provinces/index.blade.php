@@ -5,24 +5,29 @@
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
         <div>
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Provinces & Cities</h1>
-            <p class="text-gray-500 text-sm mt-1">Manage the {{ $provinces->total() }} provinces and destinations in the system.</p>
+            <p class="text-gray-500 text-sm mt-1">Manage the {{ $provinces->total() }} provinces and destinations in the
+                system.</p>
         </div>
     </div>
 
     {{-- GRID LAYOUT --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
         @forelse($provinces as $province)
-            <div class="group relative aspect-3/4 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gray-100">
+            <div
+                class="group relative aspect-3/4 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 bg-gray-100">
 
                 {{-- Background Image --}}
                 <img src="{{ $province->thumbnail_url }}" alt="{{ $province->name }}"
-                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    class="absolute inset-0 w-full h-full object-cover">
 
                 {{-- Gradient Overlay --}}
-                <div class="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity"></div>
+                <div
+                    class="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity">
+                </div>
 
                 {{-- Action Buttons (Top Right) --}}
-                <div class="absolute top-3 right-3 flex flex-col gap-2 translate-x-12 group-hover:translate-x-0 transition-transform duration-300 z-20">
+                <div
+                    class="absolute top-3 right-3 flex flex-col gap-2 translate-x-12 group-hover:translate-x-0 transition-transform duration-300 z-20">
                     <a href="{{ route('admins.provinces.edit', $province->slug) }}"
                         class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-blue-600 transition shadow-sm"
                         title="Edit Province">
@@ -43,25 +48,30 @@
 
                 {{-- Destination Count Badge (Top Left) --}}
                 <div class="absolute top-3 left-3 z-20">
-                    <span class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-sm flex items-center gap-1">
+                    <span
+                        class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-sm flex items-center gap-1">
                         <i class="fa-solid fa-map-location-dot text-white/70"></i>
-                        {{ $province->destinations->count() }} {{ Str::plural('Place', $province->destinations->count()) }}
+                        {{ $province->destinations->count() }}
+                        {{ Str::plural('Place', $province->destinations->count()) }}
                     </span>
                 </div>
 
                 {{-- Bottom Content --}}
                 <div class="absolute bottom-0 inset-x-0 p-6 text-center z-10 flex flex-col items-center">
                     <x-province-card-title :province="$province" />
-                    <a href="{{ route('admins.provinces.show', $province->slug) }}" class="absolute inset-0 z-0" title="View details"></a>
+                    <a href="{{ route('admins.provinces.show', $province->slug) }}" class="absolute inset-0 z-0"
+                        title="View details"></a>
                 </div>
             </div>
         @empty
             <div class="col-span-full py-16 text-center bg-white rounded-2xl border-2 border-dashed border-gray-200">
-                <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
+                <div
+                    class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
                     <i class="fa-regular fa-map text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-medium text-gray-900">No provinces found</h3>
-                <p class="text-gray-500 mb-6 max-w-sm mx-auto">Get started by adding the first province or city to your database.</p>
+                <p class="text-gray-500 mb-6 max-w-sm mx-auto">Get started by adding the first province or city to your
+                    database.</p>
                 <a href="{{ route('admins.provinces.create') }}"
                     class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition shadow-md">
                     <i class="fa-solid fa-plus mr-2"></i> Create Province

@@ -70,8 +70,7 @@
 
                 {{-- Image --}}
                 <img src="{{ asset('storage/container-images/1500-mountains.jpg') }}"
-                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 will-change-transform"
-                    alt="Koh Rong">
+                    class="absolute inset-0 w-full h-full object-cover" alt="Koh Rong">
 
                 {{-- Gradient Overlay --}}
                 <div
@@ -104,8 +103,7 @@
                     <div class="relative group h-60 rounded-3xl overflow-hidden shadow-xl cursor-pointer"
                         data-aos="fade-left" data-aos-delay="{{ $card['delay'] }}" data-aos-once="true">
                         <img src="{{ asset('storage/container-images/' . $card['image']) }}"
-                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 will-change-transform"
-                            alt="{{ $card['alt'] }}">
+                            class="absolute inset-0 w-full h-full object-cover" alt="{{ $card['alt'] }}">
                         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
                         <div
                             class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
@@ -222,7 +220,7 @@
                 <div data-aos="fade-left" class="flex flex-wrap justify-center gap-3">
                     {{-- * See province/city list* --}}
                     <a href="{{ route('public.provinces.index') }}"
-                        class="inline-flex items-center px-6 py-3 bg-white text-gray-900 border border-gray-200 rounded-full hover:bg-gray-50 hover:text-white-600 transition shadow-md text-sm font-bold uppercase tracking-wider">
+                        class="inline-flex items-center px-6 py-3 bg-white text-gray-900 border border-gray-200 rounded-full hover:bg-gray-50 hover:text-white-600 transition shadow-md text-sm font-bold capitalize tracking-wider">
                         <i class="fa-solid fa-list-ul mr-2"></i>
                         <span
                             x-text="$store.i18n.t('landing/landing.see_provinces_list')">{{ __('landing/landing.see_provinces_list') }}</span>
