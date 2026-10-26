@@ -10,6 +10,7 @@ use Illuminate\Filesystem\FilesystemAdapter;
 /**
  * @property int $id
  * @property int $province_id
+ * @property int|null $category_id
  * @property string $place_name
  * @property string $slug
  * @property string $short_description
@@ -24,6 +25,7 @@ use Illuminate\Filesystem\FilesystemAdapter;
  * @property-read string|null $thumbnail_url
  * @property-read array<string> $gallery_urls
  * @property-read \App\Models\Province|null $province
+ * @property-read \App\Models\Category|null $category
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  */
@@ -33,6 +35,7 @@ class Destination extends Model
 
     protected $fillable = [
         'province_id',
+        'category_id',
         'place_name',
         'slug',
         'short_description',
@@ -56,6 +59,11 @@ class Destination extends Model
     public function province()
     {
         return $this->belongsTo(Province::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     public function thumbnailUrl(): Attribute

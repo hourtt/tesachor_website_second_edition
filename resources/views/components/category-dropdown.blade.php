@@ -5,12 +5,25 @@
 ])
 
 @php
-    $options = $options ?? [
-        ['label' => __('landing/landing.all_categories'), 'value' => ''],
-        ['label' => __('landing/landing.temples'), 'value' => 'temples'],
-        ['label' => __('landing/landing.beaches'), 'value' => 'beaches'],
-        ['label' => __('landing/landing.nature'), 'value' => 'nature'],
-    ];
+    if ($options === null) {
+        $dbCategories = \Illuminate\Support\Facades\Schema::hasTable('categories')
+            ? \App\Models\Category::orderBy('name')->get()
+            : collect();
+
+        if ($dbCategories->isNotEmpty()) {
+            $options = array_merge(
+                [['label' => __('landing/landing.all_categories'), 'value' => '']],
+                $dbCategories->map(fn($c) => ['label' => $c->name, 'value' => $c->slug])->all()
+            );
+        } else {
+            $options = [
+                ['label' => __('landing/landing.all_categories'), 'value' => ''],
+                ['label' => __('landing/landing.temples'), 'value' => 'temples'],
+                ['label' => __('landing/landing.beaches'), 'value' => 'beaches'],
+                ['label' => __('landing/landing.nature'), 'value' => 'nature'],
+            ];
+        }
+    }
     $initialOption = collect($options)->firstWhere('value', $selected) ?? $options[0] ?? ['label' => __('landing/landing.all_categories'), 'value' => ''];
 @endphp
 
@@ -35,7 +48,7 @@
     <button type="button"
             @click="open = !open"
             class="flex items-center space-x-2.5 px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-150 focus:outline-none cursor-pointer select-none">
-        <span x-text="selected.value ? $store.i18n.t('landing/landing.' + selected.value) : $store.i18n.t('landing/landing.all_categories')" class="whitespace-nowrap">{{ $initialOption['label'] }}</span>
+        <span x-text="selected.label" class="whitespace-nowrap">{{ $initialOption['label'] }}</span>
         <svg class="w-4 h-4 text-gray-400 transition-transform duration-200 transform"
              :class="{ 'rotate-180 text-gray-700': open }"
              fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,9 +75,9 @@
                         :class="selected.value === option.value
                             ? 'bg-blue-50 text-blue-600 font-semibold'
                             : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-medium'">
-                    <span x-text="option.value ? $store.i18n.t('landing/landing.' + option.value) : $store.i18n.t('landing/landing.all_categories')"></span>
+                    <span x-text="option.label"></span>
                     <svg x-show="selected.value === option.value"
-                         class="w-4 h-4 text-blue-600 flex-shrink-0 ml-2"
+                         class="w-4 h-4 text-blue-600 shrink-0 ml-2"
                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                     </svg>

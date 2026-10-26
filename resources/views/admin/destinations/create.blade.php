@@ -62,6 +62,21 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    {{-- Category Dropdown --}}
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700">Category <span class="text-red-500">*</span></label>
+                        <x-custom-select
+                            name="category_id"
+                            placeholder="Select a Category"
+                            :selected="old('category_id')"
+                            :options="$categories->sortBy('name')->map(fn($c) => ['label' => $c->name, 'value' => (string) $c->id])->values()->all()"
+                            required
+                        />
+                        @error('category_id')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     {{-- Rating --}}
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Rating (0 - 5.0)</label>
@@ -72,16 +87,16 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
 
-                    {{-- Recommendation Checkbox --}}
-                    <div class="flex items-center pt-6">
-                        <label class="inline-flex items-center gap-2 cursor-pointer">
-                            <input id="is_recommended" type="checkbox" name="is_recommended" value="1"
-                                {{ old('is_recommended') ? 'checked' : '' }}
-                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer">
-                            <span class="text-sm font-medium text-gray-800">Mark as "Recommended for You"</span>
-                        </label>
-                    </div>
+                {{-- Recommendation Checkbox --}}
+                <div class="mb-6">
+                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                        <input id="is_recommended" type="checkbox" name="is_recommended" value="1"
+                            {{ old('is_recommended') ? 'checked' : '' }}
+                            class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer">
+                        <span class="text-sm font-medium text-gray-800">Mark as "Recommended for You"</span>
+                    </label>
                 </div>
 
                 {{-- Short Description --}}

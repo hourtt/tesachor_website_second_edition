@@ -15,6 +15,7 @@ class UpdateDestinationRequest extends FormRequest
     {
         return [
             'province_id' => 'required|exists:provinces,id',
+            'category_id' => 'required|exists:categories,id',
             'place_name' => 'required|string|max:255',
             'short_description' => 'required|string|max:500',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
@@ -40,6 +41,8 @@ class UpdateDestinationRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'category_id.required' => 'Please select a category.',
+            'category_id.exists' => 'The selected category is invalid.',
             'thumbnail.max' => 'The cover image must not exceed 10 MB.',
             'gallery_images.max' => 'You may upload up to 10 gallery images.',
             'gallery_images.*.max' => 'Each gallery image must not exceed 10 MB.',

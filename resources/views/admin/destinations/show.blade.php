@@ -49,6 +49,9 @@
                 @if ($destination->province)
                     <span class="flex items-center gap-1.5"><i class="fa-solid fa-map-pin text-blue-400"></i> {{ $destination->province->name }}</span>
                 @endif
+                @if ($destination->category)
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-tag text-emerald-400"></i> {{ $destination->category->name }}</span>
+                @endif
                 @if ($destination->rating)
                     <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-yellow-400"></i> {{ $destination->rating }} / 5.0</span>
                 @endif

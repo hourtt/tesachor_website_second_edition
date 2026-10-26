@@ -44,6 +44,10 @@
                 <div class="flex flex-wrap gap-4 mt-2 text-sm font-medium text-gray-300">
                     <span class="flex items-center"><i class="fa-solid fa-location-dot mr-2 text-blue-400"></i>
                         {{ $destination->province->name ?? 'Cambodia' }}</span>
+                    @if ($destination->category)
+                        <span class="flex items-center"><i class="fa-solid fa-tag mr-2 text-emerald-400"></i>
+                            {{ $destination->category->name }}</span>
+                    @endif
                     @if ($destination->rating)
                         <span class="flex items-center"><i class="fa-solid fa-star mr-2 text-yellow-400"></i>
                             {{ $destination->rating }} / 5.0</span>
@@ -62,7 +66,7 @@
 
                 {{-- About --}}
                 <section>
-                    <h2 class="font-serif text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                    <h2 class="font-sans text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
                         <span class="w-8 h-1 bg-blue-600 rounded-full block"></span> About this Place
                     </h2>
                     <div class="prose prose-lg text-gray-600 leading-relaxed text-justify">
@@ -73,7 +77,7 @@
                 {{-- Gallery Images (The Missing Part) --}}
                 @if ($destination->gallery_urls && count($destination->gallery_urls) > 0)
                     <section>
-                        <h2 class="font-serif text-2xl font-bold text-gray-900 mb-6">Photo Gallery</h2>
+                        <h2 class="font-sans text-2xl font-bold text-gray-900 mb-6">Photo Gallery</h2>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                             @foreach ($destination->gallery_urls as $index => $imgUrl)
                                 <div
@@ -138,7 +142,7 @@
 
                     {{-- 2. Details Card --}}
                     <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-                        <h3 class="font-serif text-xl font-bold text-gray-800 mb-6 border-b pb-2">At a Glance</h3>
+                        <h3 class="font-sans text-xl font-bold text-gray-800 mb-6 border-b pb-2">At a Glance</h3>
                         <ul class="space-y-4">
                             <li class="flex items-start justify-between">
                                 <span class="text-gray-500 text-sm">Location</span>
@@ -163,7 +167,7 @@
                     {{-- 3. Highlights --}}
                     @if ($destination->highlights && count($destination->highlights) > 0)
                         <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-                            <h3 class="font-serif text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            <h3 class="font-sans text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
                                 <i class="fa-regular fa-lightbulb text-yellow-500"></i> Highlights
                             </h3>
                             <ul class="space-y-3">

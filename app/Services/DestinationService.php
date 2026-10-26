@@ -13,7 +13,7 @@ class DestinationService
 
     public function getDestinationByIdOrSlug(string $identifier): Destination
     {
-        return Destination::with('province')
+        return Destination::with(['province', 'category'])
             ->where(function ($query) use ($identifier) {
                 if (is_numeric($identifier)) {
                     $query->where('id', (int) $identifier)
@@ -28,7 +28,7 @@ class DestinationService
     public function getRecommendedDestinations(int $limit = 6)
     {
         return Destination::where('is_recommended', true)
-            ->with('province')
+            ->with(['province', 'category'])
             ->latest()
             ->take($limit)
             ->get();

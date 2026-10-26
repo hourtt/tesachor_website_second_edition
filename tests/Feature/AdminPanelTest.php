@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Category;
 use App\Models\Destination;
 use App\Models\Province;
 use App\Models\User;
@@ -271,8 +272,14 @@ class AdminPanelTest extends TestCase
             'thumbnail' => 'provinces/kandal.jpg',
         ]);
 
+        $category = Category::create([
+            'name' => 'Culture',
+            'slug' => 'culture',
+        ]);
+
         $destination = Destination::create([
             'province_id' => $province->id,
+            'category_id' => $category->id,
             'place_name' => 'Oudong Mountain',
             'slug' => 'oudong-mountain',
             'short_description' => 'Historical royal necropolis.',
@@ -285,9 +292,60 @@ class AdminPanelTest extends TestCase
         $response->assertOk();
         $response->assertSee('Oudong Mountain');
         $response->assertSee('Kandal');
+        $response->assertSee('Culture');
+    }
+
+    public function test_admin_can_view_create_destination_form_with_categories(): void
+    {
+        Category::create(['name' => 'Temples', 'slug' => 'temples']);
+        Category::create(['name' => 'Beaches', 'slug' => 'beaches']);
+
+        $response = $this->actingAs($this->admin)->get(route('admins.destinations.create'));
+
+        $response->assertOk();
+        $response->assertSee('Create New Destination');
+        $response->assertSee('Category');
+        $response->assertSee('Temples');
+        $response->assertSee('Beaches');
     }
 
     public function test_admin_can_store_destination(): void
+    {
+        $province = Province::create([
+            'name' => 'Phnom Penh',
+            'name_in_khmer' => 'ភ្នំពេញ',
+            'slug' => 'phnom-penh',
+            'thumbnail' => 'provinces/phnom-penh.jpg',
+        ]);
+
+        $category = Category::create([
+            'name' => 'Historical',
+            'slug' => 'historical',
+        ]);
+
+        $thumbnail = UploadedFile::fake()->create('palace.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($this->admin)->post(route('admins.destinations.store'), [
+            'place_name' => 'Royal Palace',
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'short_description' => 'Official residence of the King of Cambodia.',
+            'place_description' => 'A complex of buildings which serves as the royal residence.',
+            'thumbnail' => $thumbnail,
+            'rating' => 4.8,
+            'is_recommended' => 1,
+            'highlights' => ['Throne Hall', 'Silver Pagoda'],
+        ]);
+
+        $response->assertRedirect(route('admins.provinces.show', $province->slug));
+        $this->assertDatabaseHas('destinations', [
+            'place_name' => 'Royal Palace',
+            'slug' => 'royal-palace',
+            'category_id' => $category->id,
+        ]);
+    }
+
+    public function test_store_destination_validation_fails_without_category(): void
     {
         $province = Province::create([
             'name' => 'Phnom Penh',
@@ -304,16 +362,80 @@ class AdminPanelTest extends TestCase
             'short_description' => 'Official residence of the King of Cambodia.',
             'place_description' => 'A complex of buildings which serves as the royal residence.',
             'thumbnail' => $thumbnail,
-            'rating' => 4.8,
-            'is_recommended' => 1,
-            'highlights' => ['Throne Hall', 'Silver Pagoda'],
         ]);
 
-        $response->assertRedirect(route('admins.provinces.show', $province->slug));
-        $this->assertDatabaseHas('destinations', [
-            'place_name' => 'Royal Palace',
-            'slug' => 'royal-palace',
+        $response->assertSessionHasErrors(['category_id']);
+    }
+
+    public function test_store_destination_validation_fails_with_invalid_category(): void
+    {
+        $province = Province::create([
+            'name' => 'Phnom Penh',
+            'name_in_khmer' => 'ភ្នំពេញ',
+            'slug' => 'phnom-penh',
+            'thumbnail' => 'provinces/phnom-penh.jpg',
         ]);
+
+        $thumbnail = UploadedFile::fake()->create('palace.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($this->admin)->post(route('admins.destinations.store'), [
+            'place_name' => 'Royal Palace',
+            'province_id' => $province->id,
+            'category_id' => 99999,
+            'short_description' => 'Official residence of the King of Cambodia.',
+            'place_description' => 'A complex of buildings which serves as the royal residence.',
+            'thumbnail' => $thumbnail,
+        ]);
+
+        $response->assertSessionHasErrors(['category_id']);
+    }
+
+    public function test_store_destination_retains_selected_category_on_validation_failure(): void
+    {
+        $category = Category::create([
+            'name' => 'Nature',
+            'slug' => 'nature',
+        ]);
+
+        $response = $this->actingAs($this->admin)->from(route('admins.destinations.create'))->post(route('admins.destinations.store'), [
+            'place_name' => 'Test Mountain',
+            'category_id' => $category->id,
+        ]);
+
+        $response->assertRedirect(route('admins.destinations.create'));
+        $response->assertSessionHasErrors();
+        $this->assertEquals($category->id, session('_old_input.category_id'));
+    }
+
+    public function test_admin_can_view_edit_destination_form_with_selected_category(): void
+    {
+        $province = Province::create([
+            'name' => 'Takeo',
+            'name_in_khmer' => 'តាកែវ',
+            'slug' => 'takeo',
+            'thumbnail' => 'provinces/takeo.jpg',
+        ]);
+
+        $category = Category::create([
+            'name' => 'Temples',
+            'slug' => 'temples',
+        ]);
+
+        $destination = Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'place_name' => 'Phnom Da',
+            'slug' => 'phnom-da',
+            'short_description' => 'Ancient pre-Angkorian temple.',
+            'place_description' => 'Temple from the Funan period.',
+            'thumbnail' => 'destinations/phnom-da.jpg',
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('admins.destinations.edit', $destination->slug));
+
+        $response->assertOk();
+        $response->assertSee('Edit Destination');
+        $response->assertSee('Temples');
     }
 
     public function test_admin_can_update_destination(): void
@@ -325,8 +447,12 @@ class AdminPanelTest extends TestCase
             'thumbnail' => 'provinces/takeo.jpg',
         ]);
 
+        $category1 = Category::create(['name' => 'Old Category', 'slug' => 'old-category']);
+        $category2 = Category::create(['name' => 'New Category', 'slug' => 'new-category']);
+
         $destination = Destination::create([
             'province_id' => $province->id,
+            'category_id' => $category1->id,
             'place_name' => 'Phnom Da',
             'slug' => 'phnom-da',
             'short_description' => 'Ancient pre-Angkorian temple.',
@@ -337,6 +463,7 @@ class AdminPanelTest extends TestCase
         $response = $this->actingAs($this->admin)->put(route('admins.destinations.update', $destination->slug), [
             'place_name' => 'Phnom Da Temple',
             'province_id' => $province->id,
+            'category_id' => $category2->id,
             'short_description' => 'Updated short description.',
             'place_description' => 'Updated long description.',
             'rating' => 4.5,
@@ -345,7 +472,166 @@ class AdminPanelTest extends TestCase
         $response->assertRedirect(route('admins.destinations.index'));
         $this->assertDatabaseHas('destinations', [
             'place_name' => 'Phnom Da Temple',
+            'category_id' => $category2->id,
         ]);
+    }
+
+    public function test_admin_can_filter_destinations_by_category(): void
+    {
+        $province = Province::create([
+            'name' => 'Siem Reap',
+            'name_in_khmer' => 'សៀមរាប',
+            'slug' => 'siem-reap',
+            'thumbnail' => 'provinces/siem-reap.jpg',
+        ]);
+
+        $templeCategory = Category::create(['name' => 'Temples', 'slug' => 'temples']);
+        $beachCategory = Category::create(['name' => 'Beaches', 'slug' => 'beaches']);
+
+        Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $templeCategory->id,
+            'place_name' => 'Angkor Wat Temple',
+            'slug' => 'angkor-wat-temple',
+            'short_description' => 'Great temple.',
+            'place_description' => 'Temple detail.',
+        ]);
+
+        Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $beachCategory->id,
+            'place_name' => 'Koh Rong Island Beach',
+            'slug' => 'koh-rong-island-beach',
+            'short_description' => 'Island beach paradise.',
+            'place_description' => 'Beach detail.',
+        ]);
+
+        // Filter by category_id
+        $response = $this->actingAs($this->admin)->get(route('admins.destinations.index', ['category_id' => $templeCategory->id]));
+        $response->assertOk();
+        $response->assertSee('Angkor Wat Temple');
+        $response->assertDontSee('Koh Rong Island Beach');
+
+        // Filter by other category
+        $response2 = $this->actingAs($this->admin)->get(route('admins.destinations.index', ['category_id' => $beachCategory->id]));
+        $response2->assertOk();
+        $response2->assertSee('Koh Rong Island Beach');
+        $response2->assertDontSee('Angkor Wat Temple');
+    }
+
+    public function test_admin_can_filter_destinations_by_category_and_search_text(): void
+    {
+        $province = Province::create([
+            'name' => 'Siem Reap',
+            'name_in_khmer' => 'សៀមរាប',
+            'slug' => 'siem-reap',
+            'thumbnail' => 'provinces/siem-reap.jpg',
+        ]);
+
+        $natureCategory = Category::create(['name' => 'Nature', 'slug' => 'nature']);
+
+        Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $natureCategory->id,
+            'place_name' => 'Kulen Waterfall',
+            'slug' => 'kulen-waterfall',
+            'short_description' => 'Lush waterfalls.',
+            'place_description' => 'Waterfall detail.',
+        ]);
+
+        Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $natureCategory->id,
+            'place_name' => 'Tonle Sap Biosphere',
+            'slug' => 'tonle-sap-biosphere',
+            'short_description' => 'Lake ecosystem.',
+            'place_description' => 'Lake detail.',
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('admins.destinations.index', [
+            'category_id' => $natureCategory->id,
+            'search' => 'Waterfall',
+        ]));
+
+        $response->assertOk();
+        $response->assertSee('Kulen Waterfall');
+        $response->assertDontSee('Tonle Sap Biosphere');
+    }
+
+    public function test_admin_can_filter_destinations_by_category_and_province(): void
+    {
+        $province1 = Province::create([
+            'name' => 'Siem Reap',
+            'name_in_khmer' => 'សៀមរាប',
+            'slug' => 'siem-reap',
+            'thumbnail' => 'provinces/siem-reap.jpg',
+        ]);
+
+        $province2 = Province::create([
+            'name' => 'Kampot',
+            'name_in_khmer' => 'កំពត',
+            'slug' => 'kampot',
+            'thumbnail' => 'provinces/kampot.jpg',
+        ]);
+
+        $natureCategory = Category::create(['name' => 'Nature', 'slug' => 'nature']);
+
+        Destination::create([
+            'province_id' => $province1->id,
+            'category_id' => $natureCategory->id,
+            'place_name' => 'Siem Reap Nature Spot',
+            'slug' => 'siem-reap-nature-spot',
+            'short_description' => 'Spot in Siem Reap.',
+            'place_description' => 'Description.',
+        ]);
+
+        Destination::create([
+            'province_id' => $province2->id,
+            'category_id' => $natureCategory->id,
+            'place_name' => 'Bokor National Park',
+            'slug' => 'bokor-national-park',
+            'short_description' => 'Park in Kampot.',
+            'place_description' => 'Description.',
+        ]);
+
+        $response = $this->actingAs($this->admin)->get(route('admins.destinations.index', [
+            'category_id' => $natureCategory->id,
+            'province_id' => $province2->id,
+        ]));
+
+        $response->assertOk();
+        $response->assertSee('Bokor National Park');
+        $response->assertDontSee('Siem Reap Nature Spot');
+    }
+
+    public function test_category_filter_retains_query_string_in_pagination(): void
+    {
+        $province = Province::create([
+            'name' => 'Battambang',
+            'name_in_khmer' => 'បាត់ដំបង',
+            'slug' => 'battambang',
+            'thumbnail' => 'provinces/battambang.jpg',
+        ]);
+
+        $category = Category::create(['name' => 'Temples', 'slug' => 'temples']);
+
+        for ($i = 1; $i <= 16; $i++) {
+            Destination::create([
+                'province_id' => $province->id,
+                'category_id' => $category->id,
+                'place_name' => "Pagoda {$i}",
+                'slug' => "pagoda-{$i}",
+                'short_description' => "Description {$i}",
+                'place_description' => "Full description {$i}",
+            ]);
+        }
+
+        $response = $this->actingAs($this->admin)->get(route('admins.destinations.index', [
+            'category_id' => $category->id,
+        ]));
+
+        $response->assertOk();
+        $response->assertSee('category_id=' . $category->id);
     }
 
     public function test_admin_can_delete_destination(): void

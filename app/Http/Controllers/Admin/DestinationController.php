@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDestinationRequest;
 use App\Http\Requests\Admin\UpdateDestinationRequest;
+use App\Models\Category;
 use App\Models\Destination;
 use App\Models\Province;
 use App\Services\DestinationService;
+use Illuminate\Http\Request;
 
 // TODO(SUPABASE): inject SupabaseService for image upload/delete/gallery
 // use App\Services\SupabaseService;
@@ -19,23 +21,51 @@ class DestinationController extends Controller
         // TODO(SUPABASE): protected SupabaseService $supabase,
     ) {}
 
-    public function index()
+    public function index(Request $request)
     {
-        $destinations = Destination::with('province')
-            ->latest()
-            ->paginate(15);
+        $query = Destination::with(['province', 'category']);
 
-        return view('admin.destinations.index', compact('destinations'));
+        // Text search across place_name and short_description
+        if ($search = $request->input('search')) {
+            $query->where(function ($q) use ($search) {
+                $q->where('place_name', 'like', "%{$search}%")
+                    ->orWhere('short_description', 'like', "%{$search}%");
+            });
+        }
+
+        // Category filter (supports category_id or slug)
+        if ($categoryId = $request->input('category_id')) {
+            $query->where('category_id', $categoryId);
+        } elseif ($categorySlug = $request->input('category')) {
+            $query->whereHas('category', function ($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
+        }
+
+        // Province filter (combines with category and text search)
+        if ($provinceId = $request->input('province_id')) {
+            $query->where('province_id', $provinceId);
+        }
+
+        $destinations = $query->latest()
+            ->paginate(15)
+            ->withQueryString();
+
+        $categories = Category::orderBy('name')->get();
+        $provinces = Province::orderBy('name')->get();
+
+        return view('admin.destinations.index', compact('destinations', 'categories', 'provinces'));
     }
 
     public function create()
     {
         $provinces = Province::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
         $targetProvince = request()->has('province_id')
             ? Province::find(request()->province_id)
             : null;
 
-        return view('admin.destinations.create', compact('provinces', 'targetProvince'));
+        return view('admin.destinations.create', compact('provinces', 'categories', 'targetProvince'));
     }
 
     public function store(StoreDestinationRequest $request)
@@ -66,8 +96,9 @@ class DestinationController extends Controller
     {
         $destination = $this->destinationService->getDestinationByIdOrSlug($id);
         $provinces = Province::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
 
-        return view('admin.destinations.edit', compact('destination', 'provinces'));
+        return view('admin.destinations.edit', compact('destination', 'provinces', 'categories'));
     }
 
     public function update(UpdateDestinationRequest $request, string $id)
