@@ -25,9 +25,9 @@
 
     $navItems = [
         ['id' => 'home', 'label' => __('navbar.home')],
-        ['id' => 'about', 'label' => __('navbar.about')],
         ['id' => 'travel', 'label' => __('navbar.travel')],
         ['id' => 'provinces', 'label' => __('navbar.provinces')],
+        ['id' => 'about', 'label' => __('navbar.about')],
         ['id' => 'lifestyle', 'label' => __('navbar.lifestyle')],
     ];
 

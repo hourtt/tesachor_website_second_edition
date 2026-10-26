@@ -60,109 +60,7 @@
         </div>
     </section>
 
-    {{-- 2. FEATURED GRID: SLIDE & ZOOM --}}
-    <section class="relative z-20 mt-10 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {{-- LEFT COLUMN: Main Feature --}}
-            {{-- Added 'data-aos-once' to stop flickering on scroll --}}
-            <div class="relative group h-125 rounded-3xl overflow-hidden shadow-2xl cursor-pointer" data-aos="zoom-in"
-                data-aos-duration="800" data-aos-once="true">
-
-                {{-- Image --}}
-                <img src="{{ asset('storage/container-images/1500-mountains.jpg') }}"
-                    class="absolute inset-0 w-full h-full object-cover" alt="Koh Rong">
-
-                {{-- Gradient Overlay --}}
-                <div
-                    class="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-                </div>
-
-                {{-- Text Content --}}
-                <div
-                    class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <span
-                        class="inline-block px-3 py-1 bg-blue-500/90 backdrop-blur rounded-full text-[10px] font-bold tracking-widest uppercase mb-3"
-                        x-text="$store.i18n.t('landing/landing.featured')">
-                        {{ __('landing/landing.featured') }}
-                    </span>
-                    <h3 class="font-sans text-4xl mb-3 group-hover:text-white-200 transition-colors"
-                        x-text="$store.i18n.t('landing/landing.coastal_journey_title')">
-                        {{ __('landing/landing.coastal_journey_title') }}
-                    </h3>
-                    <p class="font-sans text-xs text-gray-200 mb-3 line-clamp-3"
-                        x-text="$store.i18n.t('landing/landing.coastal_journey_desc')">
-                        {{ __('landing/landing.coastal_journey_desc') }}
-                    </p>
-                </div>
-            </div>
-
-            {{-- RIGHT COLUMN: Stacked Cards --}}
-            <div class="flex flex-col gap-6">
-                {{-- Loop through the $cards array from config/landing.php and pass the value to landingController --}}
-                @foreach ($cards as $card)
-                    <div class="relative group h-60 rounded-3xl overflow-hidden shadow-xl cursor-pointer"
-                        data-aos="fade-left" data-aos-delay="{{ $card['delay'] }}" data-aos-once="true">
-                        <img src="{{ asset('storage/container-images/' . $card['image']) }}"
-                            class="absolute inset-0 w-full h-full object-cover" alt="{{ $card['alt'] }}">
-                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
-                        <div
-                            class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                            <h3 class="font-sans text-2xl group-hover:text-white-200 transition-colors"
-                                x-text="$store.i18n.t('{{ $card['title'] }}')">{{ __($card['title']) }}</h3>
-                            <p class="font-sans text-xs text-gray-200 mb-2 line-clamp-2"
-                                x-text="$store.i18n.t('{{ $card['description'] }}')">{{ __($card['description']) }}
-                            </p>
-                            <p class="text-xs text-white-200 mt-1 opacity-90 group-hover:opacity-100 font-semibold"
-                                x-text="$store.i18n.t('{{ $card['caption'] }}')">{{ __($card['caption']) }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    {{-- 3. WHO WE ARE: FADE DIRECTIONS --}}
-    <section id="about" class="py-16 bg-transparent overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-duration="1000">
-                <span class="text-white-500 font-bold tracking-widest text-sm uppercase mb-3 block"
-                    x-text="$store.i18n.t('landing/landing.who_we_are')">{{ __('landing/landing.who_we_are') }}</span>
-                <h2 class="font-sans text-4xl md:text-5xl text-gray-900 leading-tight mb-6">
-                    <span
-                        x-text="$store.i18n.t('landing/landing.authentic_cambodian')">{{ __('landing/landing.authentic_cambodian') }}</span>
-                    <span class="text-transparent bg-clip-text bg-linear-to-r from-red-600 to-orange-500"
-                        x-text="$store.i18n.t('landing/landing.adventures')">{{ __('landing/landing.adventures') }}</span>
-                </h2>
-                <p class="text-gray-600 leading-relaxed text-lg" x-html="$store.i18n.t('landing/landing.about_desc')">
-                    {!! __('landing/landing.about_desc') !!}
-                </p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                {{-- Loop through the $features array from config/landing.php and pass the value to landingController --}}
-                @foreach ($features as $card)
-                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center"
-                        data-aos="fade-up" data-aos-delay="{{ $card['delay'] }}" data-aos-once="true">
-                        <div @class([
-                            'w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-6',
-                            'bg-blue-50 text-blue-500' => $card['color'] === 'blue',
-                            'bg-green-50 text-green-500' => $card['color'] === 'green',
-                        ])>
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="{{ $card['icon'] }}">
-                                </path>
-                            </svg>
-                        </div>
-                        <h3 class="font-bold text-xl text-gray-900 mb-3"
-                            x-text="$store.i18n.t('{{ $card['title'] }}')"></h3>
-                        <p class="text-gray-600 text-sm" x-text="$store.i18n.t('{{ $card['description'] }}')"></p>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
-    {{-- 4. RECOMMENDED TRAVEL --}}
+    {{-- 2. RECOMMENDED TRAVEL --}}
     <section id="travel" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 mb-16 text-center">
             <h2 class="font-sans text-4xl md:text-5xl text-gray-900" data-aos="fade-up"
@@ -203,7 +101,7 @@
         </div>
     </section>
 
-    {{-- 5. Explore province & city --}}
+    {{-- 3. Explore province & city --}}
     <section id="provinces" class="py-10 bg-transparent">
         <div class="max-w-5xl mx-auto px-4 mb-16">
             <div
@@ -264,6 +162,108 @@
         </div>
     </section>
 
+    {{-- 4. FEATURED GRID: SLIDE & ZOOM --}}
+    <section class="relative z-20 mt-10 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {{-- LEFT COLUMN: Main Feature --}}
+            {{-- Added 'data-aos-once' to stop flickering on scroll --}}
+            <div class="relative group h-125 rounded-3xl overflow-hidden shadow-2xl cursor-pointer" data-aos="zoom-in"
+                data-aos-duration="800" data-aos-once="true">
+
+                {{-- Image --}}
+                <img src="{{ asset('storage/container-images/1500-mountains.jpg') }}"
+                    class="absolute inset-0 w-full h-full object-cover" alt="Koh Rong">
+
+                {{-- Gradient Overlay --}}
+                <div
+                    class="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                </div>
+
+                {{-- Text Content --}}
+                <div
+                    class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <span
+                        class="inline-block px-3 py-1 bg-blue-500/90 backdrop-blur rounded-full text-[10px] font-bold tracking-widest uppercase mb-3"
+                        x-text="$store.i18n.t('landing/landing.featured')">
+                        {{ __('landing/landing.featured') }}
+                    </span>
+                    <h3 class="font-sans text-4xl mb-3 group-hover:text-white-200 transition-colors"
+                        x-text="$store.i18n.t('landing/landing.coastal_journey_title')">
+                        {{ __('landing/landing.coastal_journey_title') }}
+                    </h3>
+                    <p class="font-sans text-xs text-gray-200 mb-3 line-clamp-3"
+                        x-text="$store.i18n.t('landing/landing.coastal_journey_desc')">
+                        {{ __('landing/landing.coastal_journey_desc') }}
+                    </p>
+                </div>
+            </div>
+
+            {{-- RIGHT COLUMN: Stacked Cards --}}
+            <div class="flex flex-col gap-6">
+                {{-- Loop through the $cards array from config/landing.php and pass the value to landingController --}}
+                @foreach ($cards as $card)
+                    <div class="relative group h-60 rounded-3xl overflow-hidden shadow-xl cursor-pointer"
+                        data-aos="fade-left" data-aos-delay="{{ $card['delay'] }}" data-aos-once="true">
+                        <img src="{{ asset('storage/container-images/' . $card['image']) }}"
+                            class="absolute inset-0 w-full h-full object-cover" alt="{{ $card['alt'] }}">
+                        <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
+                        <div
+                            class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <h3 class="font-sans text-2xl group-hover:text-white-200 transition-colors"
+                                x-text="$store.i18n.t('{{ $card['title'] }}')">{{ __($card['title']) }}</h3>
+                            <p class="font-sans text-xs text-gray-200 mb-2 line-clamp-2"
+                                x-text="$store.i18n.t('{{ $card['description'] }}')">{{ __($card['description']) }}
+                            </p>
+                            <p class="text-xs text-white-200 mt-1 opacity-90 group-hover:opacity-100 font-semibold"
+                                x-text="$store.i18n.t('{{ $card['caption'] }}')">{{ __($card['caption']) }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
+    {{-- 5. WHO WE ARE: FADE DIRECTIONS --}}
+    <section id="about" class="py-16 bg-transparent overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-duration="1000">
+                <span class="text-white-500 font-bold tracking-widest text-sm uppercase mb-3 block"
+                    x-text="$store.i18n.t('landing/landing.who_we_are')">{{ __('landing/landing.who_we_are') }}</span>
+                <h2 class="font-sans text-4xl md:text-5xl text-gray-900 leading-tight mb-6">
+                    <span
+                        x-text="$store.i18n.t('landing/landing.authentic_cambodian')">{{ __('landing/landing.authentic_cambodian') }}</span>
+                    <span class="text-transparent bg-clip-text bg-linear-to-r from-red-600 to-orange-500"
+                        x-text="$store.i18n.t('landing/landing.adventures')">{{ __('landing/landing.adventures') }}</span>
+                </h2>
+                <p class="text-gray-600 leading-relaxed text-lg" x-html="$store.i18n.t('landing/landing.about_desc')">
+                    {!! __('landing/landing.about_desc') !!}
+                </p>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                {{-- Loop through the $features array from config/landing.php and pass the value to landingController --}}
+                @foreach ($features as $card)
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow text-center"
+                        data-aos="fade-up" data-aos-delay="{{ $card['delay'] }}" data-aos-once="true">
+                        <div @class([
+                            'w-14 h-14 mx-auto rounded-full flex items-center justify-center mb-6',
+                            'bg-blue-50 text-blue-500' => $card['color'] === 'blue',
+                            'bg-green-50 text-green-500' => $card['color'] === 'green',
+                        ])>
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="{{ $card['icon'] }}">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="font-bold text-xl text-gray-900 mb-3"
+                            x-text="$store.i18n.t('{{ $card['title'] }}')"></h3>
+                        <p class="text-gray-600 text-sm" x-text="$store.i18n.t('{{ $card['description'] }}')"></p>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </section>
+
     {{-- 6. Discover Cambodia --}}
     <section id="lifestyle" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 text-center mb-16">
@@ -318,7 +318,6 @@
             @endforeach
         </div>
     </section>
-
 
     {{-- 7. GOOD TO KNOW --}}
     <section class="py-10 bg-transparent">

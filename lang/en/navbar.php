@@ -4,7 +4,7 @@ return [
     'home' => 'Home',
     'about' => 'About',
     'travel' => 'Travel',
-    'provinces' => 'Provinces',
+    'provinces' => 'Provinces-Cities',
     'lifestyle' => 'Life Style',
     'login' => 'Log in',
     'register' => 'Register',
