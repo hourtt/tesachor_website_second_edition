@@ -25,8 +25,6 @@ class AppServiceProvider extends ServiceProvider
         // Register the Class in a Service Provider after create a navigation composer class 
         View::composer('layouts.navigation', NavigationComposer::class);
 
-        ResetPassword::createUrlUsing(function (object $notifiable, string $token) {
-            return route('password.reset', ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()]);
-        });
+        ResetPassword::createUrlUsing(fn(object $notifiable, string $token) => route('password.reset', ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()]));
     }
 }
