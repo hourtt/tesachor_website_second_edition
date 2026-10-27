@@ -80,7 +80,7 @@ class ProvinceService
         if ($province->destinations()->count() > 0) {
             return false;
         }
-
+        // Delete the thumbnail if it exists
         if ($province->thumbnail && !str_starts_with($province->thumbnail, 'http://') && !str_starts_with($province->thumbnail, 'https://')) {
             Storage::disk($this->disk)->delete($province->thumbnail);
         }

@@ -18,7 +18,7 @@ class ProvinceController extends Controller
 
     public function index()
     {
-        $provinces = $this->provinceService->getProvincesPaginated(12);
+        $provinces = $this->provinceService->getProvincesPaginated(8);
 
         return view('admin.provinces.index', compact('provinces'));
     }
