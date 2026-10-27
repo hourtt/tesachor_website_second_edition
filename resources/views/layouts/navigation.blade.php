@@ -1,57 +1,3 @@
-@php
-    use App\Models\User;
-
-    // 1. Initialize variables
-    $dashboard = 'users.login';
-    $profile = 'profile.edit';
-    $logout = 'logout';
-    $user = Auth::user();
-    $auth = Auth::check();
-
-    // 2. Check for Admin first (It checks that $user is a User model and has the admin role before continuing.)
-    if ($auth && $user instanceof User && $user->hasRole('admin')) {
-        $dashboard = 'admins.dashboard';
-        $profile = 'admins.profile.edit';
-        $logout = 'logout';
-    }
-    // 3. Check for Regular User second (It checks that $user is a User model before continuing.)
-    elseif ($auth && $user instanceof User) {
-        $dashboard = 'public.landing';
-        $profile = 'profile.edit';
-        $logout = 'logout';
-    }
-
-    $isProfilePage = request()->routeIs('*.profile.*', 'profile.*');
-
-    $navItems = [
-        ['id' => 'home', 'label' => __('navbar.home')],
-        ['id' => 'travel', 'label' => __('navbar.travel')],
-        ['id' => 'provinces', 'label' => __('navbar.provinces')],
-        ['id' => 'about', 'label' => __('navbar.about')],
-        ['id' => 'lifestyle', 'label' => __('navbar.lifestyle')],
-    ];
-
-    $navTranslations = [
-        'en' => [
-            'navbar' => trans('navbar', [], 'en'),
-            'landing' => trans('landing/landing', [], 'en'),
-            'landing/landing' => trans('landing/landing', [], 'en'),
-        ],
-        'km' => [
-            'navbar' => trans('navbar', [], 'km'),
-            'landing' => trans('landing/landing', [], 'km'),
-            'landing/landing' => trans('landing/landing', [], 'km'),
-        ],
-    ];
-
-    foreach (['en', 'km'] as $loc) {
-        $landingArr = trans('landing/landing', [], $loc);
-        if (is_array($landingArr)) {
-            $navTranslations[$loc] += $landingArr;
-        }
-    }
-
-@endphp
 
 <script>
     if (!window.translations) {
@@ -90,13 +36,6 @@
             {{-- *Logo* --}}
             <div class="flex">
                 <div class="shrink-0 flex items-center">
-                    @php
-                        // Determine the logo link based on authentication status
-                        $logoRoute = 'public.landing'; // Default for visitors & regular users
-                        if ($user instanceof User && $user->hasRole('admin')) {
-                            $logoRoute = 'admins.dashboard';
-                        }
-                    @endphp
                     <a href="{{ route($logoRoute) }}" class="flex items-center gap-2.5 group">
                         <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
                             class="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-sm">
@@ -121,7 +60,7 @@
 
             {{-- *Right Side (Desktop)* --}}
             <div class="hidden sm:flex sm:items-center sm:ms-6 gap-4">
-                @unless ($auth && $user instanceof User && $user->hasRole('admin'))
+                @unless ($isAdmin)
                     {{-- Language Switcher (Desktop) --}}
                     <div class="inline-flex items-center p-1 rounded-xl transition-all duration-300"
                         :class="(scrolled || forceSolid) ? 'bg-gray-100 text-gray-700 border border-gray-200/60' :
@@ -267,7 +206,7 @@
             @endforeach
         </div>
 
-        @unless ($auth && $user instanceof User && $user->hasRole('admin'))
+        @unless ($isAdmin)
             {{-- Language Switcher (Mobile) --}}
             <div class="border-t border-gray-100 px-4 py-3 flex items-center justify-between">
                 <span class="text-sm font-medium text-gray-600"
