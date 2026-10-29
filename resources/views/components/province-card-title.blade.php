@@ -7,7 +7,7 @@
     </p>
 
     {{-- English Name (Bottom, Smaller) --}}
-    <h3 class="text-sm font-medium text-gray-300 font-sans tracking-wide drop-shadow-md capitalize">
+    <h3 class="text-sm text-gray-300 font-sans tracking-wide drop-shadow-md capitalize">
         {{ $province->name }}
     </h3>
 
