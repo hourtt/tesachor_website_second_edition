@@ -36,8 +36,16 @@ return [
 
     // Recommended travel
     'recommended_title' => 'Recommended for You',
+    'search_results' => 'Search Results',
+    'filtered_by' => 'Filtered by',
+    'filter_category' => 'Category',
+    'filter_search' => 'Search',
+    'clear_all' => 'Clear All',
+    'clear_filter' => 'Clear filter',
+    'showing_matching' => 'Showing destinations matching your active filters',
     'read_more' => 'Read More',
     'no_recommended' => 'No recommended places found yet.',
+    'no_search_results' => 'No destinations found matching your criteria.',
 
     // Explore provinces
     'explore_badge' => 'Explore',

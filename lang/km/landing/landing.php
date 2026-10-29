@@ -36,8 +36,16 @@ return [
 
     // Recommended travel
     'recommended_title' => 'ណែនាំសម្រាប់អ្នក',
+    'search_results' => 'លទ្ធផលស្វែងរក',
+    'filtered_by' => 'ត្រងតាម',
+    'filter_category' => 'ប្រភេទ',
+    'filter_search' => 'ស្វែងរក',
+    'clear_all' => 'សម្អាតទាំងអស់',
+    'clear_filter' => 'សម្អាតការស្វែងរក',
+    'showing_matching' => 'បង្ហាញទិសដៅទេសចរណ៍ដែលត្រូវគ្នានឹងតម្រងរបស់អ្នក',
     'read_more' => 'អានបន្ថែម',
     'no_recommended' => 'មិនទាន់មានកន្លែងណែនាំនៅឡើយទេ។',
+    'no_search_results' => 'មិនមានទិសដៅទេសចរណ៍ដែលត្រូវគ្នានឹងការស្វែងរករបស់អ្នកទេ។',
 
     // Explore provinces
     'explore_badge' => 'ស្វែងយល់',
