@@ -56,15 +56,75 @@
                     class="px-4 py-2 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-blue-600 transition shadow-sm">
                     Filter
                 </button>
-                @if (request()->hasAny(['search', 'category_id', 'category', 'province_id']))
-                    <a href="{{ route('admins.destinations.index') }}"
-                        class="px-3 py-2 bg-gray-100 text-gray-600 hover:text-gray-900 hover:bg-gray-200 rounded-xl text-sm font-medium transition"
-                        title="Clear filters">
-                        Reset
-                    </a>
-                @endif
             </div>
         </form>
+
+        {{-- Active Filter Pills / Chips --}}
+        @php
+            $activeAdminCategory = null;
+            if (request('category_id')) {
+                $activeAdminCategory = $categories->firstWhere('id', request('category_id'))?->name;
+            } elseif (request('category')) {
+                $activeAdminCategory = $categories->firstWhere('slug', request('category'))?->name ?? ucfirst(request('category'));
+            }
+
+            $activeAdminProvince = null;
+            if (request('province_id')) {
+                $activeAdminProvince = $provinces->firstWhere('id', request('province_id'))?->name;
+            }
+        @endphp
+
+        @if (request()->hasAny(['search', 'category_id', 'category', 'province_id']))
+            <div class="mt-4 pt-3 border-t border-gray-100 flex flex-wrap items-center gap-2 text-xs">
+                <span class="text-gray-500 font-medium">Active Filters:</span>
+
+                {{-- Category Pill --}}
+                @if ($activeAdminCategory)
+                    <span class="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-full font-medium bg-blue-50 text-blue-900 border border-blue-200/70 shadow-xs">
+                        <span class="text-blue-500 font-normal">Category:</span>
+                        <span class="font-semibold text-blue-950">{{ $activeAdminCategory }}</span>
+                        <a href="{{ route('admins.destinations.index', request()->except(['category_id', 'category', 'page'])) }}"
+                           class="inline-flex items-center justify-center w-4 h-4 ml-0.5 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-700 hover:text-blue-900 transition"
+                           title="Remove Category filter">
+                            <i class="fa-solid fa-xmark text-[10px]"></i>
+                        </a>
+                    </span>
+                @endif
+
+                {{-- Province Pill --}}
+                @if ($activeAdminProvince)
+                    <span class="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-full font-medium bg-emerald-50 text-emerald-900 border border-emerald-200/70 shadow-xs">
+                        <span class="text-emerald-600 font-normal">Province:</span>
+                        <span class="font-semibold text-emerald-950">{{ $activeAdminProvince }}</span>
+                        <a href="{{ route('admins.destinations.index', request()->except(['province_id', 'page'])) }}"
+                           class="inline-flex items-center justify-center w-4 h-4 ml-0.5 rounded-full bg-emerald-100 hover:bg-emerald-200 text-emerald-700 hover:text-emerald-900 transition"
+                           title="Remove Province filter">
+                            <i class="fa-solid fa-xmark text-[10px]"></i>
+                        </a>
+                    </span>
+                @endif
+
+                {{-- Search Pill --}}
+                @if (request()->filled('search'))
+                    <span class="inline-flex items-center gap-1.5 pl-3 pr-1.5 py-1 rounded-full font-medium bg-gray-100 text-gray-900 border border-gray-200 shadow-xs">
+                        <span class="text-gray-500 font-normal">Search:</span>
+                        <span class="font-semibold text-gray-950">"{{ request('search') }}"</span>
+                        <a href="{{ route('admins.destinations.index', request()->except(['search', 'page'])) }}"
+                           class="inline-flex items-center justify-center w-4 h-4 ml-0.5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-950 transition"
+                           title="Remove Search filter">
+                            <i class="fa-solid fa-xmark text-[10px]"></i>
+                        </a>
+                    </span>
+                @endif
+
+                {{-- Clear All --}}
+                <a href="{{ route('admins.destinations.index') }}"
+                   class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200/60 transition shadow-xs ml-1">
+                    <i class="fa-solid fa-rotate-left text-[10px]"></i>
+                    Clear All
+                </a>
+            </div>
+        @endif
     </div>
 
     {{-- Destinations Table / Card List --}}

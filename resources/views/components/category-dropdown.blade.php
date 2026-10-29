@@ -5,6 +5,13 @@
 ])
 
 @php
+    if ($selected && is_numeric($selected)) {
+        $foundCat = \App\Models\Category::find((int) $selected);
+        if ($foundCat) {
+            $selected = $foundCat->slug;
+        }
+    }
+
     if ($options === null) {
         $dbCategories = \Illuminate\Support\Facades\Schema::hasTable('categories')
             ? \App\Models\Category::orderBy('name')->get()
@@ -13,7 +20,12 @@
         if ($dbCategories->isNotEmpty()) {
             $options = array_merge(
                 [['label' => __('landing/landing.all_categories'), 'value' => '']],
-                $dbCategories->map(fn($c) => ['label' => $c->name, 'value' => $c->slug])->all()
+                $dbCategories->map(fn($c) => [
+                    'label' => \Illuminate\Support\Facades\Lang::has('landing/landing.' . $c->slug)
+                        ? __('landing/landing.' . $c->slug)
+                        : $c->name,
+                    'value' => $c->slug,
+                ])->all()
             );
         } else {
             $options = [
@@ -24,10 +36,13 @@
             ];
         }
     }
-    $initialOption = collect($options)->firstWhere('value', $selected) ?? $options[0] ?? ['label' => __('landing/landing.all_categories'), 'value' => ''];
+    $initialOption = collect($options)->first(function ($opt) use ($selected) {
+        return (string) ($opt['value'] ?? '') === (string) $selected;
+    }) ?? $options[0] ?? ['label' => __('landing/landing.all_categories'), 'value' => ''];
 @endphp
 
-<div class="hidden md:block relative mr-2"
+<div class="relative mr-1 md:mr-2 shrink-0 transition-all"
+     :class="{ 'z-50': open, 'z-20': !open }"
      x-data="{
          open: false,
          selected: {{ json_encode($initialOption) }},
@@ -35,6 +50,9 @@
          select(option) {
              this.selected = option;
              this.open = false;
+             this.$nextTick(() => {
+                 this.$el.closest('form')?.submit();
+             });
          }
      }"
      @click.outside="open = false"
@@ -42,12 +60,12 @@
      {{ $attributes }}>
 
     {{-- Hidden Input for Form Submission --}}
-    <input type="hidden" name="{{ $name }}" :value="selected.value">
+    <input type="hidden" name="{{ $name }}" :value="selected.value" value="{{ $initialOption['value'] }}">
 
     {{-- Trigger Button --}}
     <button type="button"
             @click="open = !open"
-            class="flex items-center space-x-2.5 px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-150 focus:outline-none cursor-pointer select-none">
+            class="flex items-center space-x-1.5 sm:space-x-2.5 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors duration-150 focus:outline-none cursor-pointer select-none">
         <span x-text="selected.label" class="whitespace-nowrap">{{ $initialOption['label'] }}</span>
         <svg class="w-4 h-4 text-gray-400 transition-transform duration-200 transform"
              :class="{ 'rotate-180 text-gray-700': open }"
@@ -65,7 +83,7 @@
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
          x-transition:leave-end="opacity-0 -translate-y-2 scale-95"
-         class="absolute right-0 mt-3 w-48 bg-white rounded-2xl shadow-xl border border-gray-100 p-1.5 z-50 origin-top"
+         class="absolute right-0 mt-3 w-48 sm:w-56 max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-2xl border border-gray-100 p-1.5 z-50 origin-top ring-1 ring-black/5"
          style="display: none;">
         <div class="space-y-1">
             <template x-for="option in options" :key="option.value">

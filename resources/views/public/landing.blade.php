@@ -29,35 +29,88 @@
 
     {{-- SEARCH BAR --}}
     <section class="relative z-30 -mt-8 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="bg-white p-2 rounded-full shadow-2xl flex items-center border border-gray-100" data-aos="fade-up"
+        <form action="{{ route('public.landing') }}#travel" method="GET"
+            class="relative z-40 bg-white p-2 rounded-full shadow-2xl flex items-center border border-gray-100" data-aos="fade-up"
             data-aos-delay="600">
-            <div class="grow flex items-center pl-6">
-                <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="grow flex items-center pl-3 sm:pl-6 min-w-0">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
-                <input type="text" placeholder="{{ __('landing/landing.search_placeholder') }}"
+                <input type="text"
+                    name="search"
+                    value="{{ request('search') }}"
+                    placeholder="{{ __('landing/landing.search_placeholder') }}"
                     :placeholder="$store.i18n.t('landing/landing.search_placeholder')"
-                    class="w-full border-none focus:ring-0 text-gray-700 bg-transparent py-3 px-4 outline-none">
+                    class="w-full border-none focus:ring-0 text-gray-700 bg-transparent py-2 sm:py-3 pl-2 sm:px-4 text-xs sm:text-sm md:text-base outline-none">
             </div>
-            <div class="hidden md:block w-px h-8 bg-gray-200 mx-4"></div>
+            <div class="w-px h-6 sm:h-8 bg-gray-200 mx-1 sm:mx-3 shrink-0"></div>
             {{-- Category Dropdown --}}
-            <x-category-dropdown />
+            <x-category-dropdown :selected="request('category', '')" />
 
-            <button
-                class="bg-gray-900 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-600 transition shrink-0"
+            <button type="submit"
+                class="bg-gray-900 text-white px-5 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm md:text-base font-bold hover:bg-blue-600 transition shrink-0 cursor-pointer"
                 x-text="$store.i18n.t('landing/landing.search_button')">
                 {{ __('landing/landing.search_button') }}
             </button>
-        </div>
+        </form>
+
+        {{-- Active Filter Pills / Chips --}}
+        @if (request()->filled('search') || request()->filled('category'))
+            <div class="relative z-10 mt-4 flex flex-wrap items-center justify-center gap-2.5" data-aos="fade-up">
+                {{-- Category Pill --}}
+                @if (request()->filled('category') && $activeCategoryName)
+                    <span class="inline-flex items-center gap-1.5 pl-3.5 pr-1.5 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-white/95 text-gray-800 border border-blue-200 shadow-sm backdrop-blur-md transition-all hover:border-blue-300">
+                        <span class="text-blue-600 font-semibold" x-text="$store.i18n.t('landing/landing.filter_category')">{{ __('landing/landing.filter_category') }}:</span>
+                        <span class="text-gray-900 font-medium">{{ $activeCategoryName }}</span>
+                        <a href="{{ route('public.landing', array_merge(request()->except(['category', 'category_id', 'page']), [])) }}#travel"
+                           class="inline-flex items-center justify-center w-5 h-5 ml-1 rounded-full bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 transition-colors focus:outline-none"
+                           aria-label="Remove category filter"
+                           title="Remove category filter">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </a>
+                    </span>
+                @endif
+
+                {{-- Search Pill --}}
+                @if (request()->filled('search'))
+                    <span class="inline-flex items-center gap-1.5 pl-3.5 pr-1.5 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-white/95 text-gray-800 border border-gray-200 shadow-sm backdrop-blur-md transition-all hover:border-gray-300">
+                        <span class="text-gray-500 font-semibold" x-text="$store.i18n.t('landing/landing.filter_search')">{{ __('landing/landing.filter_search') }}:</span>
+                        <span class="text-gray-900 font-medium">"{{ request('search') }}"</span>
+                        <a href="{{ route('public.landing', array_merge(request()->except(['search', 'page']), [])) }}#travel"
+                           class="inline-flex items-center justify-center w-5 h-5 ml-1 rounded-full bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 transition-colors focus:outline-none"
+                           aria-label="Remove search filter"
+                           title="Remove search filter">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+                            </svg>
+                        </a>
+                    </span>
+                @endif
+            </div>
+        @endif
     </section>
 
     {{-- 2. RECOMMENDED TRAVEL --}}
     <section id="travel" class="py-10 bg-transparent">
-        <div class="max-w-7xl mx-auto px-4 mb-16 text-center">
-            <h2 class="font-sans text-4xl md:text-5xl text-gray-900" data-aos="fade-up"
-                x-text="$store.i18n.t('landing/landing.recommended_title')">
-                {{ __('landing/landing.recommended_title') }}</h2>
+        <div class="max-w-7xl mx-auto px-4 mb-10 text-center">
+            @if (request()->filled('search') || request()->filled('category'))
+                <h2 class="font-sans text-4xl md:text-5xl text-gray-900" data-aos="fade-up"
+                    x-text="$store.i18n.t('landing/landing.search_results')">
+                    {{ __('landing/landing.search_results') }}
+                </h2>
+                <p class="mt-2 text-sm text-gray-500" data-aos="fade-up"
+                    x-text="$store.i18n.t('landing/landing.showing_matching')">
+                    {{ __('landing/landing.showing_matching') }}
+                </p>
+            @else
+                <h2 class="font-sans text-4xl md:text-5xl text-gray-900" data-aos="fade-up"
+                    x-text="$store.i18n.t('landing/landing.recommended_title')">
+                    {{ __('landing/landing.recommended_title') }}
+                </h2>
+            @endif
         </div>
 
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-8">
@@ -89,10 +142,23 @@
                 </div>
             @empty
                 <div class="col-span-full text-center py-12">
-                    <div class="rounded-2xl border border-dashed border-gray-300 bg-white p-8 shadow-sm">
-                        <p class="mb-5 text-gray-500 italic" x-text="$store.i18n.t('landing/landing.no_recommended')">
-                            {{ __('landing/landing.no_recommended') }}
-                        </p>
+                    <div class="rounded-2xl border border-dashed border-gray-300 bg-white p-8 shadow-sm max-w-md mx-auto">
+                        @if (request()->filled('search') || request()->filled('category'))
+                            <p class="mb-5 text-gray-500 italic" x-text="$store.i18n.t('landing/landing.no_search_results')">
+                                {{ __('landing/landing.no_search_results') }}
+                            </p>
+                            <a href="{{ route('public.landing') }}#travel"
+                               class="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-full bg-gray-900 text-white hover:bg-blue-600 transition shadow-sm">
+                                <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                                </svg>
+                                <span x-text="$store.i18n.t('landing/landing.clear_all')">{{ __('landing/landing.clear_all') }}</span>
+                            </a>
+                        @else
+                            <p class="mb-5 text-gray-500 italic" x-text="$store.i18n.t('landing/landing.no_recommended')">
+                                {{ __('landing/landing.no_recommended') }}
+                            </p>
+                        @endif
                     </div>
                 </div>
             @endforelse
