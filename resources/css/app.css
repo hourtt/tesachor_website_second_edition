@@ -3,60 +3,37 @@
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
-/* Language-specific Typography & Font Variables */
+/* Default (English): Roboto for both sans and serif.
+   Kantumruy Pro / Hanuman are fallbacks so Khmer text still renders. */
 :root {
     --font-sans:
         "Roboto", "Kantumruy Pro", ui-sans-serif, system-ui, -apple-system,
-        BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif,
+        "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
     --font-serif:
-        "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman",
-        Times, serif;
+        "Roboto", "Hanuman", ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     --font-khmer: "Kantumruy Pro", "Hanuman", sans-serif;
 }
 
-/* English Active: Roboto as main default sans, Playfair Display as serif/editorial */
-html[lang="en"],
-:root:lang(en) {
-    --font-sans:
-        "Roboto", "Kantumruy Pro", ui-sans-serif, system-ui, -apple-system,
-        BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
-        sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-        "Noto Color Emoji";
-    --font-serif:
-        "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman",
-        Times, serif;
-}
-
-/* Khmer Active: Kantumruy Pro for both body sans and headings/serif */
+/* Khmer active: Kantumruy Pro sans, Hanuman serif */
 html[lang="km"],
 :root:lang(km) {
     --font-sans:
-        "Kantumruy Pro", "Hanuman", "Roboto", ui-sans-serif, system-ui,
-        sans-serif;
-    --font-serif: "Kantumruy Pro", "Hanuman", "Playfair Display", serif;
+        "Kantumruy Pro", "Roboto", ui-sans-serif, system-ui, sans-serif;
+    --font-serif: "Hanuman", "Kantumruy Pro", "Roboto", sans-serif;
 }
 
-/* Base HTML & Body Font Family */
-html {
-    font-family: var(--font-sans);
-}
-
+html,
 body {
     font-family: var(--font-sans);
 }
 
-/* Typography adjustment for Khmer language */
 html[lang="km"] {
     letter-spacing: normal;
 }
 
-html[lang="km"] body {
-    font-family: var(--font-sans);
-}
-
-/* Ensure Khmer headings render cleanly with Kantumruy Pro without broken cluster spacing */
 html[lang="km"] h1,
 html[lang="km"] h2,
 html[lang="km"] h3,
@@ -67,7 +44,6 @@ html[lang="km"] h6 {
     letter-spacing: normal;
 }
 
-/* Reset excessive tracking on Khmer text so compound glyphs do not disconnect */
 html[lang="km"] [class*="tracking-"],
 html[lang="km"] [x-text],
 html[lang="km"] [x-html],
@@ -79,7 +55,6 @@ html[lang="km"] .font-khmer {
     display: none !important;
 }
 
-/* Smooth Cross-Fade Transition for Language Switching */
 [x-text],
 [x-html] {
     transition:
