@@ -72,7 +72,7 @@
 
                     <div class="flex min-w-0 flex-1 flex-col p-3 sm:p-5 lg:p-6">
                         <h3
-                            class="mb-2 line-clamp-2 wrap-break-words text-base font-semibold leading-snug sm:text-lg lg:text-xl">
+                            class="mb-2 line-clamp-2 wrap-break-words text-base font-sans leading-snug sm:text-lg lg:text-xl">
                             {{ $tour->place_name }}
                         </h3>
 
@@ -189,7 +189,7 @@
                         x-text="$store.i18n.t('landing/landing.coastal_journey_title')">
                         {{ __('landing/landing.coastal_journey_title') }}
                     </h3>
-                    <p class="font-sans text-xs text-gray-200 mb-3 line-clamp-3"
+                    <p class="font-sans text-xs text-gray-200 mb-3 line-clamp-5"
                         x-text="$store.i18n.t('landing/landing.coastal_journey_desc')">
                         {{ __('landing/landing.coastal_journey_desc') }}
                     </p>
