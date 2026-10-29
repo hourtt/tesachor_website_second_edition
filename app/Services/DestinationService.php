@@ -34,6 +34,49 @@ class DestinationService
             ->get();
     }
 
+    public function getFilteredDestinations(array $filters = [], ?int $limit = 12)
+    {
+        $query = Destination::with(['province', 'category']);
+
+        $search = isset($filters['search']) ? trim((string) $filters['search']) : '';
+        $category = $filters['category'] ?? $filters['category_id'] ?? null;
+
+        if ($search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('place_name', 'like', "%{$search}%")
+                    ->orWhere('short_description', 'like', "%{$search}%")
+                    ->orWhereHas('province', function ($pq) use ($search) {
+                        $pq->where('name', 'like', "%{$search}%")
+                            ->orWhere('name_in_khmer', 'like', "%{$search}%");
+                    });
+            });
+        }
+
+        if (!empty($category)) {
+            if (is_numeric($category)) {
+                $query->where('category_id', (int) $category);
+            } else {
+                $query->whereHas('category', function ($cq) use ($category) {
+                    $cq->where('slug', $category)
+                        ->orWhere('name', $category);
+                });
+            }
+        }
+
+        // If neither search nor category is filtered, default to recommended
+        if ($search === '' && empty($category)) {
+            $query->where('is_recommended', true);
+        }
+
+        $query->latest();
+
+        if ($limit !== null) {
+            $query->take($limit);
+        }
+
+        return $query->get();
+    }
+
     public function createDestination(array $data, ?UploadedFile $thumbnail = null, ?array $galleryImages = null): Destination
     {
         // Remove file objects from $data before initial DB create
