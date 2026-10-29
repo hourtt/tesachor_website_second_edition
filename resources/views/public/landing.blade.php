@@ -1,37 +1,29 @@
 <x-landing>
     {{-- 1. HERO SECTION: ZOOM & FADE --}}
-    <section id="home" class="relative h-screen w-full overflow-hidden flex items-center justify-center group">
+    <section id="home"
+        class="relative h-127.5 sm:h-167.5 lg:h-screen w-full overflow-hidden flex items-center justify-center group">
         {{-- Animation: zoom-out (Creates a cinematic opening effect) --}}
         <div class="absolute inset-0 z-0 bg-gray-900" data-aos="zoom-out" data-aos-duration="2000">
             <video autoplay loop muted playsinline
                 class="absolute inset-0 w-full h-full object-cover object-center opacity-80" id="myVideo">
                 <source src="{{ url('storage/cambodia-flag-wind-waving.mp4') }}" type="video/mp4">
             </video>
-            <div class="absolute inset-0 bg-linear-to-b from-black/30 via-black/20 to-black/60"></div>
+            <div class="absolute inset-0 bg-linear-to-b from-black/40 via-black/20 to-black/60"></div>
         </div>
 
-        <div class="relative z-10 text-center text-white px-4">
+        <div class="relative z-10 text-center text-white px-4 pt-14 pb-10 sm:py-0">
             {{-- Animation: fade-down (Headline drops in from top) --}}
-            <h1 class="font-sans text-5xl md:text-7xl lg:text-9xl tracking-tight mb-4 drop-shadow-2xl"
+            <h1 class="font-sans text-4xl sm:text-5xl md:text-7xl lg:text-9xl tracking-tight mb-3 sm:mb-4 drop-shadow-2xl"
                 data-aos="fade-down" data-aos-duration="1000" x-text="$store.i18n.t('landing/landing.headline')">
                 {{ __('landing/landing.headline') }}
             </h1>
 
             {{-- Animation: fade-up (Subtitle rises from bottom) --}}
-            <p class="text-lg md:text-2xl font-light tracking-[0.2em] font-variant: small-caps mb-8 text-gray-100"
+            <p class="text-sm sm:text-lg md:text-2xl font-light tracking-[0.2em] uppercase mb-6 sm:mb-8 text-gray-100"
                 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"
                 x-text="$store.i18n.t('landing/landing.subtitle')">
                 {{ __('landing/landing.subtitle') }}
             </p>
-
-            {{-- Call to Action --}}
-            <div data-aos="fade-up" data-aos-delay="400" data-aos-duration="1000">
-                <a href="#travel"
-                    class="inline-block px-8 py-4 bg-blue-600 text-white font-bold rounded-full hover:bg-blue-700 hover:scale-105 transition-all shadow-lg text-sm md:text-base tracking-wider uppercase"
-                    x-text="$store.i18n.t('landing/landing.start_journey')">
-                    {{ __('landing/landing.start_journey') }}
-                </a>
-            </div>
         </div>
     </section>
 
@@ -68,23 +60,28 @@
                 {{ __('landing/landing.recommended_title') }}</h2>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {{-- Loop through the $destinations array from config/landing.php and pass the value to landingController --}}
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-8">
             @forelse ($destinations as $index => $tour)
-                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500"
+                <div class="group flex min-w-0 flex-col overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-500 hover:shadow-xl"
                     data-aos="zoom-in-up" data-aos-delay="{{ $index * 100 }}">
 
-                    <div class="relative h-64 overflow-hidden">
+                    <div class="relative h-40 overflow-hidden sm:h-48 lg:h-64">
                         <img src="{{ $tour->thumbnail_url }}" alt="{{ $tour->place_name }}"
-                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
                     </div>
 
-                    <div class="p-8">
-                        <h3 class="font-sans text-2xl font-semibold mb-2">{{ $tour->place_name }}</h3>
-                        <p class="text-l text-black mb-3 line-clamp-2">{{ $tour->short_description }}</p>
+                    <div class="flex min-w-0 flex-1 flex-col p-3 sm:p-5 lg:p-6">
+                        <h3
+                            class="mb-2 line-clamp-2 wrap-break-words text-base font-semibold leading-snug sm:text-lg lg:text-xl">
+                            {{ $tour->place_name }}
+                        </h3>
+
+                        <p class="mb-3 line-clamp-2 wrap-break-words text-xs leading-relaxed sm:text-sm md:text-base">
+                            {{ $tour->short_description }}
+                        </p>
 
                         <a href="{{ route('public.destinations.show', $tour->slug) }}"
-                            class="inline-flex items-center text-sm font-bold uppercase tracking-wider text-gray-900 hover:text-white-600 transition-colors"
+                            class="mt-auto inline-flex text-xs font-bold capitalize tracking-wider text-gray-900 transition-colors hover:text-blue-600 sm:text-sm"
                             x-text="$store.i18n.t('landing/landing.read_more')">
                             {{ __('landing/landing.read_more') }}
                         </a>
@@ -92,9 +89,10 @@
                 </div>
             @empty
                 <div class="col-span-full text-center py-12">
-                    <div class="bg-white rounded-2xl p-8 shadow-sm border border-dashed border-gray-300">
-                        <p class="text-gray-500 italic mb-5" x-text="$store.i18n.t('landing/landing.no_recommended')">
-                            {{ __('landing/landing.no_recommended') }}</p>
+                    <div class="rounded-2xl border border-dashed border-gray-300 bg-white p-8 shadow-sm">
+                        <p class="mb-5 text-gray-500 italic" x-text="$store.i18n.t('landing/landing.no_recommended')">
+                            {{ __('landing/landing.no_recommended') }}
+                        </p>
                     </div>
                 </div>
             @endforelse
@@ -163,7 +161,7 @@
     </section>
 
     {{-- 4. FEATURED GRID: SLIDE & ZOOM --}}
-    <section class="relative z-20 mt-10 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+    <section class="relative z-20 mt-10 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {{-- LEFT COLUMN: Main Feature --}}
             {{-- Added 'data-aos-once' to stop flickering on scroll --}}
@@ -289,7 +287,7 @@
                                 class="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-500">
                             </div>
 
-                            <!-- icon -->
+                            {{-- <!-- icon -->
                             <div
                                 class="absolute top-6 left-6 w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300 shadow-sm">
                                 <svg class="w-6 h-6 text-white transition-transform duration-300 group-hover:scale-105"
@@ -297,7 +295,7 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                                 </svg>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <!-- text below -->
