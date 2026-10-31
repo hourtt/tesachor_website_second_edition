@@ -70,19 +70,22 @@ class DestinationController extends Controller
 
     public function store(StoreDestinationRequest $request)
     {
-        // TODO(SUPABASE): replace $request->file('thumbnail') with
-        //   $this->supabase->uploadImage($request->file('thumbnail'), 'destinations')
-        //   For gallery: loop and call $this->supabase->uploadImage($file, 'destination_gallery')
-        $this->destinationService->createDestination(
-            $request->validated(),
-            $request->file('thumbnail'),
-            $request->file('gallery_images')
-        );
+        try {
+            $destination = $this->destinationService->createDestination(
+                $request->validated(),
+                $request->file('thumbnail'),
+                $request->file('gallery_images')
+            );
 
-        $province = Province::findOrFail($request->validated()['province_id']);
+            $province = Province::find($destination->province_id);
 
-        return redirect()->route('admins.provinces.show', $province->slug)
-            ->with('success', 'Destination created successfully!');
+            return redirect()->route('admins.provinces.show', $province ? $province->slug : $destination->province_id)
+                ->with('success', 'Destination created successfully!');
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->withInput()->with('error', 'Could not save the destination, please try again.');
+        }
     }
 
     public function show(string $id)
@@ -103,21 +106,23 @@ class DestinationController extends Controller
 
     public function update(UpdateDestinationRequest $request, string $id)
     {
-        $destination = $this->destinationService->getDestinationByIdOrSlug($id);
+        try {
+            $destination = $this->destinationService->getDestinationByIdOrSlug($id);
 
-        // TODO(SUPABASE): replace local file handling with:
-        //   - thumbnail: $this->supabase->uploadImage($request->file('thumbnail'), 'destinations')
-        //     and $this->supabase->deleteImage($destination->thumbnail)
-        //   - gallery: same pattern per file
-        $this->destinationService->updateDestination(
-            $destination,
-            $request->validated(),
-            $request->file('thumbnail'),
-            $request->file('gallery_images')
-        );
+            $this->destinationService->updateDestination(
+                $destination,
+                $request->validated(),
+                $request->file('thumbnail'),
+                $request->file('gallery_images')
+            );
 
-        return redirect()->route('admins.destinations.index')
-            ->with('success', 'Destination updated successfully!');
+            return redirect()->route('admins.destinations.index')
+                ->with('success', 'Destination updated successfully!');
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->withInput()->with('error', 'Could not save the destination, please try again.');
+        }
     }
 
     public function destroy(string $id)

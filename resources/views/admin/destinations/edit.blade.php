@@ -18,7 +18,10 @@
 
     {{-- Form Container --}}
     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8">
-        <form action="{{ route('admins.destinations.update', $destination->slug) }}" method="POST" enctype="multipart/form-data">
+        <x-form-alerts />
+
+        <form action="{{ route('admins.destinations.update', $destination->slug) }}" method="POST" enctype="multipart/form-data"
+            x-data="{ submitting: false }" @submit="if (submitting) { $event.preventDefault(); return false; } submitting = true;">
             @csrf
             @method('PUT')
 
@@ -239,8 +242,18 @@
                     Cancel
                 </a>
                 <button type="submit"
-                    class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm">
-                    Update Destination
+                    :disabled="submitting"
+                    :class="{ 'opacity-75 cursor-not-allowed': submitting }"
+                    class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm flex items-center gap-2 cursor-pointer">
+                    <template x-if="submitting">
+                        <span class="flex items-center gap-2">
+                            <i class="fa-solid fa-circle-notch fa-spin"></i>
+                            <span>Saving...</span>
+                        </span>
+                    </template>
+                    <template x-if="!submitting">
+                        <span>Update Destination</span>
+                    </template>
                 </button>
             </div>
         </form>

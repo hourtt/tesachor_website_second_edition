@@ -30,16 +30,19 @@ class ProvinceController extends Controller
 
     public function store(StoreProvinceRequest $request)
     {
-        // TODO(SUPABASE): replace $request->file('thumbnail') with
-        //   $this->supabase->uploadImage($request->file('thumbnail'), 'provinces')
-        //   and store the returned URL instead of a local path.
-        $this->provinceService->createProvince(
-            $request->validated(),
-            $request->file('thumbnail')
-        );
+        try {
+            $this->provinceService->createProvince(
+                $request->validated(),
+                $request->file('thumbnail')
+            );
 
-        return redirect()->route('admins.provinces.index')
-            ->with('success', 'Province created successfully!');
+            return redirect()->route('admins.provinces.index')
+                ->with('success', 'Province created successfully!');
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->withInput()->with('error', 'Could not save the province, please try again.');
+        }
     }
 
     public function show(string $slug)
@@ -58,19 +61,22 @@ class ProvinceController extends Controller
 
     public function update(UpdateProvinceRequest $request, string $slug)
     {
-        $province = $this->provinceService->getProvinceByIdOrSlug($slug);
+        try {
+            $province = $this->provinceService->getProvinceByIdOrSlug($slug);
 
-        // TODO(SUPABASE): replace $request->file('thumbnail') with
-        //   $this->supabase->uploadImage($request->file('thumbnail'), 'provinces')
-        //   and delete the old image: $this->supabase->deleteImage($province->thumbnail)
-        $this->provinceService->updateProvince(
-            $province,
-            $request->validated(),
-            $request->file('thumbnail')
-        );
+            $this->provinceService->updateProvince(
+                $province,
+                $request->validated(),
+                $request->file('thumbnail')
+            );
 
-        return redirect()->route('admins.provinces.index')
-            ->with('success', 'Province updated successfully!');
+            return redirect()->route('admins.provinces.index')
+                ->with('success', 'Province updated successfully!');
+        } catch (\Throwable $e) {
+            report($e);
+
+            return back()->withInput()->with('error', 'Could not save the province, please try again.');
+        }
     }
 
     public function destroy(string $slug)

@@ -3,30 +3,72 @@
 namespace App\Services;
 
 use App\Models\Province;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Throwable;
 
 class ProvinceService
 {
-
     protected string $disk = 'supabase_province';
+
+    public function uniqueSlug(string $name, ?int $ignoreId = null): string
+    {
+        $baseSlug = Str::slug($name);
+        if ($baseSlug === '') {
+            $baseSlug = 'province';
+        }
+
+        $slug = $baseSlug;
+        $counter = 2;
+
+        while ($this->slugExists($slug, $ignoreId)) {
+            $slug = "{$baseSlug}-{$counter}";
+            $counter++;
+        }
+
+        return $slug;
+    }
+
+    protected function slugExists(string $slug, ?int $ignoreId = null): bool
+    {
+        return Province::where('slug', $slug)
+            ->when($ignoreId, fn ($q) => $q->where('id', '!=', $ignoreId))
+            ->exists();
+    }
 
     public function createProvince(array $data, ?UploadedFile $thumbnail = null): Province
     {
-        $province = Province::create([
-            'name' => $data['name'],
-            'name_in_khmer' => $data['name_in_khmer'] ?? null,
-            'slug' => Str::slug($data['name']),
-            'thumbnail' => null,
-        ]);
+        $slug = $this->uniqueSlug($data['name'] ?? '');
+
+        try {
+            $province = Province::create([
+                'name' => $data['name'],
+                'name_in_khmer' => $data['name_in_khmer'] ?? null,
+                'slug' => $slug,
+                'thumbnail' => null,
+            ]);
+        } catch (UniqueConstraintViolationException $e) {
+            $slug = $this->uniqueSlug($data['name'] ?? '');
+            $province = Province::create([
+                'name' => $data['name'],
+                'name_in_khmer' => $data['name_in_khmer'] ?? null,
+                'slug' => $slug,
+                'thumbnail' => null,
+            ]);
+        }
 
         if ($thumbnail) {
-            $provinceId = (string) $province->getKey();
-            $disk = Storage::disk($this->disk);
-            // image file path: thumbnails/{province_id}/randomhash.jpg
-            $province->thumbnail = $disk->putFile("thumbnails/{$provinceId}", $thumbnail);
-            $province->save();
+            try {
+                $province->update([
+                    'thumbnail' => Storage::disk($this->disk)
+                        ->putFile("thumbnails/{$province->id}", $thumbnail),
+                ]);
+            } catch (Throwable $e) {
+                $province->delete();   // don't leave a half-created record
+                throw $e;
+            }
         }
 
         return $province;
@@ -34,7 +76,7 @@ class ProvinceService
 
     public function getProvincesPaginated(int $perPage = 8)
     {
-        return Province::orderBy('name', 'asc')->paginate($perPage);
+        return Province::with('destinations')->orderBy('name', 'asc')->paginate($perPage);
     }
 
     public function getProvinceByIdOrSlug(string $identifier): Province
@@ -57,7 +99,7 @@ class ProvinceService
         $provinceId = (string) $province->getKey();
 
         if ($thumbnail) {
-            if ($province->thumbnail && !str_starts_with($province->thumbnail, 'http://') && !str_starts_with($province->thumbnail, 'https://')) {
+            if ($province->thumbnail && ! str_starts_with($province->thumbnail, 'http://') && ! str_starts_with($province->thumbnail, 'https://')) {
                 $disk->delete($province->thumbnail);
             }
             $data['thumbnail'] = $disk->putFile("thumbnails/{$provinceId}", $thumbnail);
@@ -67,10 +109,19 @@ class ProvinceService
         }
 
         if (isset($data['name']) && $province->name !== $data['name']) {
-            $data['slug'] = Str::slug($data['name']);
+            $data['slug'] = $this->uniqueSlug($data['name'], $province->id);
         }
 
-        $province->update($data);
+        try {
+            $province->update($data);
+        } catch (UniqueConstraintViolationException $e) {
+            if (isset($data['name'])) {
+                $data['slug'] = $this->uniqueSlug($data['name'], $province->id);
+                $province->update($data);
+            } else {
+                throw $e;
+            }
+        }
 
         return $province;
     }
@@ -80,8 +131,9 @@ class ProvinceService
         if ($province->destinations()->count() > 0) {
             return false;
         }
+
         // Delete the thumbnail if it exists
-        if ($province->thumbnail && !str_starts_with($province->thumbnail, 'http://') && !str_starts_with($province->thumbnail, 'https://')) {
+        if ($province->thumbnail && ! str_starts_with($province->thumbnail, 'http://') && ! str_starts_with($province->thumbnail, 'https://')) {
             Storage::disk($this->disk)->delete($province->thumbnail);
         }
 

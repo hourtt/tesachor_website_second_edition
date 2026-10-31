@@ -14,7 +14,10 @@
         </div>
 
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8">
-            <form action="{{ route('admins.provinces.update', $province->slug) }}" method="POST" enctype="multipart/form-data">
+            <x-form-alerts />
+
+            <form action="{{ route('admins.provinces.update', $province->slug) }}" method="POST" enctype="multipart/form-data"
+                x-data="{ submitting: false }" @submit="if (submitting) { $event.preventDefault(); return false; } submitting = true;">
                 @csrf
                 @method('PUT')
 
@@ -25,7 +28,7 @@
                         <input type="text" name="name" value="{{ old('name', $province->name) }}" required
                             class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">
                         @error('name')
-                            <p class="text-white-500 text-xs mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -35,7 +38,7 @@
                         <input type="text" name="name_in_khmer" value="{{ old('name_in_khmer', $province->name_in_khmer) }}" required
                             class="font-khmer font-normal w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">
                         @error('name_in_khmer')
-                            <p class="text-white-500 text-xs mt-1">{{ $message }}</p>
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
 
@@ -84,8 +87,18 @@
                         Cancel
                     </a>
                     <button type="submit"
-                        class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm">
-                        Update Province
+                        :disabled="submitting"
+                        :class="{ 'opacity-75 cursor-not-allowed': submitting }"
+                        class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm flex items-center gap-2">
+                        <template x-if="submitting">
+                            <span class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                <span>Saving...</span>
+                            </span>
+                        </template>
+                        <template x-if="!submitting">
+                            <span>Update Province</span>
+                        </template>
                     </button>
                 </div>
             </form>

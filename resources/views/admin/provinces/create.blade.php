@@ -12,7 +12,10 @@
         </div>
 
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8">
-            <form action="{{ route('admins.provinces.store') }}" method="POST" enctype="multipart/form-data">
+            <x-form-alerts />
+
+            <form action="{{ route('admins.provinces.store') }}" method="POST" enctype="multipart/form-data"
+                x-data="{ submitting: false }" @submit="if (submitting) { $event.preventDefault(); return false; } submitting = true;">
                 @csrf
 
                 <div class="space-y-6">
@@ -22,9 +25,9 @@
                         <input type="text" name="name" value="{{ old('name') }}" required
                             class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition capitalize"
                             placeholder="e.g. Siem Reap">
-                        @error('name')
-                            <p class="text-white-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
+                        {{-- @error('name')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror --}}
                     </div>
 
                     {{-- Khmer Name --}}
@@ -34,9 +37,9 @@
                             pattern="[\u1780-\u17B3\u17B6-\u17D3 ]+" title="Enter Khmer letters only"
                             class="font-khmer font-normal w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition"
                             placeholder="e.g. សៀមរាប">
-                        @error('name_in_khmer')
-                            <p class="text-white-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
+                        {{-- @error('name_in_khmer')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror --}}
                     </div>
 
                     {{-- Image Upload Section --}}
@@ -85,8 +88,18 @@
                         Cancel
                     </a>
                     <button type="submit"
-                        class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm cursor-pointer">
-                        Save Province
+                        :disabled="submitting"
+                        :class="{ 'opacity-75 cursor-not-allowed': submitting }"
+                        class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm cursor-pointer flex items-center gap-2">
+                        <template x-if="submitting">
+                            <span class="flex items-center gap-2">
+                                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                <span>Saving...</span>
+                            </span>
+                        </template>
+                        <template x-if="!submitting">
+                            <span>Save Province</span>
+                        </template>
                     </button>
                 </div>
             </form>

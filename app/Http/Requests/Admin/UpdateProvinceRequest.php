@@ -14,8 +14,6 @@ class UpdateProvinceRequest extends FormRequest
 
     public function rules(): array
     {
-        // We need the province ID to exclude it from unique check.
-        // The route parameter could be slug, so we resolve via the service layer —
         $param = (string) $this->route('province');
         $province = Province::where(function ($query) use ($param) {
             if (is_numeric($param)) {
@@ -27,7 +25,24 @@ class UpdateProvinceRequest extends FormRequest
         $provinceId = $province?->id;
 
         return [
-            'name' => 'required|string|max:255|unique:provinces,name,'.$provinceId,
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($provinceId) {
+                    $trimmed = trim((string) $value);
+                    if ($trimmed === '') {
+                        return;
+                    }
+                    $query = Province::whereRaw('LOWER(name) = LOWER(?)', [$trimmed]);
+                    if ($provinceId) {
+                        $query->where('id', '!=', $provinceId);
+                    }
+                    if ($query->exists()) {
+                        $fail('This province already exists.');
+                    }
+                },
+            ],
             'name_in_khmer' => [
                 'required',
                 'string',
@@ -41,9 +56,10 @@ class UpdateProvinceRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'thumbnail.max' => 'The cover image must not exceed 4 MB.',
-            'name.unique' => 'A province with this name already exists.',
+            'name.required' => 'The province name is required.',
+            'name_in_khmer.required' => 'The Khmer name is required.',
             'name_in_khmer.regex' => 'The Khmer name must contain only Khmer letters, marks, and spaces.',
+            'thumbnail.max' => 'The cover image must not exceed 4 MB.',
         ];
     }
 }

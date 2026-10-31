@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Province;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProvinceRequest extends FormRequest
@@ -14,7 +15,20 @@ class StoreProvinceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|unique:provinces,name',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    $trimmed = trim((string) $value);
+                    if ($trimmed === '') {
+                        return;
+                    }
+                    if (Province::whereRaw('LOWER(name) = LOWER(?)', [$trimmed])->exists()) {
+                        $fail('This province already exists.');
+                    }
+                },
+            ],
             'name_in_khmer' => [
                 'required',
                 'string',
@@ -28,10 +42,11 @@ class StoreProvinceRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'name.required' => 'The province name is required.',
+            'name_in_khmer.required' => 'The Khmer name is required.',
+            'name_in_khmer.regex' => 'The Khmer name must contain only Khmer letters, marks, and spaces.',
             'thumbnail.required' => 'A cover image is required for the province.',
             'thumbnail.max' => 'The cover image must not exceed 4 MB.',
-            'name.unique' => 'A province with this name already exists.',
-            'name_in_khmer.regex' => 'The Khmer name must contain only Khmer letters, marks, and spaces.',
         ];
     }
 }
