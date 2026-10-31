@@ -17,11 +17,14 @@
                 <i class="fa-solid fa-pen-to-square mr-2"></i> Edit
             </a>
             <form action="{{ route('admins.destinations.destroy', $destination->slug) }}" method="POST"
-                onsubmit="return confirm('Are you sure you want to delete {{ $destination->place_name }}?');">
+                data-confirm-delete
+                data-title="Delete Destination?"
+                data-name="{{ $destination->place_name }}"
+                data-warning="Are you sure you want to delete {{ $destination->place_name }}? This action cannot be undone.">
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                    class="inline-flex items-center px-4 py-2 bg-white border border-red-200 text-white-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-blue-50 transition">
+                    class="inline-flex items-center px-4 py-2 bg-white border border-red-200 text-red-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-red-50 transition cursor-pointer">
                     <i class="fa-solid fa-trash mr-2"></i> Delete
                 </button>
             </form>

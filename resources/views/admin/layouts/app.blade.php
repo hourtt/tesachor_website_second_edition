@@ -322,6 +322,9 @@
         </div>
     </div>
 
+    {{-- REUSABLE DELETE CONFIRMATION MODAL --}}
+    <x-delete-confirm-modal />
+
 </body>
 
 </html>

@@ -53,7 +53,7 @@
             {{-- Action Buttons --}}
             <div class="flex items-center gap-2 shrink-0">
                 <button type="submit"
-                    class="px-4 py-2 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-blue-600 transition shadow-sm">
+                    class="px-4 py-2 bg-gray-900 text-white rounded-xl text-sm font-semibold hover:bg-blue-600 transition shadow-sm cursor-pointer">
                     Filter
                 </button>
             </div>
@@ -117,12 +117,6 @@
                     </span>
                 @endif
 
-                {{-- Clear All --}}
-                <a href="{{ route('admins.destinations.index') }}"
-                   class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 border border-red-200/60 transition shadow-xs ml-1">
-                    <i class="fa-solid fa-rotate-left text-[10px]"></i>
-                    Clear All
-                </a>
             </div>
         @endif
     </div>
@@ -214,10 +208,14 @@
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                         <form action="{{ route('admins.destinations.destroy', $destination->slug) }}" method="POST"
-                                            onsubmit="return confirm('Are you sure you want to delete {{ $destination->place_name }}?');" class="inline">
+                                            data-confirm-delete
+                                            data-title="Delete Destination?"
+                                            data-name="{{ $destination->place_name }}"
+                                            data-warning="Are you sure you want to delete {{ $destination->place_name }}? This action cannot be undone."
+                                            class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Delete">
+                                            <button type="submit" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition cursor-pointer" title="Delete">
                                                 <i class="fa-regular fa-trash-can"></i>
                                             </button>
                                         </form>
@@ -241,7 +239,7 @@
                 </div>
                 @if (request()->hasAny(['search', 'category_id', 'category', 'province_id']))
                     <h3 class="text-lg font-medium text-gray-900">No destinations match your filters</h3>
-                    <p class="text-gray-500 mb-6 max-w-sm mx-auto">Try adjusting or clearing your search and filter criteria.</p>
+                    <p class="text-gray-500 mb-6 max-w-lg mx-auto">Try adjusting or clearing your search and filter criteria.</p>
                     <a href="{{ route('admins.destinations.index') }}"
                         class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-gray-700 bg-gray-100 hover:bg-gray-200 transition font-medium text-sm">
                         Clear Filters

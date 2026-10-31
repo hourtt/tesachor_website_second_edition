@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Destination;
 use App\Models\Province;
 use App\Models\User;
+use App\Services\DestinationService;
+use App\Services\ProvinceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -227,6 +229,52 @@ class AdminPanelTest extends TestCase
             'name' => 'Pursat Updated',
             'name_in_khmer' => 'ពោធិ៍សាត់ថ្មី',
         ]);
+    }
+
+    public function test_store_province_fails_when_name_already_exists(): void
+    {
+        Province::create([
+            'name' => 'Battambang',
+            'name_in_khmer' => 'បាត់ដំបង',
+            'slug' => 'battambang',
+            'thumbnail' => 'provinces/battambang.jpg',
+        ]);
+
+        $file = UploadedFile::fake()->create('battambang.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($this->admin)->post(route('admins.provinces.store'), [
+            'name' => 'Battambang',
+            'name_in_khmer' => 'បាត់ដំបងថ្មី',
+            'thumbnail' => $file,
+        ]);
+
+        $response->assertSessionHasErrors(['name']);
+        $this->assertEquals('This province already exists.', session('errors')->first('name'));
+    }
+
+    public function test_update_province_fails_when_name_already_exists_on_another_province(): void
+    {
+        $province1 = Province::create([
+            'name' => 'Kampot',
+            'name_in_khmer' => 'កំពត',
+            'slug' => 'kampot',
+            'thumbnail' => 'provinces/kampot.jpg',
+        ]);
+
+        $province2 = Province::create([
+            'name' => 'Kep',
+            'name_in_khmer' => 'កែប',
+            'slug' => 'kep',
+            'thumbnail' => 'provinces/kep.jpg',
+        ]);
+
+        $response = $this->actingAs($this->admin)->put(route('admins.provinces.update', $province2->slug), [
+            'name' => 'Kampot',
+            'name_in_khmer' => 'កែបថ្មី',
+        ]);
+
+        $response->assertSessionHasErrors(['name']);
+        $this->assertEquals('This province already exists.', session('errors')->first('name'));
     }
 
     public function test_update_province_fails_when_name_in_khmer_contains_non_khmer_characters(): void
@@ -476,6 +524,91 @@ class AdminPanelTest extends TestCase
         ]);
     }
 
+    public function test_store_destination_fails_when_place_name_already_exists(): void
+    {
+        $province = Province::create([
+            'name' => 'Siem Reap 2',
+            'name_in_khmer' => 'សៀមរាប',
+            'slug' => 'siem-reap-2',
+            'thumbnail' => 'provinces/siem-reap.jpg',
+        ]);
+
+        $category = Category::create([
+            'name' => 'Heritage',
+            'slug' => 'heritage',
+        ]);
+
+        Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'place_name' => 'Angkor Wat Complex',
+            'slug' => 'angkor-wat-complex',
+            'short_description' => 'World wonder.',
+            'place_description' => 'Detailed description of Angkor Wat.',
+            'thumbnail' => 'destinations/angkor.jpg',
+        ]);
+
+        $thumbnail = UploadedFile::fake()->create('angkor2.jpg', 100, 'image/jpeg');
+
+        $response = $this->actingAs($this->admin)->post(route('admins.destinations.store'), [
+            'place_name' => 'Angkor Wat Complex',
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'short_description' => 'Duplicate destination test.',
+            'place_description' => 'Another description.',
+            'thumbnail' => $thumbnail,
+        ]);
+
+        $response->assertSessionHasErrors(['place_name']);
+        $this->assertEquals('This destination already exists.', session('errors')->first('place_name'));
+    }
+
+    public function test_update_destination_fails_when_place_name_already_exists_on_another_destination(): void
+    {
+        $province = Province::create([
+            'name' => 'Kampot 2',
+            'name_in_khmer' => 'កំពត',
+            'slug' => 'kampot-2',
+            'thumbnail' => 'provinces/kampot.jpg',
+        ]);
+
+        $category = Category::create([
+            'name' => 'Nature 2',
+            'slug' => 'nature-2',
+        ]);
+
+        $dest1 = Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'place_name' => 'Bokor Hill',
+            'slug' => 'bokor-hill',
+            'short_description' => 'Bokor mountain resort.',
+            'place_description' => 'Mountain station.',
+            'thumbnail' => 'destinations/bokor.jpg',
+        ]);
+
+        $dest2 = Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'place_name' => 'Teuk Chhou',
+            'slug' => 'teuk-chhou',
+            'short_description' => 'Rapids in Kampot.',
+            'place_description' => 'Freshwater rapids.',
+            'thumbnail' => 'destinations/teuk-chhou.jpg',
+        ]);
+
+        $response = $this->actingAs($this->admin)->put(route('admins.destinations.update', $dest2->slug), [
+            'place_name' => 'Bokor Hill',
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'short_description' => 'Updated short description.',
+            'place_description' => 'Updated description.',
+        ]);
+
+        $response->assertSessionHasErrors(['place_name']);
+        $this->assertEquals('This destination already exists.', session('errors')->first('place_name'));
+    }
+
     public function test_admin_can_filter_destinations_by_category(): void
     {
         $province = Province::create([
@@ -631,7 +764,7 @@ class AdminPanelTest extends TestCase
         ]));
 
         $response->assertOk();
-        $response->assertSee('category_id=' . $category->id);
+        $response->assertSee('category_id='.$category->id);
     }
 
     public function test_admin_can_delete_destination(): void
@@ -756,5 +889,202 @@ class AdminPanelTest extends TestCase
 
         $response->assertSessionHasNoErrors();
         $response->assertSessionHas('status', 'password-updated');
+    }
+
+    public function test_unique_slug_appends_numerical_suffix_when_slug_exists(): void
+    {
+        Province::create([
+            'name' => 'Siem Reap',
+            'name_in_khmer' => 'សៀមរាប',
+            'slug' => 'siem-reap',
+            'thumbnail' => null,
+        ]);
+
+        $provinceService = app(ProvinceService::class);
+        $this->assertSame('siem-reap-2', $provinceService->uniqueSlug('Siem Reap'));
+
+        Province::create([
+            'name' => 'Siem Reap 2',
+            'name_in_khmer' => 'សៀមរាប',
+            'slug' => 'siem-reap-2',
+            'thumbnail' => null,
+        ]);
+
+        $this->assertSame('siem-reap-3', $provinceService->uniqueSlug('Siem Reap'));
+
+        $category = Category::create(['name' => 'Temples', 'slug' => 'temples']);
+        Destination::create([
+            'province_id' => Province::first()->id,
+            'category_id' => $category->id,
+            'place_name' => 'Angkor Wat',
+            'slug' => 'angkor-wat',
+            'short_description' => 'Historic temple',
+            'place_description' => 'Historic temple description',
+            'thumbnail' => 'test.jpg',
+        ]);
+
+        $destinationService = app(DestinationService::class);
+        $this->assertSame('angkor-wat-2', $destinationService->uniqueSlug('Angkor Wat'));
+    }
+
+    public function test_store_province_and_destination_rejects_duplicate_name_with_different_casing(): void
+    {
+        $file = UploadedFile::fake()->create('battambang.jpg', 100, 'image/jpeg');
+
+        Province::create([
+            'name' => 'Battambang',
+            'name_in_khmer' => 'បាត់ដំបង',
+            'slug' => 'battambang',
+            'thumbnail' => 'thumbnails/1/test.jpg',
+        ]);
+
+        // Lowercase variant fails validation
+        $response = $this->actingAs($this->admin)->post(route('admins.provinces.store'), [
+            'name' => 'battambang',
+            'name_in_khmer' => 'បាត់ដំបង',
+            'thumbnail' => $file,
+        ]);
+
+        $response->assertSessionHasErrors(['name' => 'This province already exists.']);
+
+        // Uppercase variant fails validation
+        $responseUpper = $this->actingAs($this->admin)->post(route('admins.provinces.store'), [
+            'name' => 'BATTAMBANG',
+            'name_in_khmer' => 'បាត់ដំបង',
+            'thumbnail' => $file,
+        ]);
+
+        $responseUpper->assertSessionHasErrors(['name' => 'This province already exists.']);
+
+        $category = Category::create(['name' => 'Nature', 'slug' => 'nature']);
+        $province = Province::first();
+
+        Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'place_name' => 'Phnom Kulen',
+            'slug' => 'phnom-kulen',
+            'short_description' => 'Sacred mountain',
+            'place_description' => 'Sacred mountain description',
+            'thumbnail' => 'test.jpg',
+        ]);
+
+        // Destination with different casing fails validation
+        $destResponse = $this->actingAs($this->admin)->post(route('admins.destinations.store'), [
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'place_name' => 'phnom kulen',
+            'short_description' => 'Another description',
+            'place_description' => 'Another full description',
+            'thumbnail' => $file,
+        ]);
+
+        $destResponse->assertSessionHasErrors(['place_name' => 'This destination already exists.']);
+    }
+
+    public function test_unique_slug_falls_back_to_default_when_slug_is_empty(): void
+    {
+        $provinceService = app(ProvinceService::class);
+        $this->assertSame('province', $provinceService->uniqueSlug('???'));
+
+        Province::create([
+            'name' => '???',
+            'name_in_khmer' => 'ទូទៅ',
+            'slug' => 'province',
+            'thumbnail' => null,
+        ]);
+
+        $this->assertSame('province-2', $provinceService->uniqueSlug('???'));
+
+        $destinationService = app(DestinationService::class);
+        $this->assertSame('destination', $destinationService->uniqueSlug('---'));
+
+        $category = Category::create(['name' => 'Adventure', 'slug' => 'adventure']);
+        $province = Province::first();
+        Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'place_name' => '---',
+            'slug' => 'destination',
+            'short_description' => 'Desc',
+            'place_description' => 'Desc full',
+            'thumbnail' => 'test.jpg',
+        ]);
+
+        $this->assertSame('destination-2', $destinationService->uniqueSlug('---'));
+    }
+
+    public function test_failed_thumbnail_upload_leaves_no_orphan_province_or_destination_row(): void
+    {
+        Storage::shouldReceive('disk')
+            ->with('supabase_province')
+            ->andReturnSelf();
+        Storage::shouldReceive('putFile')
+            ->andThrow(new \RuntimeException('Supabase disk upload connection timed out'));
+
+        $provinceService = app(ProvinceService::class);
+        $file = UploadedFile::fake()->create('failed.jpg', 100, 'image/jpeg');
+
+        try {
+            $provinceService->createProvince([
+                'name' => 'Kratie',
+                'name_in_khmer' => 'ក្រចេះ',
+            ], $file);
+            $this->fail('Expected exception was not thrown');
+        } catch (\RuntimeException $e) {
+            $this->assertSame('Supabase disk upload connection timed out', $e->getMessage());
+        }
+
+        $this->assertDatabaseMissing('provinces', ['name' => 'Kratie']);
+        $this->assertSame(0, Province::where('name', 'Kratie')->count());
+    }
+
+    public function test_admin_views_render_reusable_delete_confirm_modal_and_triggers(): void
+    {
+        $province = Province::create([
+            'name' => 'Koh Kong',
+            'name_in_khmer' => 'កោះកុង',
+            'slug' => 'koh-kong',
+            'thumbnail' => 'provinces/koh-kong.jpg',
+        ]);
+
+        $category = Category::create(['name' => 'Islands', 'slug' => 'islands']);
+        $destination = Destination::create([
+            'province_id' => $province->id,
+            'category_id' => $category->id,
+            'place_name' => 'Koh Rong Sanloem',
+            'slug' => 'koh-rong-sanloem',
+            'short_description' => 'Beautiful island beach',
+            'place_description' => 'Detailed description of Koh Rong Sanloem island.',
+            'thumbnail' => 'destinations/koh-rong-sanloem.jpg',
+        ]);
+
+        // 1. Province index
+        $provinceIndex = $this->actingAs($this->admin)->get(route('admins.provinces.index'));
+        $provinceIndex->assertOk();
+        $provinceIndex->assertSee('deleteConfirmModal');
+        $provinceIndex->assertSee('data-confirm-delete', false);
+        $provinceIndex->assertDontSee('onsubmit="return confirm', false);
+        $provinceIndex->assertSee('This will also permanently delete all of its associated destinations and media.');
+
+        // 2. Province show
+        $provinceShow = $this->actingAs($this->admin)->get(route('admins.provinces.show', $province->slug));
+        $provinceShow->assertOk();
+        $provinceShow->assertSee('data-confirm-delete', false);
+        $provinceShow->assertDontSee('onsubmit="return confirm', false);
+
+        // 3. Destination index
+        $destIndex = $this->actingAs($this->admin)->get(route('admins.destinations.index'));
+        $destIndex->assertOk();
+        $destIndex->assertSee('deleteConfirmModal');
+        $destIndex->assertSee('data-confirm-delete', false);
+        $destIndex->assertDontSee('onsubmit="return confirm', false);
+        $destIndex->assertSee('This action cannot be undone.');
+
+        // 4. Destination show
+        $destShow = $this->actingAs($this->admin)->get(route('admins.destinations.show', $destination->slug));
+        $destShow->assertOk();
+        $destShow->assertSee('data-confirm-delete', false);
+        $destShow->assertDontSee('onsubmit="return confirm', false);
     }
 }

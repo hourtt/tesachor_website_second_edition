@@ -35,11 +35,14 @@
                     </a>
 
                     <form action="{{ route('admins.provinces.destroy', $province->slug) }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete {{ $province->name }}? This will also delete all destinations inside it.');">
+                        data-confirm-delete
+                        data-title="Delete Province?"
+                        data-name="{{ $province->name }}"
+                        data-warning="Are you sure you want to delete {{ $province->name }}? This will also permanently delete all of its associated destinations and media.">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition shadow-sm"
+                            class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition shadow-sm cursor-pointer"
                             title="Delete Province">
                             <i class="fa-solid fa-trash text-xs"></i>
                         </button>

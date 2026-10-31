@@ -22,11 +22,14 @@
                 <i class="fa-solid fa-pen-to-square mr-2"></i> Edit
             </a>
             <form action="{{ route('admins.provinces.destroy', $province->slug) }}" method="POST"
-                onsubmit="return confirm('Are you sure you want to delete {{ $province->name }}? This will also delete all its destinations.');">
+                data-confirm-delete
+                data-title="Delete Province?"
+                data-name="{{ $province->name }}"
+                data-warning="Are you sure you want to delete {{ $province->name }}? This will also permanently delete all of its associated destinations and media.">
                 @csrf
                 @method('DELETE')
                 <button type="submit"
-                    class="inline-flex items-center px-4 py-2.5 bg-white border border-red-200 text-white-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-blue-50 transition">
+                    class="inline-flex items-center px-4 py-2.5 bg-white border border-red-200 text-red-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-red-50 transition cursor-pointer">
                     <i class="fa-solid fa-trash mr-2"></i> Delete
                 </button>
             </form>
@@ -84,11 +87,14 @@
                         <i class="fa-solid fa-pen text-xs"></i>
                     </a>
                     <form action="{{ route('admins.destinations.destroy', $destination->slug) }}" method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete {{ $destination->place_name }}?');">
+                        data-confirm-delete
+                        data-title="Delete Destination?"
+                        data-name="{{ $destination->place_name }}"
+                        data-warning="Are you sure you want to delete {{ $destination->place_name }}? This action cannot be undone.">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="w-8 h-8 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-white-600 transition shadow-sm"
+                            class="w-8 h-8 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition shadow-sm cursor-pointer"
                             title="Delete">
                             <i class="fa-solid fa-trash text-xs"></i>
                         </button>
