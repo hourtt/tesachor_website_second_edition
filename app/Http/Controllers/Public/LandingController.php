@@ -8,14 +8,14 @@ use App\Services\DestinationService;
 use App\Services\ProvinceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
 
 class LandingController extends Controller
 {
     public function __construct(
         protected ProvinceService $provinceService,
         protected DestinationService $destinationService
-    ) {
-    }
+    ) {}
 
     public function index(Request $request)
     {
@@ -32,14 +32,14 @@ class LandingController extends Controller
         $tips = config('landing.tips');
 
         $activeCategoryName = null;
-        if (!empty($filters['category'])) {
+        if (! empty($filters['category'])) {
             $catParam = $filters['category'];
             $cat = is_numeric($catParam)
                 ? Category::find((int) $catParam)
                 : Category::where('slug', $catParam)->orWhere('name', $catParam)->first();
             if ($cat) {
-                $activeCategoryName = \Illuminate\Support\Facades\Lang::has('landing/landing.' . $cat->slug)
-                    ? __('landing/landing.' . $cat->slug)
+                $activeCategoryName = Lang::has('landing/landing.'.$cat->slug)
+                    ? __('landing/landing.'.$cat->slug)
                     : $cat->name;
             } else {
                 $activeCategoryName = ucfirst((string) $catParam);

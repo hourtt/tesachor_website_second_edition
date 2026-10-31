@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('provinces', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('name_in_khmer');
+            // Add standard indexes for fast searching & sorting
+            $table->string('name')->index();
+            $table->string('name_in_khmer')->index();
             $table->string('slug')->unique(); // * For URL: tesachor.com/siem-reap
             $table->string('thumbnail')->nullable();
             $table->timestamps();

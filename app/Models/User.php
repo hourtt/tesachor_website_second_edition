@@ -4,14 +4,13 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-
 
 /** @property string|null $avatar_path
  * @property string|null $avatar_url
@@ -53,13 +52,12 @@ class User extends Authenticatable
     /**
      * Get the public avatar URL from Supabase storage.
      */
-
     protected function avatarUrl(): Attribute
     {
         return Attribute::make(
             get: function (): ?string {
                 $path = $this->avatar_path;
-                if (!$path) {
+                if (! $path) {
                     return null;
                 }
                 if (
@@ -71,6 +69,7 @@ class User extends Authenticatable
                 try {
                     /** @var FilesystemAdapter $disk */
                     $disk = Storage::disk('supabase_avatar');
+
                     return $disk->url($path);
                 } catch (\Throwable $e) {
                     return null;
@@ -78,6 +77,7 @@ class User extends Authenticatable
             },
         );
     }
+
     /**
      * The attributes that should be hidden for serialization.
      *

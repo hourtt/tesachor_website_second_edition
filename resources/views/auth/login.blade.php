@@ -10,7 +10,7 @@
     </div>
     <div class="mb-6 text-center">
         <h2 class="text-2xl font-bold text-gray-900">Welcome Back!</h2>
-        <p class="text-sm text-gray-500">Please enter your details to sign in.</p>
+        <p class="text-sm text-gray-500">Please enter your credentials to sign in.</p>
     </div>
 
     <x-auth-session-status class="mb-4" :status="session('status')" />

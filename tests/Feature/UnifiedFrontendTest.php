@@ -185,15 +185,15 @@ class UnifiedFrontendTest extends TestCase
         $response->assertSee('Clear All');
 
         // Removing category pill link keeps search
-        $removeCategoryUrl = route('public.landing', ['search' => 'Beach']) . '#travel';
+        $removeCategoryUrl = route('public.landing', ['search' => 'Beach']).'#travel';
         $response->assertSee($removeCategoryUrl, false);
 
         // Removing search pill link keeps category
-        $removeSearchUrl = route('public.landing', ['category' => 'beaches']) . '#travel';
+        $removeSearchUrl = route('public.landing', ['category' => 'beaches']).'#travel';
         $response->assertSee($removeSearchUrl, false);
 
         // Clear All link points to base landing
-        $clearAllUrl = route('public.landing') . '#travel';
+        $clearAllUrl = route('public.landing').'#travel';
         $response->assertSee($clearAllUrl, false);
     }
 }

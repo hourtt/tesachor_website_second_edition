@@ -16,12 +16,14 @@ return new class extends Migration
             $table->foreignId('province_id')->constrained()->onDelete('cascade'); // * Link to Province table
 
             // * Basic Info + small container (before get into detail page)
-            $table->string('place_name');    // * e.g., "Angkor Wat"
+            $table->string('place_name')->index();    // * e.g., "Angkor Wat"
             $table->string('slug')->unique(); // * e.g., "angkor-wat"
             $table->text('short_description');
             $table->string('thumbnail')->nullable();
             $table->boolean('is_recommended')->default(false); // * For "Recommended for you"
-            $table->decimal('rating', 3, 1)->default(0.0);
+            $table->decimal('rating', 3, 1)->default(0.0)->index();
+            $table->index(['is_recommended', 'rating']);
+            $table->index(['place_name', 'short_description']);
 
             // * Detail Page Info
             $table->longText('place_description')->nullable();

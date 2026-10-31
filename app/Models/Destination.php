@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -24,10 +25,10 @@ use Illuminate\Filesystem\FilesystemAdapter;
  * @property array<string>|null $gallery_images
  * @property-read string|null $thumbnail_url
  * @property-read array<string> $gallery_urls
- * @property-read \App\Models\Province|null $province
- * @property-read \App\Models\Category|null $category
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Province|null $province
+ * @property-read Category|null $category
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  */
 class Destination extends Model
 {
@@ -70,7 +71,7 @@ class Destination extends Model
     {
         return Attribute::make(
             get: function (): ?string {
-                if (!$this->thumbnail) {
+                if (! $this->thumbnail) {
                     return null;
                 }
                 if (str_starts_with($this->thumbnail, 'http://') || str_starts_with($this->thumbnail, 'https://')) {
@@ -78,6 +79,7 @@ class Destination extends Model
                 }
                 /** @var FilesystemAdapter $disk */
                 $disk = Storage::disk('supabase_destination');
+
                 return $disk->url($this->thumbnail);
             }
         );
@@ -87,15 +89,17 @@ class Destination extends Model
     {
         return Attribute::make(
             get: function (): array {
-                if (!$this->gallery_images || !is_array($this->gallery_images)) {
+                if (! $this->gallery_images || ! is_array($this->gallery_images)) {
                     return [];
                 }
                 /** @var FilesystemAdapter $disk */
                 $disk = Storage::disk('supabase_destination');
+
                 return array_map(function ($path) use ($disk) {
                     if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
                         return $path;
                     }
+
                     return $disk->url($path);
                 }, $this->gallery_images);
             }

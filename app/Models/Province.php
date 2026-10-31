@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property int $id
@@ -14,9 +16,9 @@ use Illuminate\Filesystem\FilesystemAdapter;
  * @property string $slug
  * @property string|null $thumbnail
  * @property-read string|null $thumbnail_url
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Destination> $destinations
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read Collection<int, Destination> $destinations
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  */
 class Province extends Model
 {
@@ -38,7 +40,7 @@ class Province extends Model
     {
         return Attribute::make(
             get: function (): ?string {
-                if (!$this->thumbnail) {
+                if (! $this->thumbnail) {
                     return null;
                 }
                 if (
@@ -49,6 +51,7 @@ class Province extends Model
                 }
                 /** @var FilesystemAdapter $disk */
                 $disk = Storage::disk('supabase_province');
+
                 return $disk->url($this->thumbnail);
             }
         );

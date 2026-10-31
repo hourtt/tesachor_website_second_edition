@@ -5,7 +5,9 @@ namespace App\View\Composers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+
 use function is_array;
+
 class NavigationComposer
 {
     /**
@@ -31,7 +33,7 @@ class NavigationComposer
             $logout = 'logout';
             $logoRoute = 'admins.dashboard';
         }
-        
+
         // 3. Check for Regular User
         elseif ($auth && $user instanceof User) {
             $dashboard = 'public.landing';
@@ -45,7 +47,8 @@ class NavigationComposer
         // 4. Retrieve nav items from config and format labels
         $rawItems = config('navigation.items', []);
         $navItems = array_map(function ($item) {
-            $labelKey = $item['label_key'] ?? ('navbar.' . $item['id']);
+            $labelKey = $item['label_key'] ?? ('navbar.'.$item['id']);
+
             return [
                 'id' => $item['id'],
                 'label' => __($labelKey),

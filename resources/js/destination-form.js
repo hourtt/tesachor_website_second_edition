@@ -45,3 +45,17 @@ window.removeField = function (button) {
         button.parentElement.remove();
     }
 };
+
+window.handleDestinationSubmit = function (event) {
+    const btn = document.getElementById("submitBtn");
+    const spinner = document.getElementById("submitBtnSpinner");
+    const text = document.getElementById("submitBtnText");
+    if (btn) {
+        setTimeout(() => {
+            btn.disabled = true;
+        }, 10);
+        btn.classList.add("opacity-75", "cursor-not-allowed");
+        if (spinner) spinner.classList.remove("hidden");
+        if (text) text.textContent = "Uploading & Saving...";
+    }
+};
