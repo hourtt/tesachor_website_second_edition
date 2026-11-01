@@ -44,21 +44,27 @@ class UserController extends Controller
             'is_active' => 'boolean',
         ]);
 
-        // Sync role
-        $user->syncRoles([$data['role']]);
+        try {
+            // Sync role
+            $user->syncRoles([$data['role']]);
 
-        // Update active status
-        $isActive = $request->boolean('is_active', true);
-        $user->update(['is_active' => $isActive]);
+            // Update active status
+            $isActive = $request->boolean('is_active', true);
+            $user->update(['is_active' => $isActive]);
 
-        // If deactivating, invalidate all their sessions immediately
-        if (! $isActive) {
-            DB::table('sessions')
-                ->where('user_id', $user->id)
-                ->delete();
+            // If deactivating, invalidate all their sessions immediately
+            if (! $isActive) {
+                DB::table('sessions')
+                    ->where('user_id', $user->id)
+                    ->delete();
+            }
+
+            return redirect()->route('admins.users.index')
+                ->with('success', "User \"{$user->name}\" updated successfully.");
+        } catch (\Throwable $e) {
+            report($e);
+
+            return redirect()->back()->with('error', 'Could not update user, please try again.');
         }
-
-        return redirect()->route('admins.users.index')
-            ->with('success', "User \"{$user->name}\" updated successfully.");
     }
 }

@@ -58,7 +58,7 @@ class DestinationController extends Controller
         $provinces = Province::orderBy('name')->get();
         $categories = Category::orderBy('name')->get();
         $targetProvince = request()->has('province_id')
-            ? Province::find(request()->province_id)
+            ? Province::find(request()->query('province_id'))
             : null;
 
         return view('admin.destinations.create', compact('provinces', 'categories', 'targetProvince'));
@@ -66,6 +66,7 @@ class DestinationController extends Controller
 
     public function store(StoreDestinationRequest $request)
     {
+        // * handle exception and return error message for store and validate the destination
         try {
             $destination = $this->destinationService->createDestination(
                 $request->validated(),
