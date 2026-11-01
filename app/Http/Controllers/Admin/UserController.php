@@ -8,9 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
-// TODO(SUPABASE): inject SupabaseService for user sync when role/status changes
-// use App\Services\SupabaseService;
-
 class UserController extends Controller
 {
     public function index()
@@ -53,9 +50,6 @@ class UserController extends Controller
         // Update active status
         $isActive = $request->boolean('is_active', true);
         $user->update(['is_active' => $isActive]);
-
-        // TODO(SUPABASE): sync role/active-status change to Supabase Auth user:
-        //   $this->supabase->syncUserStatus($user->id, $isActive, $data['role']);
 
         // If deactivating, invalidate all their sessions immediately
         if (! $isActive) {
