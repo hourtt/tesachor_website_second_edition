@@ -35,7 +35,7 @@
                 {{-- Back Button --}}
                 <a href="{{ route('public.landing') }}"
                     class="backdrop-blur-md bg-white/15 hover:bg-white/25 border border-white/20 text-white px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition inline-flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-arrow-left text-xs"></i> Back to Dashboard
+                    <i class="fa-solid fa-arrow-left text-xs"></i> Back to Home
                 </a>
 
                 {{-- Recommended Badge (Title case, no uppercase) --}}

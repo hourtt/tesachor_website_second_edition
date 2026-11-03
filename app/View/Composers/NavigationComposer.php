@@ -19,32 +19,16 @@ class NavigationComposer
         $auth = Auth::check();
 
         // 1. Initialize route variables
-        $dashboard = 'users.login';
-        $profile = 'profile.edit';
+        $dashboard = 'admins.dashboard';
+        $profile = 'admins.profile.edit';
         $logout = 'logout';
         $logoRoute = 'public.landing';
 
         $isAdmin = (bool) ($auth && $user instanceof User && $user->hasRole('admin'));
 
-        // 2. Check for Admin
-        if ($isAdmin) {
-            $dashboard = 'admins.dashboard';
-            $profile = 'admins.profile.edit';
-            $logout = 'logout';
-            $logoRoute = 'admins.dashboard';
-        }
+        $isProfilePage = request()->routeIs('admins.profile.*');
 
-        // 3. Check for Regular User
-        elseif ($auth && $user instanceof User) {
-            $dashboard = 'public.landing';
-            $profile = 'profile.edit';
-            $logout = 'logout';
-            $logoRoute = 'public.landing';
-        }
-
-        $isProfilePage = request()->routeIs('*.profile.*', 'profile.*');
-
-        // 4. Retrieve nav items from config and format labels
+        // 2. Retrieve nav items from config and format labels
         $rawItems = config('navigation.items', []);
         $navItems = array_map(function ($item) {
             $labelKey = $item['label_key'] ?? ('navbar.'.$item['id']);

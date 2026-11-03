@@ -15,7 +15,7 @@
             <div class="flex items-center gap-3">
                 <a href="{{ route('public.landing') }}"
                     class="text-gray-500 hover:text-gray-700 font-medium text-sm transition-colors mr-2">
-                    Back to Dashboard
+                    Back to Home
                 </a>
 
             </div>
@@ -41,13 +41,7 @@
                         <span
                             class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-sm flex items-center gap-1">
                             <i class="fa-solid fa-map-location-dot text-blue-400"></i>
-                            @if ($province->destinations->count() == 0)
-                                {{-- * One place only --}}
-                                {{ $province->destinations->count() }} Place
-                            @else
-                                {{-- *More than one place* --}}
-                                {{ $province->destinations->count() }} Places
-                            @endif
+                            {{ $province->destinations->count() }} {{ Str::plural('Place', $province->destinations->count()) }}
                         </span>
                     </div>
 
