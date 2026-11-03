@@ -14,14 +14,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! Auth::check()) {
-            return redirect()->route('login');
+        // Stealth 404: If unauthenticated guest or non-admin user requests /admin/*,
+        // immediately return 404 Not Found to prevent leaking the secret admin login path.
+        if (! Auth::check() || ! Auth::user()->hasRole('admin')) {
+            abort(404);
         }
 
-        if (Auth::user()->hasRole('admin')) {
-            return $next($request);
-        }
-
-        abort(403, 'Unauthorized action.');
+        return $next($request);
     }
 }

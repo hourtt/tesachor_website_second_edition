@@ -25,6 +25,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'active' => EnsureUserIsActive::class,
         ]);
 
+        // Stealth 404: Never redirect unauthorized guests to secret admin login URL
+        $middleware->redirectGuestsTo(fn (Request $request) => abort(404));
+
         // Append to the web group so every request checks user status and applies session locale
         $middleware->web(append: [
             EnsureUserIsActive::class,

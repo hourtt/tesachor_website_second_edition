@@ -7,20 +7,15 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    $adminLoginPath = config('app.admin_login_path', 'tesachor-portal-hq');
 
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
-    Route::post('register', [RegisteredUserController::class, 'store']);
-
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+    Route::get($adminLoginPath, [AuthenticatedSessionController::class, 'create'])
         ->name('login');
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post($adminLoginPath, [AuthenticatedSessionController::class, 'store']);
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
@@ -34,11 +29,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function () {
-    // Note: 'auth' middleware usually defaults to 'web' guard. We might need handling for 'auth:web,admins' or similar in global middleware or explicitly here if routes are shared.
-    // However, for typical Laravel setup, we might need separate groups or a unified middleware if we want generic access.
-    // Given "Unified Auth System", we try to rely on the controller logic finding the user from request, but middleware filters access.
-    // Does 'auth' middleware support multiple guards? Yes: 'auth:web,admins'
-
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
@@ -59,12 +49,4 @@ Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function (
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
-});
-
-// To ensure ProfileController works for both, we need it protected.
-// Since 'auth' alias usually means default guard, if we want to allow admins, we must specify 'auth:web,admins'
-Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

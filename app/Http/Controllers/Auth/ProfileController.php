@@ -20,17 +20,7 @@ class ProfileController extends Controller
         $guard = 'web';
         $user = $request->user($guard);
 
-        if ($request->routeIs('admins.*')) {
-            return view('admin.profile.edit', [
-                'user' => $user,
-            ]);
-        }
-
-        if ($user?->hasRole('admin')) {
-            return redirect()->route('admins.profile.edit');
-        }
-
-        return view('profile.edit', [
+        return view('admin.profile.edit', [
             'user' => $user,
         ]);
     }
@@ -43,16 +33,12 @@ class ProfileController extends Controller
         $guard = 'web';
         $profileService->update($request->user($guard), $request->validated());
 
-        if ($request->routeIs('admins.*')) {
-            $redirect = Redirect::route('admins.profile.edit')->with('status', 'profile-updated');
-            if ($request->filled('email') && ! $request->filled('name')) {
-                $redirect->with('email_updated', true);
-            }
-
-            return $redirect;
+        $redirect = Redirect::route('admins.profile.edit')->with('status', 'profile-updated');
+        if ($request->filled('email') && ! $request->filled('name')) {
+            $redirect->with('email_updated', true);
         }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return $redirect;
     }
 
     /**

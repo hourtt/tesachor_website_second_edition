@@ -54,6 +54,8 @@ return [
 
     'url' => env('APP_URL', 'http://localhost'),
 
+    'admin_login_path' => env('ADMIN_LOGIN_PATH', 'tesachor-portal-hq'),
+
     /*
     |
     | Application Timezone
