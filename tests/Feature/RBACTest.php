@@ -30,7 +30,7 @@ class RBACTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_non_admin_receives_403_on_admin_routes()
+    public function test_non_admin_receives_stealth_404_on_admin_routes()
     {
         $user = User::factory()->create();
         $user->assignRole('user');
@@ -38,13 +38,13 @@ class RBACTest extends TestCase
         // Attempt to access an admin-only route
         $response = $this->actingAs($user)->get(route('admins.dashboard'));
 
-        $response->assertStatus(403);
+        $response->assertNotFound();
     }
 
-    public function test_guest_is_redirected_to_login_when_accessing_admin_routes()
+    public function test_guest_receives_stealth_404_when_accessing_admin_routes()
     {
         $response = $this->get(route('admins.dashboard'));
 
-        $response->assertRedirect(route('login'));
+        $response->assertNotFound();
     }
 }

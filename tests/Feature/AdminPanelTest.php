@@ -72,14 +72,14 @@ class AdminPanelTest extends TestCase
     {
         $response = $this->actingAs($this->regularUser)->get(route('admins.dashboard'));
 
-        $response->assertStatus(403);
+        $response->assertNotFound();
     }
 
     public function test_guest_is_redirected_to_login(): void
     {
         $response = $this->get(route('admins.dashboard'));
 
-        $response->assertRedirect(route('login'));
+        $response->assertNotFound();
     }
 
     // 2. PROVINCES CRUD TESTS
