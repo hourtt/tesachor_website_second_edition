@@ -171,9 +171,9 @@
             <div
                 class="flex flex-col md:flex-row justify-between items-end md:items-center text-center md:text-left gap-4 py-4">
                 <div class="w-full md:w-auto">
-                    <span class="text-white-500 font-bold tracking-widest text-sm capitalize mb-2 block"
+                    {{-- <span class="text-white-500 font-bold tracking-widest text-sm capitalize mb-2 block"
                         data-aos="fade-down"
-                        x-text="$store.i18n.t('landing/landing.explore_badge')">{{ __('landing/landing.explore_badge') }}</span>
+                        x-text="$store.i18n.t('landing/landing.explore_badge')">{{ __('landing/landing.explore_badge') }}</span> --}}
                     <h2 class="font-sans text-4xl italic text-gray-800" data-aos="fade-up"
                         x-text="$store.i18n.t('landing/landing.provinces_cities_title')">
                         {{ __('landing/landing.provinces_cities_title') }}</h2>
@@ -182,7 +182,7 @@
                 <div data-aos="fade-left" class="flex flex-wrap justify-center gap-3">
                     {{-- * See province/city list* --}}
                     <a href="{{ route('public.provinces.index') }}"
-                        class="inline-flex items-center px-6 py-3 bg-white text-gray-900 border border-gray-200 rounded-full hover:bg-gray-50 hover:text-white-600 transition shadow-md text-sm font-bold capitalize tracking-wider">
+                        class="inline-flex items-center px-6 py-3 bg-white text-gray-900 border border-gray-200 rounded-full hover:bg-gray-50 hover:text-white-600 transition shadow-md text-sm font-semibold capitalize tracking-wider">
                         <i class="fa-solid fa-list-ul mr-2"></i>
                         <span
                             x-text="$store.i18n.t('landing/landing.see_provinces_list')">{{ __('landing/landing.see_provinces_list') }}</span>

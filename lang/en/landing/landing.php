@@ -13,8 +13,8 @@ return [
 
     // Featured section
     'featured' => 'Featured',
-    'coastal_journey_title' => 'Coastal Journey',
-    'coastal_journey_desc' => 'Embark on a journey where the horizon has no end. From the pristine coastlines to the lush countryside, travel in Cambodia is more than just sightseeing...',
+    'coastal_journey_title' => 'Experience a new journey',
+    'coastal_journey_desc' => 'Discover the hidden gems and breathtaking landscapes of Cambodia, where ancient temples and vibrant culture await at every turn.',
     'lifestyle_title' => 'Life Style',
     'lifestyle_desc' => 'Immerse yourself in the rhythm of the Kingdom. Where ancient traditions meet modern energy.',
     'ancient_traditions' => 'Ancient traditions',
