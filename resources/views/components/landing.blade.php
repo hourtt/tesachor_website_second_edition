@@ -18,7 +18,7 @@
 
     {{-- Fonts & Icons --}}
     <link
-        href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&subset=khmer&display=swap"
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
         rel="stylesheet">
@@ -33,6 +33,7 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 5rem;
         }
 
         /* Custom easing for smoother interactions */
@@ -93,7 +94,7 @@
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+    </head>
 
 <body x-data class="font-sans antialiased text-gray-800 bg-transparent overflow-x-hidden">
     @include('layouts.navigation')

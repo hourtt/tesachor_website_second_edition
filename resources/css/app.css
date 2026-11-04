@@ -12,22 +12,38 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
     --font-serif:
-        "Roboto", "Hanuman", ui-sans-serif, system-ui, -apple-system,
+        "Roboto", "Hanuman", "Kantumruy Pro", ui-sans-serif, system-ui, -apple-system,
         BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    --font-khmer: "Kantumruy Pro", "Hanuman", sans-serif;
+    --font-khmer: "Roboto", "Kantumruy Pro", "Hanuman", sans-serif;
 }
 
-/* Khmer active: Kantumruy Pro sans, Hanuman serif */
+/* Khmer active: Roboto for English/numbers, Kantumruy Pro for Khmer body, Hanuman for Khmer headings */
 html[lang="km"],
 :root:lang(km) {
     --font-sans:
-        "Kantumruy Pro", "Roboto", ui-sans-serif, system-ui, sans-serif;
-    --font-serif: "Hanuman", "Kantumruy Pro", "Roboto", sans-serif;
+        "Roboto", "Kantumruy Pro", ui-sans-serif, system-ui, sans-serif;
+    --font-serif:
+        "Roboto", "Hanuman", "Kantumruy Pro", sans-serif;
+    --font-khmer:
+        "Roboto", "Kantumruy Pro", "Hanuman", sans-serif;
 }
 
 html,
 body {
     font-family: var(--font-sans);
+}
+
+/* Ensure forms, inputs, buttons, and placeholders inherit the unified font-sans */
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+}
+
+::placeholder {
+    font-family: inherit;
 }
 
 html[lang="km"] {

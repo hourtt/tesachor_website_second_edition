@@ -14,7 +14,7 @@
     @endphp
 
     {{-- 1. RESPONSIVE HERO SECTION --}}
-    <div class="relative w-full h-[45vh] sm:h-[55vh] lg:h-[65vh] min-h-[320px] max-h-[600px] group overflow-hidden">
+    <div class="relative w-full h-[45vh] sm:h-[55vh] lg:h-[65vh] min-h-80 max-h-150 group overflow-hidden">
         {{-- Hero Background Image --}}
         <div class="absolute inset-0">
             @if ($destination->thumbnail)
@@ -26,7 +26,7 @@
                 </div>
             @endif
             {{-- Dark Gradient Overlay --}}
-            <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-900/60 to-black/30"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-gray-950 via-gray-900/60 to-black/30"></div>
         </div>
 
         {{-- Hero Content Overlay --}}

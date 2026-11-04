@@ -22,7 +22,7 @@ export default {
                 roboto: ['"Roboto"', ...defaultTheme.fontFamily.sans],
                 'roboto-condensed': ['"Roboto Condensed"', ...defaultTheme.fontFamily.sans],
                 'roboto-semicondensed': ['"Roboto SemiCondensed"', ...defaultTheme.fontFamily.sans],
-                khmer: ['"Kantumruy Pro"', "Hanuman", "serif"],
+                khmer: ['"var(--font-khmer)"', '"Roboto"', '"Kantumruy Pro"', "Hanuman", "sans-serif"],
             },
         },
     },
