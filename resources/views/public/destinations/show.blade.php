@@ -35,7 +35,7 @@
                 {{-- Back Button --}}
                 <a href="{{ route('public.landing') }}"
                     class="backdrop-blur-md bg-white/15 hover:bg-white/25 border border-white/20 text-white px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition inline-flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-arrow-left text-xs"></i> Back to Home
+                    <x-icon name="arrow-left" class="text-xs" /> Back to Home
                 </a>
 
                 {{-- Recommended Badge (Title case, no uppercase) --}}
@@ -186,7 +186,7 @@
                                 <button type="button" @click="close()"
                                     class="pointer-events-auto w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition cursor-pointer"
                                     aria-label="Close lightbox">
-                                    <i class="fa-solid fa-xmark text-lg"></i>
+                                    <x-icon name="xmark" class="text-lg" />
                                 </button>
                             </div>
 
@@ -194,7 +194,7 @@
                             <button type="button" @click="prev()"
                                 class="absolute left-2 sm:left-6 z-20 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition cursor-pointer backdrop-blur-xs focus:outline-none"
                                 aria-label="Previous photo">
-                                <i class="fa-solid fa-chevron-left text-base sm:text-lg"></i>
+                                <x-icon name="chevron-left" class="text-base sm:text-lg" />
                             </button>
 
                             {{-- Main Displayed Image --}}
@@ -208,7 +208,7 @@
                             <button type="button" @click="next()"
                                 class="absolute right-2 sm:right-6 z-20 w-11 h-11 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition cursor-pointer backdrop-blur-xs focus:outline-none"
                                 aria-label="Next photo">
-                                <i class="fa-solid fa-chevron-right text-base sm:text-lg"></i>
+                                <x-icon name="chevron-right" class="text-base sm:text-lg" />
                             </button>
                         </div>
                     </section>
@@ -263,7 +263,7 @@
                             <a href="https://www.google.com/maps/search/?api=1&query={{ urlencode($destination->place_name) }}"
                                 target="_blank" rel="noopener noreferrer"
                                 class="inline-flex items-center justify-center gap-2 w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm sm:text-base py-3 px-4 rounded-xl transition shadow-sm">
-                                <i class="fa-solid fa-location-arrow"></i> Get Directions
+                                <x-icon name="location-arrow" /> Get Directions
                             </a>
                         </div>
                     </div>

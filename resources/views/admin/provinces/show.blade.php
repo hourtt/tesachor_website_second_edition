@@ -6,7 +6,7 @@
         <div>
             <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
                 <a href="{{ route('admins.provinces.index') }}" class="hover:text-gray-900 transition">Provinces</a>
-                <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+                <x-icon name="chevron-right" class="text-[10px] text-gray-400" />
                 <span class="text-gray-900 font-medium">{{ $province->name }}</span>
             </div>
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight">{{ $province->name }}</h1>
@@ -15,11 +15,11 @@
         <div class="flex items-center gap-3">
             <a href="{{ route('admins.destinations.create', ['province_id' => $province->id]) }}"
                 class="inline-flex items-center px-4 py-2.5 bg-blue-600 text-white font-semibold text-sm rounded-xl shadow-sm hover:bg-blue-700 transition">
-                <i class="fa-solid fa-plus mr-2"></i> Add Destination
+                <x-icon name="plus" class="mr-2" /> Add Destination
             </a>
             <a href="{{ route('admins.provinces.edit', $province->slug) }}"
                 class="inline-flex items-center px-4 py-2.5 bg-white border border-gray-200 text-gray-700 font-semibold text-sm rounded-xl shadow-sm hover:bg-gray-50 transition">
-                <i class="fa-solid fa-pen-to-square mr-2"></i> Edit
+                <x-icon name="pen-to-square" class="mr-2" /> Edit
             </a>
             <form action="{{ route('admins.provinces.destroy', $province->slug) }}" method="POST"
                 data-confirm-delete
@@ -30,7 +30,7 @@
                 @method('DELETE')
                 <button type="submit"
                     class="inline-flex items-center px-4 py-2.5 bg-white border border-red-200 text-red-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-red-50 transition cursor-pointer">
-                    <i class="fa-solid fa-trash mr-2"></i> Delete
+                    <x-icon name="trash" class="mr-2" /> Delete
                 </button>
             </form>
         </div>
@@ -84,7 +84,7 @@
                     <a href="{{ route('admins.destinations.edit', $destination->slug) }}"
                         class="w-8 h-8 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-blue-600 transition shadow-sm"
                         title="Edit">
-                        <i class="fa-solid fa-pen text-xs"></i>
+                        <x-icon name="pen" class="text-xs" />
                     </a>
                     <form action="{{ route('admins.destinations.destroy', $destination->slug) }}" method="POST"
                         data-confirm-delete
@@ -96,7 +96,7 @@
                         <button type="submit"
                             class="w-8 h-8 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition shadow-sm cursor-pointer"
                             title="Delete">
-                            <i class="fa-solid fa-trash text-xs"></i>
+                            <x-icon name="trash" class="text-xs" />
                         </button>
                     </form>
                 </div>
@@ -115,7 +115,7 @@
                     </h4>
                     @if ($destination->rating)
                         <div class="flex items-center justify-center gap-1 text-yellow-400 text-xs">
-                            <i class="fa-solid fa-star"></i>
+                            <x-icon name="star" />
                             <span class="text-white font-medium">{{ $destination->rating }}</span>
                         </div>
                     @endif
@@ -125,13 +125,13 @@
         @empty
             <div class="col-span-full py-16 text-center bg-white rounded-2xl border-2 border-dashed border-gray-200">
                 <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
-                    <i class="fa-regular fa-map-location-dot text-2xl"></i>
+                    <x-icon name="map-location-dot" class="text-2xl" />
                 </div>
                 <h3 class="text-lg font-medium text-gray-900">No destinations yet</h3>
                 <p class="text-gray-500 mb-6 max-w-sm mx-auto">Start by adding the first destination for {{ $province->name }}.</p>
                 <a href="{{ route('admins.destinations.create', ['province_id' => $province->id]) }}"
                     class="inline-flex items-center justify-center px-5 py-2.5 border border-transparent font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition shadow-sm text-sm">
-                    <i class="fa-solid fa-plus mr-2"></i> Add Destination
+                    <x-icon name="plus" class="mr-2" /> Add Destination
                 </a>
             </div>
         @endforelse

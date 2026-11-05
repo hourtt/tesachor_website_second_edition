@@ -7,12 +7,12 @@
             @if ($paginator->onFirstPage())
                 <span
                     class="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200 shadow-sm">
-                    <i class="fa-solid fa-chevron-left"></i>
+                    <x-icon name="chevron-left" />
                 </span>
             @else
                 <a href="{{ $paginator->previousPageUrl() }}" rel="prev"
                     class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 border border-gray-300 shadow-sm transition-all duration-200">
-                    <i class="fa-solid fa-chevron-left"></i>
+                    <x-icon name="chevron-left" />
                 </a>
             @endif
 
@@ -48,12 +48,12 @@
             @if ($paginator->hasMorePages())
                 <a href="{{ $paginator->nextPageUrl() }}" rel="next"
                     class="flex items-center justify-center w-10 h-10 rounded-lg bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600 hover:border-blue-300 border border-gray-300 shadow-sm transition-all duration-200">
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <x-icon name="chevron-right" />
                 </a>
             @else
                 <span
                     class="flex items-center justify-center w-10 h-10 rounded-lg bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200 shadow-sm">
-                    <i class="fa-solid fa-chevron-right"></i>
+                    <x-icon name="chevron-right" />
                 </span>
             @endif
         </div>

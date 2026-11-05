@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Admin Panel' }}</title>
 
-    <!-- Preload Fonts -->
     <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Regular.ttf') }}" as="font" type="font/ttf"
         crossorigin="anonymous">
     <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Bold.ttf') }}" as="font" type="font/ttf"
@@ -17,10 +16,6 @@
     <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Bold.ttf') }}" as="font" type="font/ttf"
         crossorigin="anonymous">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&subset=khmer&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -39,7 +34,7 @@
 
         {{--  SIDEBAR  --}}
         <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
-            class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col
+            class="admin-sidebar fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 flex flex-col
                    transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:sticky lg:top-0 lg:h-screen lg:self-start lg:shrink-0 shadow-xl lg:shadow-none">
 
             {{-- Logo & Mobile Close --}}
@@ -54,7 +49,7 @@
                 <button type="button" @click="sidebarOpen = false"
                     class="lg:hidden p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
                     aria-label="Close sidebar">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+                    <x-icon name="xmark" class="text-lg" />
                 </button>
             </div>
 
@@ -66,8 +61,7 @@
                 <a href="{{ route('admins.dashboard') }}"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
                            {{ $isDash ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i
-                        class="fa-solid fa-gauge-high w-4 text-center {{ $isDash ? 'text-blue-600' : 'text-gray-400' }}"></i>
+                    <x-icon name="gauge-high" class="w-4 text-center {{ $isDash ? 'text-blue-600' : 'text-gray-400' }}" />
                     Dashboard
                 </a>
 
@@ -79,8 +73,7 @@
                 <a href="{{ route('admins.provinces.index') }}"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
                            {{ $isProvinces ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i
-                        class="fa-solid fa-map w-4 text-center {{ $isProvinces ? 'text-blue-600' : 'text-gray-400' }}"></i>
+                    <x-icon name="map" class="w-4 text-center {{ $isProvinces ? 'text-blue-600' : 'text-gray-400' }}" />
                     Provinces
                 </a>
 
@@ -88,22 +81,8 @@
                 <a href="{{ route('admins.destinations.index') }}"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
                            {{ $isDest ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i
-                        class="fa-solid fa-location-dot w-4 text-center {{ $isDest ? 'text-blue-600' : 'text-gray-400' }}"></i>
+                    <x-icon name="location-dot" class="w-4 text-center {{ $isDest ? 'text-blue-600' : 'text-gray-400' }}" />
                     Destinations
-                </a>
-
-                <div class="pt-4 pb-2">
-                    <p class="text-[10px] font-semibold text-gray-400 capitalize tracking-widest px-3">Users</p>
-                </div>
-
-                @php $isUsers = request()->routeIs('admins.users.*'); @endphp
-                <a href="{{ route('admins.users.index') }}"
-                    class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
-                           {{ $isUsers ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i
-                        class="fa-solid fa-users w-4 text-center {{ $isUsers ? 'text-blue-600' : 'text-gray-400' }}"></i>
-                    Users
                 </a>
 
                 {{-- Settings Category --}}
@@ -115,8 +94,7 @@
                 <a href="{{ route('admins.profile.edit') }}"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all
                            {{ $isProfile ? 'bg-blue-50 text-blue-700 font-semibold' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50' }}">
-                    <i
-                        class="fa-solid fa-user-gear w-4 text-center {{ $isProfile ? 'text-blue-600' : 'text-gray-400' }}"></i>
+                    <x-icon name="user-gear" class="w-4 text-center {{ $isProfile ? 'text-blue-600' : 'text-gray-400' }}" />
                     Profile
                 </a>
             </nav>
@@ -144,8 +122,8 @@
                                 <p class="text-sm font-semibold {{ $isProfile ? 'text-blue-700' : 'text-gray-900' }} truncate group-hover:text-blue-600 transition-colors">
                                     {{ Auth::user()->name }}
                                 </p>
-                                <i
-                                    class="fa-solid fa-pen-to-square text-[10px] text-blue-500 {{ $isProfile ? 'opacity-100' : 'opacity-0 -translate-x-1' }} group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 shrink-0"></i>
+                                <x-icon name="pen-to-square"
+                                    class="text-[10px] text-blue-500 {{ $isProfile ? 'opacity-100' : 'opacity-0 -translate-x-1' }} group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200 shrink-0" />
                             </div>
                             <p class="text-xs text-gray-400 truncate">Administrator</p>
                         </div>
@@ -153,7 +131,7 @@
 
                     <button type="button" @click="logoutModalOpen = true" title="Sign out"
                         class="text-gray-400 hover:text-red-600 hover:bg-red-50 p-2.5 rounded-xl transition-all duration-200 shrink-0 focus:outline-hidden focus:ring-2 focus:ring-red-100 cursor-pointer">
-                        <i class="fa-solid fa-right-from-bracket text-sm"></i>
+                        <x-icon name="right-from-bracket" class="text-sm" />
                     </button>
                 </div>
             </div>
@@ -163,7 +141,7 @@
         <div class="flex flex-col flex-1 min-w-0">
 
             {{-- TOP NAVIGATION BAR --}}
-            <header class="sticky top-0 z-30 bg-white border-b border-gray-200">
+            <header class="admin-header sticky top-0 z-30 bg-white border-b border-gray-200">
                 <div class="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
 
                     <div class="flex items-center gap-3">
@@ -171,7 +149,7 @@
                         <button @click="sidebarOpen = !sidebarOpen"
                             class="lg:hidden p-2 rounded-xl text-gray-600 hover:bg-gray-100 focus:outline-hidden focus:ring-2 focus:ring-blue-100 transition-colors cursor-pointer"
                             aria-label="Toggle Navigation Sidebar">
-                            <i class="fa-solid fa-bars text-lg"></i>
+                            <x-icon name="bars" class="text-lg" />
                         </button>
 
                         {{-- Mobile Page Title --}}
@@ -204,11 +182,11 @@
                     @if (session('success'))
                         <div x-data="{ show: true }" x-show="show" x-transition
                             class="flex items-center gap-3 p-4 bg-green-50 border border-green-200 text-green-800 rounded-xl text-sm shadow-2xs">
-                            <i class="fa-solid fa-circle-check text-green-500 shrink-0"></i>
+                            <x-icon name="circle-check" class="text-green-500 shrink-0" />
                             <span class="font-medium">{{ session('success') }}</span>
                             <button @click="show = false"
                                 class="ml-auto text-green-400 hover:text-green-600 shrink-0 cursor-pointer">
-                                <i class="fa-solid fa-xmark"></i>
+                                <x-icon name="xmark" />
                             </button>
                         </div>
                     @endif
@@ -225,22 +203,22 @@
                         @endphp
                         <div x-data="{ show: true }" x-show="show" x-transition
                             class="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm shadow-2xs">
-                            <i class="fa-solid fa-circle-check text-emerald-500 shrink-0"></i>
+                            <x-icon name="circle-check" class="text-emerald-500 shrink-0" />
                             <span class="font-medium">{{ $statusText }}</span>
                             <button @click="show = false"
                                 class="ml-auto text-emerald-400 hover:text-emerald-600 shrink-0 cursor-pointer">
-                                <i class="fa-solid fa-xmark"></i>
+                                <x-icon name="xmark" />
                             </button>
                         </div>
                     @endif
                     @if (session('error'))
                         <div x-data="{ show: true }" x-show="show" x-transition
                             class="flex items-center gap-3 p-4 bg-red-50 border border-red-200 text-red-800 rounded-xl text-sm shadow-2xs">
-                            <i class="fa-solid fa-circle-exclamation text-red-500 shrink-0"></i>
+                            <x-icon name="circle-exclamation" class="text-red-500 shrink-0" />
                             <span class="font-medium">{{ session('error') }}</span>
                             <button @click="show = false"
                                 class="ml-auto text-red-400 hover:text-red-600 shrink-0 cursor-pointer">
-                                <i class="fa-solid fa-xmark"></i>
+                                <x-icon name="xmark" />
                             </button>
                         </div>
                     @endif
@@ -248,7 +226,7 @@
             @endif
 
             {{-- PAGE CONTENT --}}
-            <main class="flex-1 px-4 sm:px-6 lg:px-8 py-6">
+            <main class="admin-content flex-1 px-4 sm:px-6 lg:px-8 py-6">
                 {{ $slot }}
             </main>
         </div>
@@ -282,7 +260,7 @@
                         {{-- Warning Icon Container --}}
                         <div
                             class="w-12 h-12 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center ring-8 ring-red-50/60 shadow-xs shrink-0">
-                            <i class="fa-solid fa-right-from-bracket text-lg"></i>
+                            <x-icon name="right-from-bracket" class="text-lg" />
                         </div>
 
                         {{-- Text Content --}}
@@ -298,7 +276,7 @@
                         {{-- Close Button --}}
                         <button type="button" @click="logoutModalOpen = false"
                             class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
-                            <i class="fa-solid fa-xmark text-base"></i>
+                            <x-icon name="xmark" class="text-base" />
                         </button>
                     </div>
 
@@ -312,7 +290,7 @@
                             @csrf
                             <button type="submit"
                                 class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-xs hover:shadow-sm transition-all focus:outline-hidden focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                <i class="fa-solid fa-right-from-bracket text-xs"></i>
+                                <x-icon name="right-from-bracket" class="text-xs" />
                                 Yes, Sign Out
                             </button>
                         </form>

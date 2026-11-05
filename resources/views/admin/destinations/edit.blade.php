@@ -6,13 +6,13 @@
         <div>
             <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
                 <a href="{{ route('admins.destinations.index') }}" class="hover:text-gray-900 transition">Destinations</a>
-                <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+                <x-icon name="chevron-right" class="text-[10px] text-gray-400" />
                 <span class="text-gray-900 font-medium">Edit: {{ $destination->place_name }}</span>
             </div>
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Edit Destination</h1>
         </div>
         <a href="{{ route('admins.destinations.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900">
-            <i class="fa-solid fa-arrow-left mr-1"></i> Back to Destinations
+            <x-icon name="arrow-left" class="mr-1" /> Back to Destinations
         </a>
     </div>
 
@@ -119,7 +119,7 @@
                     <label class="block mb-2 text-sm font-medium text-gray-700">Main Thumbnail</label>
                     <div class="flex flex-col sm:flex-row items-start gap-4">
                         <label class="w-full sm:w-1/2 cursor-pointer border-2 border-dashed border-gray-200 rounded-xl p-6 hover:bg-gray-50 transition text-center">
-                            <i class="fa-solid fa-cloud-arrow-up text-2xl text-gray-400 mb-2"></i>
+                            <x-icon name="cloud-arrow-up" class="text-2xl text-gray-400 mb-2" />
                             <span class="block text-sm text-gray-600 font-medium">Click to replace thumbnail</span>
                             <span class="block text-xs text-gray-400 mt-1">Leave empty to keep existing image</span>
                             <input type="file" name="thumbnail" class="hidden"
@@ -128,7 +128,7 @@
                         </label>
                         <div class="w-full sm:w-1/2 h-40 bg-gray-50 rounded-xl overflow-hidden border border-gray-200">
                             <img id="thumbnail_preview"
-                                src="{{ $destination->thumbnail_url ?? 'https://placehold.co/600x400?text=No+Image' }}"
+                                src="{{ $destination->thumbnail_url ?? asset('images/placeholder.svg') }}"
                                 class="w-full h-full object-cover">
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                 <div>
                     <label class="block mb-2 text-sm font-medium text-gray-700">Gallery Images (Replace or add)</label>
                     <label class="block w-full cursor-pointer border-2 border-dashed border-gray-200 rounded-xl p-4 hover:bg-gray-50 transition text-center mb-4">
-                        <i class="fa-solid fa-images text-xl text-gray-400 mr-2"></i>
+                        <x-icon name="images" class="text-xl text-gray-400 mr-2" />
                         <span class="text-sm font-medium text-gray-600">+ Upload New Gallery Images</span>
                         <input type="file" name="gallery_images[]" multiple class="hidden"
                             accept="image/jpeg,image/png,image/jpg,image/webp"
@@ -215,7 +215,7 @@
                                 <input type="text" name="highlights[]" value="{{ $highlight }}"
                                     class="w-full px-4 py-2 border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
                                 <button type="button" onclick="removeField(this)" class="px-3 text-red-500 hover:text-red-700">
-                                    <i class="fa-solid fa-trash"></i>
+                                    <x-icon name="trash" />
                                 </button>
                             </div>
                         @endforeach
@@ -224,14 +224,14 @@
                             <input type="text" name="highlights[]" placeholder="Highlight..."
                                 class="w-full px-4 py-2 border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
                             <button type="button" onclick="removeField(this)" class="px-3 text-red-500 hover:text-red-700">
-                                <i class="fa-solid fa-trash"></i>
+                                <x-icon name="trash" />
                             </button>
                         </div>
                     @endif
                 </div>
 
                 <button type="button" onclick="addHighlightField()" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                    <i class="fa-solid fa-plus text-xs"></i> Add Another Highlight
+                    <x-icon name="plus" class="text-xs" /> Add Another Highlight
                 </button>
             </div>
 
@@ -247,7 +247,7 @@
                     class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm flex items-center gap-2 cursor-pointer">
                     <template x-if="submitting">
                         <span class="flex items-center gap-2">
-                            <i class="fa-solid fa-circle-notch fa-spin"></i>
+                            <x-icon name="circle-notch" class="fa-spin" />
                             <span>Saving...</span>
                         </span>
                     </template>

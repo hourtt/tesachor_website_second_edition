@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <!-- Preload Fonts -->
     <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Regular.ttf') }}" as="font" type="font/ttf"
         crossorigin="anonymous">
     <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Bold.ttf') }}" as="font" type="font/ttf"
@@ -18,10 +17,6 @@
     <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Bold.ttf') }}" as="font" type="font/ttf"
         crossorigin="anonymous">
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Hanuman:wght@100;300;400;700;900&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&subset=khmer&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 

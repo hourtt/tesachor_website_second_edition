@@ -6,13 +6,13 @@
         <div>
             <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
                 <a href="{{ route('admins.users.index') }}" class="hover:text-gray-900 transition">Users</a>
-                <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+                <x-icon name="chevron-right" class="text-[10px] text-gray-400" />
                 <span class="text-gray-900 font-medium">Edit: {{ $user->name }}</span>
             </div>
             <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Edit User Account</h1>
         </div>
         <a href="{{ route('admins.users.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900">
-            <i class="fa-solid fa-arrow-left mr-1"></i> Back to Users
+            <x-icon name="arrow-left" class="mr-1" /> Back to Users
         </a>
     </div>
 

@@ -183,7 +183,7 @@
                     {{-- * See province/city list* --}}
                     <a href="{{ route('public.provinces.index') }}"
                         class="inline-flex items-center px-6 py-3 bg-white text-gray-900 border border-gray-200 rounded-full hover:bg-gray-50 hover:text-white-600 transition shadow-md text-sm font-semibold capitalize tracking-wider">
-                        <i class="fa-solid fa-list-ul mr-2"></i>
+                        <x-icon name="list-ul" class="mr-2" />
                         <span
                             x-text="$store.i18n.t('landing/landing.see_provinces_list')">{{ __('landing/landing.see_provinces_list') }}</span>
                     </a>

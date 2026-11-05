@@ -31,7 +31,7 @@
                     <a href="{{ route('admins.provinces.edit', $province->slug) }}"
                         class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-blue-600 transition shadow-sm"
                         title="Edit Province">
-                        <i class="fa-solid fa-pen text-xs"></i>
+                        <x-icon name="pen" class="text-xs" />
                     </a>
 
                     <form action="{{ route('admins.provinces.destroy', $province->slug) }}" method="POST"
@@ -44,7 +44,7 @@
                         <button type="submit"
                             class="w-9 h-9 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full flex items-center justify-center hover:bg-white hover:text-red-600 transition shadow-sm cursor-pointer"
                             title="Delete Province">
-                            <i class="fa-solid fa-trash text-xs"></i>
+                            <x-icon name="trash" class="text-xs" />
                         </button>
                     </form>
                 </div>
@@ -53,7 +53,7 @@
                 <div class="absolute top-3 left-3 z-20">
                     <span
                         class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-sm flex items-center gap-1">
-                        <i class="fa-solid fa-map-location-dot text-white/70"></i>
+                        <x-icon name="map-location-dot" class="text-white/70" />
                         {{ $province->destinations->count() }}
                         {{ Str::plural('Place', $province->destinations->count()) }}
                     </span>
@@ -70,14 +70,14 @@
             <div class="col-span-full py-16 text-center bg-white rounded-2xl border-2 border-dashed border-gray-200">
                 <div
                     class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
-                    <i class="fa-regular fa-map text-2xl"></i>
+                    <x-icon name="map" class="text-2xl" />
                 </div>
                 <h3 class="text-lg font-medium text-gray-900">No provinces found</h3>
                 <p class="text-gray-500 mb-6 max-w-sm mx-auto">Get started by adding the first province or city to your
                     database.</p>
                 <a href="{{ route('admins.provinces.create') }}"
                     class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition shadow-md">
-                    <i class="fa-solid fa-plus mr-2"></i> Create Province
+                    <x-icon name="plus" class="mr-2" /> Create Province
                 </a>
             </div>
         @endforelse

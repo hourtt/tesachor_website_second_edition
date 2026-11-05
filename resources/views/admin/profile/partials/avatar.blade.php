@@ -44,20 +44,20 @@
         {{-- Desktop Hover Semi-Transparent Dark Overlay with Camera Icon --}}
         <div
             class="hidden sm:flex absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex-col items-center justify-center text-white pointer-events-none">
-            <i class="fa-solid fa-camera text-base"></i>
+            <x-icon name="camera" class="text-base" />
             <span class="text-[10px] font-medium tracking-wide mt-1">Change</span>
         </div>
 
         {{-- Mobile Touch Camera Badge (Anchored to Bottom-Right Corner) --}}
         <div
             class="sm:hidden absolute -bottom-1 -right-1 w-7 h-7 bg-blue-600 text-white rounded-full flex items-center justify-center border-2 border-white shadow-xs pointer-events-none">
-            <i class="fa-solid fa-camera text-[11px]"></i>
+            <x-icon name="camera" class="text-[11px]" />
         </div>
 
         {{-- Uploading Spinner Overlay --}}
         <div x-cloak x-show="uploading"
             class="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center text-white">
-            <i class="fa-solid fa-circle-notch fa-spin text-xl"></i>
+            <x-icon name="circle-notch" class="fa-spin text-xl" />
         </div>
     </div>
 
@@ -69,7 +69,7 @@
             </h3>
             <span
                 class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-700 border border-blue-200/60 shadow-2xs">
-                <i class="fa-solid fa-shield-halved text-[10px]"></i>
+                <x-icon name="shield-halved" class="text-[10px]" />
                 Administrator
             </span>
         </div>
@@ -77,11 +77,11 @@
             {{ $user->email }}
         </p>
         <p class="text-xs text-gray-400 mt-1.5 hidden sm:flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-info text-[10px] text-gray-400"></i>
+            <x-icon name="circle-info" class="text-[10px] text-gray-400" />
             Click the avatar to upload a custom JPG, PNG, or WEBP photo.
         </p>
         <p class="text-xs text-gray-400 mt-1 sm:hidden flex items-center gap-1">
-            <i class="fa-solid fa-hand-pointer text-[10px] text-blue-500"></i>
+            <x-icon name="hand-pointer" class="text-[10px] text-blue-500" />
             Tap avatar to upload photo
         </p>
     </div>
@@ -91,7 +91,7 @@
 @if ($errors->get('avatar'))
     <div
         class="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center gap-2">
-        <i class="fa-solid fa-circle-exclamation text-red-500 shrink-0"></i>
+        <x-icon name="circle-exclamation" class="text-red-500 shrink-0" />
         <span>{{ $errors->first('avatar') }}</span>
     </div>
 @endif

@@ -68,7 +68,7 @@
         @if ($searchable)
             <div x-show="options.length > 6" class="p-1 mb-1 border-b border-gray-100">
                 <div class="relative">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-gray-400 text-xs"></i>
+                    <x-icon name="magnifying-glass" class="absolute left-3 top-2.5 text-gray-400 text-xs" />
                     <input type="text"
                            x-ref="searchInput"
                            x-model="search"

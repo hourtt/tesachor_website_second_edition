@@ -6,7 +6,7 @@
                 class="text-gray-500 hover:text-blue-600 flex items-center gap-2 transition group">
                 {{-- Definingn the condition of navigation (is user came from dashboard page or province & city page)
                 --}}
-                <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i> Back to Province
+                <x-icon name="arrow-left" class="group-hover:-translate-x-1 transition-transform" /> Back to Province
                 list
             </a>
         </div>
@@ -80,7 +80,7 @@
                         <div class="flex items-center justify-center gap-3 text-gray-300 text-sm">
                             @if ($destination->rating)
                                 <span class="flex items-center gap-1">
-                                    <i class="fa-solid fa-star text-yellow-400 text-xs"></i> {{ $destination->rating }}
+                                    <x-icon name="star" class="text-yellow-400 text-xs" /> {{ $destination->rating }}
                                 </span>
                                 <span class="w-1 h-1 bg-gray-500 rounded-full"></span>
                             @endif
@@ -104,7 +104,7 @@
                 <div class="col-span-full py-16 text-center bg-gray-50 rounded-xl border-2 border-dashed border-gray-200">
                     <div
                         class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
-                        <i class="fa-regular fa-map"></i>
+                        <x-icon name="map" />
                     </div>
                     {{-- If there are no destinations, show a message --}}
                     <h3 class="text-lg font-medium text-gray-900">No destinations yet</h3>

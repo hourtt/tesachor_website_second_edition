@@ -6,7 +6,7 @@
         <div>
             <div class="flex items-center gap-2 text-sm text-gray-500 mb-1">
                 <a href="{{ route('admins.destinations.index') }}" class="hover:text-gray-900 transition">Destinations</a>
-                <i class="fa-solid fa-chevron-right text-[10px] text-gray-400"></i>
+                <x-icon name="chevron-right" class="text-[10px] text-gray-400" />
                 <span class="text-gray-900 font-medium">{{ $destination->place_name }}</span>
             </div>
         </div>
@@ -14,7 +14,7 @@
         <div class="flex items-center gap-3">
             <a href="{{ route('admins.destinations.edit', $destination->slug) }}"
                 class="inline-flex items-center px-4 py-2 bg-white border border-gray-200 text-gray-700 font-semibold text-sm rounded-xl shadow-sm hover:bg-gray-50 transition">
-                <i class="fa-solid fa-pen-to-square mr-2"></i> Edit
+                <x-icon name="pen-to-square" class="mr-2" /> Edit
             </a>
             <form action="{{ route('admins.destinations.destroy', $destination->slug) }}" method="POST"
                 data-confirm-delete
@@ -25,7 +25,7 @@
                 @method('DELETE')
                 <button type="submit"
                     class="inline-flex items-center px-4 py-2 bg-white border border-red-200 text-red-600 font-semibold text-sm rounded-xl shadow-sm hover:bg-red-50 transition cursor-pointer">
-                    <i class="fa-solid fa-trash mr-2"></i> Delete
+                    <x-icon name="trash" class="mr-2" /> Delete
                 </button>
             </form>
         </div>
@@ -37,7 +37,7 @@
             <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}" class="w-full h-full object-cover">
         @else
             <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
-                <i class="fa-regular fa-image text-3xl"></i>
+                <x-icon name="image" class="text-3xl" />
             </div>
         @endif
         <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
@@ -50,13 +50,13 @@
             <h2 class="text-3xl font-bold font-sans">{{ $destination->place_name }}</h2>
             <div class="flex items-center gap-4 mt-2 text-sm text-gray-200">
                 @if ($destination->province)
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-map-pin text-blue-400"></i> {{ $destination->province->name }}</span>
+                    <span class="flex items-center gap-1.5"><x-icon name="map-pin" class="text-blue-400" /> {{ $destination->province->name }}</span>
                 @endif
                 @if ($destination->category)
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-tag text-emerald-400"></i> {{ $destination->category->name }}</span>
+                    <span class="flex items-center gap-1.5"><x-icon name="tag" class="text-emerald-400" /> {{ $destination->category->name }}</span>
                 @endif
                 @if ($destination->rating)
-                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-star text-yellow-400"></i> {{ $destination->rating }} / 5.0</span>
+                    <span class="flex items-center gap-1.5"><x-icon name="star" class="text-yellow-400" /> {{ $destination->rating }} / 5.0</span>
                 @endif
             </div>
         </div>
@@ -104,7 +104,7 @@
                     <ul class="space-y-2">
                         @foreach ($destination->highlights as $hl)
                             <li class="flex items-center gap-2 text-sm text-gray-700">
-                                <i class="fa-solid fa-check text-green-500 text-xs"></i>
+                                <x-icon name="check" class="text-green-500 text-xs" />
                                 {{ $hl }}
                             </li>
                         @endforeach

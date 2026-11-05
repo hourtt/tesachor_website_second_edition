@@ -9,7 +9,7 @@
         </div>
         <a href="{{ route('admins.destinations.create') }}"
             class="inline-flex items-center px-4 py-2.5 bg-blue-600 text-white font-semibold text-sm rounded-xl shadow-sm hover:bg-blue-700 transition">
-            <i class="fa-solid fa-plus mr-2"></i> Add Destination
+            <x-icon name="plus" class="mr-2" /> Add Destination
         </a>
     </div>
 
@@ -18,7 +18,7 @@
         <form method="GET" action="{{ route('admins.destinations.index') }}" class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
             {{-- Text Search --}}
             <div class="relative flex-1">
-                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-gray-400 text-sm"></i>
+                <x-icon name="magnifying-glass" class="absolute left-3.5 top-3 text-gray-400 text-sm" />
                 <input type="text" name="search" value="{{ request('search') }}"
                     placeholder="Search by destination name or description..."
                     class="w-full pl-10 pr-4 py-2 text-sm border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition">
@@ -86,7 +86,7 @@
                         <a href="{{ route('admins.destinations.index', request()->except(['category_id', 'category', 'page'])) }}"
                            class="inline-flex items-center justify-center w-4 h-4 ml-0.5 rounded-full bg-blue-100 hover:bg-blue-200 text-blue-700 hover:text-blue-900 transition"
                            title="Remove Category filter">
-                            <i class="fa-solid fa-xmark text-[10px]"></i>
+                            <x-icon name="xmark" class="text-[10px]" />
                         </a>
                     </span>
                 @endif
@@ -99,7 +99,7 @@
                         <a href="{{ route('admins.destinations.index', request()->except(['province_id', 'page'])) }}"
                            class="inline-flex items-center justify-center w-4 h-4 ml-0.5 rounded-full bg-emerald-100 hover:bg-emerald-200 text-emerald-700 hover:text-emerald-900 transition"
                            title="Remove Province filter">
-                            <i class="fa-solid fa-xmark text-[10px]"></i>
+                            <x-icon name="xmark" class="text-[10px]" />
                         </a>
                     </span>
                 @endif
@@ -112,7 +112,7 @@
                         <a href="{{ route('admins.destinations.index', request()->except(['search', 'page'])) }}"
                            class="inline-flex items-center justify-center w-4 h-4 ml-0.5 rounded-full bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-950 transition"
                            title="Remove Search filter">
-                            <i class="fa-solid fa-xmark text-[10px]"></i>
+                            <x-icon name="xmark" class="text-[10px]" />
                         </a>
                     </span>
                 @endif
@@ -146,7 +146,7 @@
                                                 <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}" class="w-full h-full object-cover">
                                             @else
                                                 <div class="w-full h-full flex items-center justify-center text-gray-400">
-                                                    <i class="fa-regular fa-image"></i>
+                                                    <x-icon name="image" />
                                                 </div>
                                             @endif
                                         </div>
@@ -171,7 +171,7 @@
                                     @if ($destination->province)
                                         <a href="{{ route('admins.provinces.show', $destination->province->slug) }}"
                                             class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-gray-100 text-gray-700 text-xs font-medium hover:bg-gray-200 transition">
-                                            <i class="fa-solid fa-map-pin text-blue-600 text-[10px]"></i>
+                                            <x-icon name="map-pin" class="text-blue-600 text-[10px]" />
                                             {{ $destination->province->name }}
                                         </a>
                                     @else
@@ -181,7 +181,7 @@
                                 <td class="px-6 py-4">
                                     @if ($destination->rating)
                                         <span class="inline-flex items-center gap-1 text-sm font-semibold text-gray-800">
-                                            <i class="fa-solid fa-star text-yellow-400 text-xs"></i>
+                                            <x-icon name="star" class="text-yellow-400 text-xs" />
                                             {{ number_format($destination->rating, 1) }}
                                         </span>
                                     @else
@@ -201,11 +201,11 @@
                                     <div class="flex items-center justify-end gap-2">
                                         <a href="{{ route('admins.destinations.show', $destination->slug) }}"
                                             class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition" title="View">
-                                            <i class="fa-regular fa-eye"></i>
+                                            <x-icon name="eye" />
                                         </a>
                                         <a href="{{ route('admins.destinations.edit', $destination->slug) }}"
                                             class="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition" title="Edit">
-                                            <i class="fa-regular fa-pen-to-square"></i>
+                                            <x-icon name="pen-to-square" />
                                         </a>
                                         <form action="{{ route('admins.destinations.destroy', $destination->slug) }}" method="POST"
                                             data-confirm-delete
@@ -216,7 +216,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition cursor-pointer" title="Delete">
-                                                <i class="fa-regular fa-trash-can"></i>
+                                                <x-icon name="trash-can" />
                                             </button>
                                         </form>
                                     </div>
@@ -235,7 +235,7 @@
         @else
             <div class="py-16 text-center">
                 <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-600">
-                    <i class="fa-solid fa-location-dot text-2xl"></i>
+                    <x-icon name="location-dot" class="text-2xl" />
                 </div>
                 @if (request()->hasAny(['search', 'category_id', 'category', 'province_id']))
                     <h3 class="text-lg font-medium text-gray-900">No destinations match your filters</h3>
@@ -249,7 +249,7 @@
                     <p class="text-gray-500 mb-6 max-w-sm mx-auto">Get started by creating your first travel destination.</p>
                     <a href="{{ route('admins.destinations.create') }}"
                         class="inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition shadow-sm text-sm font-semibold">
-                        <i class="fa-solid fa-plus mr-2"></i> Add Destination
+                        <x-icon name="plus" class="mr-2" /> Add Destination
                     </a>
                 @endif
             </div>

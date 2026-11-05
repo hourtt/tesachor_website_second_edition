@@ -74,7 +74,7 @@
                                 @if ($user->id !== auth()->id())
                                     <a href="{{ route('admins.users.edit', $user->id) }}"
                                         class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-gray-700 hover:text-white-600 hover:bg-blue-50 rounded-lg transition">
-                                        <i class="fa-solid fa-user-pen"></i> Edit Role & Status
+                                        <x-icon name="user-pen" /> Edit Role & Status
                                     </a>
                                 @else
                                     <span class="text-xs text-gray-400 italic">Protected</span>

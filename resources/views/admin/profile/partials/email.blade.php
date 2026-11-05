@@ -21,7 +21,7 @@
                 </div>
                 @if ($errors->get('email'))
                     <p class="mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1">
-                        <i class="fa-solid fa-circle-exclamation text-[11px]"></i>
+                        <x-icon name="circle-exclamation" class="text-[11px]" />
                         {{ $errors->first('email') }}
                     </p>
                 @endif
@@ -43,14 +43,14 @@
             <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
                 <button type="submit"
                     class="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-sm font-semibold rounded-xl shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                    <i class="fa-regular fa-envelope text-xs"></i>
+                    <x-icon name="envelope" class="text-xs" />
                     Save Email Address
                 </button>
 
                 @if (session('status') === 'profile-updated' && session('email_updated'))
                     <span x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)"
                         class="text-xs font-semibold text-emerald-600 flex items-center gap-1.5 justify-center sm:justify-start">
-                        <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                        <x-icon name="circle-check" class="text-emerald-500" />
                         Email updated successfully.
                     </span>
                 @endif

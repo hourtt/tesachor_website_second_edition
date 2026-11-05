@@ -2,7 +2,7 @@
 <div class="pt-8">
     <div class="mb-5">
         <h3 class="text-base font-bold text-gray-900 tracking-tight flex items-center gap-2">
-            <i class="fa-solid fa-key text-blue-600 text-sm"></i>
+            <x-icon name="key" class="text-blue-600 text-sm" />
             Change Password
         </h3>
         <p class="text-xs sm:text-sm text-gray-500 mt-1">
@@ -33,13 +33,13 @@
                     class="absolute inset-y-0 right-0 min-w-[44px] min-h-[44px] px-3 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors focus:outline-hidden cursor-pointer"
                     :title="showPass ? 'Hide password' : 'Show password'"
                     :aria-label="showPass ? 'Hide password' : 'Show password'">
-                    <i :class="showPass ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'"
-                        class="text-sm"></i>
+                    <x-icon x-show="showPass" name="eye-slash" class="text-sm" />
+                    <x-icon x-show="!showPass" name="eye" class="text-sm" />
                 </button>
             </div>
             @if ($errors->updatePassword->get('current_password'))
                 <p class="mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1">
-                    <i class="fa-solid fa-circle-exclamation text-[11px]"></i>
+                    <x-icon name="circle-exclamation" class="text-[11px]" />
                     {{ $errors->updatePassword->first('current_password') }}
                 </p>
             @endif
@@ -66,13 +66,13 @@
                         class="absolute inset-y-0 right-0 min-w-[44px] min-h-[44px] px-3 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors focus:outline-hidden cursor-pointer"
                         :title="showPass ? 'Hide password' : 'Show password'"
                         :aria-label="showPass ? 'Hide password' : 'Show password'">
-                        <i :class="showPass ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'"
-                            class="text-sm"></i>
+                        <x-icon x-show="showPass" name="eye-slash" class="text-sm" />
+                        <x-icon x-show="!showPass" name="eye" class="text-sm" />
                     </button>
                 </div>
                 @if ($errors->updatePassword->get('password'))
                     <p class="mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1">
-                        <i class="fa-solid fa-circle-exclamation text-[11px]"></i>
+                        <x-icon name="circle-exclamation" class="text-[11px]" />
                         {{ $errors->updatePassword->first('password') }}
                     </p>
                 @endif
@@ -98,13 +98,13 @@
                         class="absolute inset-y-0 right-0 min-w-[44px] min-h-[44px] px-3 flex items-center justify-center text-gray-400 hover:text-gray-700 transition-colors focus:outline-hidden cursor-pointer"
                         :title="showPass ? 'Hide password' : 'Show password'"
                         :aria-label="showPass ? 'Hide password' : 'Show password'">
-                        <i :class="showPass ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'"
-                            class="text-sm"></i>
+                        <x-icon x-show="showPass" name="eye-slash" class="text-sm" />
+                        <x-icon x-show="!showPass" name="eye" class="text-sm" />
                     </button>
                 </div>
                 @if ($errors->updatePassword->get('password_confirmation'))
                     <p class="mt-1.5 text-xs font-medium text-red-600 flex items-center gap-1">
-                        <i class="fa-solid fa-circle-exclamation text-[11px]"></i>
+                        <x-icon name="circle-exclamation" class="text-[11px]" />
                         {{ $errors->updatePassword->first('password_confirmation') }}
                     </p>
                 @endif
@@ -115,14 +115,14 @@
         <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-2">
             <button type="submit"
                 class="w-full sm:w-auto justify-center inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-sm font-semibold rounded-xl shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                <i class="fa-solid fa-lock text-xs"></i>
+                <x-icon name="lock" class="text-xs" />
                 Update Password
             </button>
 
             @if (session('status') === 'password-updated')
                 <span x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 3000)"
                     class="text-xs font-semibold text-emerald-600 flex items-center gap-1.5 justify-center sm:justify-start">
-                    <i class="fa-solid fa-circle-check text-emerald-500"></i>
+                    <x-icon name="circle-check" class="text-emerald-500" />
                     Password updated successfully.
                 </span>
             @endif

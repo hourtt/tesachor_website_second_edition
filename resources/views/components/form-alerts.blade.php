@@ -5,7 +5,7 @@
         {{-- Flash Session Error --}}
         @if (session('error'))
             <div class="flex items-start gap-3 p-4 rounded-xl bg-red-50 border border-red-200 text-red-900 shadow-xs" role="alert">
-                <i class="fa-solid fa-circle-exclamation text-red-500 text-lg mt-0.5 shrink-0"></i>
+                <x-icon name="circle-exclamation" class="text-red-500 text-lg mt-0.5 shrink-0" />
                 <div class="flex-1 text-sm">
                     <p class="font-semibold text-red-800 mb-0.5">Failed to save record</p>
                     <p class="text-red-700 leading-relaxed">{{ session('error') }}</p>
@@ -16,7 +16,7 @@
         {{-- Validation Errors Summary --}}
         @if ($errors->any())
             <div class="flex items-start gap-3 p-4 rounded-xl bg-rose-50 border border-rose-200 text-rose-900 shadow-xs" role="alert">
-                <i class="fa-solid fa-triangle-exclamation text-rose-500 text-lg mt-0.5 shrink-0"></i>
+                <x-icon name="triangle-exclamation" class="text-rose-500 text-lg mt-0.5 shrink-0" />
                 <div class="flex-1 text-sm">
                     <p class="font-semibold text-rose-800 mb-1.5">Error encounter ({{ $errors->count() }}):</p>
                     <ul class="space-y-1 text-rose-700">
@@ -34,7 +34,7 @@
         {{-- Flash Session Success --}}
         @if (session('success'))
             <div class="flex items-start gap-3 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 shadow-xs" role="alert">
-                <i class="fa-solid fa-circle-check text-emerald-500 text-lg mt-0.5 shrink-0"></i>
+                <x-icon name="circle-check" class="text-emerald-500 text-lg mt-0.5 shrink-0" />
                 <div class="flex-1 text-sm">
                     <p class="font-semibold text-emerald-800">{{ session('success') }}</p>
                 </div>

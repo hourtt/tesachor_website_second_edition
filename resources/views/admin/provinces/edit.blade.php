@@ -9,7 +9,7 @@
                 <p class="text-gray-500 text-sm mt-1">Update details for <span class="font-semibold text-gray-800">{{ $province->name }}</span></p>
             </div>
             <a href="{{ route('admins.provinces.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900">
-                <i class="fa-solid fa-arrow-left mr-1"></i> Back to Provinces
+                <x-icon name="arrow-left" class="mr-1" /> Back to Provinces
             </a>
         </div>
 
@@ -50,13 +50,13 @@
                             {{-- Preview Box --}}
                             <div class="shrink-0 w-44 h-44 bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group">
                                 <img id="final_preview" class="w-full h-full object-cover"
-                                    src="{{ $province->thumbnail_url ?? 'https://placehold.co/300x300?text=No+Image' }}">
+                                    src="{{ $province->thumbnail_url ?? asset('images/placeholder.svg') }}">
                                 <div id="edit_overlay"
                                     class="hidden absolute inset-0 bg-black/50 items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
                                     style="display: none;"
                                     onclick="reOpenCropper()">
                                     <span class="text-white text-xs font-bold bg-black/60 px-3 py-1.5 rounded-lg">
-                                         <i class="fa-solid fa-pen mr-1"></i> Edit Crop
+                                         <x-icon name="pen" class="mr-1" /> Edit Crop
                                      </span>
                                  </div>
                             </div>
@@ -92,7 +92,7 @@
                         class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm flex items-center gap-2">
                         <template x-if="submitting">
                             <span class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-notch fa-spin"></i>
+                                <x-icon name="circle-notch" class="fa-spin" />
                                 <span>Saving...</span>
                             </span>
                         </template>
@@ -113,7 +113,7 @@
             <div class="p-4 border-b flex justify-between items-center">
                 <h3 class="font-bold text-gray-800">Crop Image</h3>
                 <button type="button" onclick="closeCropper()" class="text-gray-400 hover:text-gray-600 transition">
-                    <i class="fa-solid fa-times text-lg"></i>
+                    <x-icon name="xmark" class="text-lg" />
                 </button>
             </div>
 
@@ -126,7 +126,7 @@
                     class="px-4 py-2 text-gray-600 hover:bg-gray-200 rounded-xl text-sm font-medium">Cancel</button>
                 <button type="button" onclick="performCrop()"
                     class="px-5 py-2 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 shadow-sm text-sm">
-                    <i class="fa-solid fa-check mr-1.5"></i> Crop & Save
+                    <x-icon name="check" class="mr-1.5" /> Crop & Save
                 </button>
             </div>
         </div>

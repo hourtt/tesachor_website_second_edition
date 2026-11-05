@@ -1,7 +1,4 @@
 <x-app-layout :hideNav="true">
-    {{-- Font Awesome (Ensuring icons load) --}}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
     <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
 
         {{-- Header Section --}}
@@ -40,7 +37,7 @@
                     <div class="absolute top-3 left-3 z-20">
                         <span
                             class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-sm flex items-center gap-1">
-                            <i class="fa-solid fa-map-location-dot text-blue-400"></i>
+                            <x-icon name="map-location-dot" class="text-blue-400" />
                             {{ $province->destinations->count() }} {{ Str::plural('Place', $province->destinations->count()) }}
                         </span>
                     </div>
@@ -59,7 +56,7 @@
                 <div class="col-span-full py-16 text-center bg-white rounded-xl border-2 border-dashed border-gray-200">
                     <div
                         class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4 text-blue-500">
-                        <i class="fa-regular fa-map text-2xl"></i>
+                        <x-icon name="map" class="text-2xl" />
                     </div>
                     <h3 class="text-lg font-medium text-gray-900">No provinces found</h3>
                 </div>

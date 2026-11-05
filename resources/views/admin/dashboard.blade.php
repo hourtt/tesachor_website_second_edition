@@ -14,7 +14,7 @@
             class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all group">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-                    <i class="fa-solid fa-map text-blue-500"></i>
+                    <x-icon name="map" class="text-blue-500" />
                 </div>
                 <span class="text-xs font-semibold text-blue-500 bg-blue-50 px-2 py-1 rounded-full">Provinces</span>
             </div>
@@ -27,7 +27,7 @@
             class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all group">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100 transition-colors">
-                    <i class="fa-solid fa-location-dot text-blue-600"></i>
+                    <x-icon name="location-dot" class="text-blue-600" />
                 </div>
                 <span class="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">Places</span>
             </div>
@@ -40,7 +40,7 @@
             class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all group">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center group-hover:bg-purple-100 transition-colors">
-                    <i class="fa-solid fa-users text-purple-500"></i>
+                    <x-icon name="users" class="text-purple-500" />
                 </div>
                 <span class="text-xs font-semibold text-purple-500 bg-purple-50 px-2 py-1 rounded-full">Users</span>
             </div>
@@ -52,7 +52,7 @@
         <div class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-10 h-10 bg-amber-50 rounded-xl flex items-center justify-center">
-                    <i class="fa-solid fa-star text-amber-500"></i>
+                    <x-icon name="star" class="text-amber-500" />
                 </div>
                 <span class="text-xs font-semibold text-amber-500 bg-amber-50 px-2 py-1 rounded-full">Featured</span>
             </div>
@@ -70,13 +70,13 @@
                 <h3 class="font-semibold text-gray-900">Recent Provinces</h3>
                 <a href="{{ route('admins.provinces.create') }}"
                     class="text-xs font-semibold text-white-600 hover:text-white-700 flex items-center gap-1">
-                    <i class="fa-solid fa-plus text-[10px]"></i> Add
+                    <x-icon name="plus" class="text-[10px]" /> Add
                 </a>
             </div>
             <div class="divide-y divide-gray-50">
                 @forelse ($recentProvinces as $province)
                     <div class="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors">
-                        <img src="{{ $province->thumbnail_url ?? 'https://placehold.co/100x100?text=No+Image' }}" alt="{{ $province->name }}"
+                        <img src="{{ $province->thumbnail_url ?? asset('images/placeholder.svg') }}" alt="{{ $province->name }}"
                             class="w-10 h-10 rounded-xl object-cover shrink-0 border border-gray-100">
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-900 truncate">{{ $province->name }}</p>
@@ -85,11 +85,11 @@
                         <div class="flex gap-2 shrink-0">
                             <a href="{{ route('admins.provinces.show', $province->slug) }}"
                                 class="text-gray-400 hover:text-blue-500 transition-colors text-sm">
-                                <i class="fa-solid fa-eye"></i>
+                                <x-icon name="eye" />
                             </a>
                             <a href="{{ route('admins.provinces.edit', $province->slug) }}"
                                 class="text-gray-400 hover:text-amber-500 transition-colors text-sm">
-                                <i class="fa-solid fa-pen"></i>
+                                <x-icon name="pen" />
                             </a>
                         </div>
                     </div>
@@ -108,13 +108,13 @@
                 <h3 class="font-semibold text-gray-900">Recent Destinations</h3>
                 <a href="{{ route('admins.destinations.create') }}"
                     class="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                    <i class="fa-solid fa-plus text-[10px]"></i> Add
+                    <x-icon name="plus" class="text-[10px]" /> Add
                 </a>
             </div>
             <div class="divide-y divide-gray-50">
                 @forelse ($recentDestinations as $destination)
                     <div class="flex items-center gap-4 px-6 py-3 hover:bg-gray-50 transition-colors">
-                        <img src="{{ $destination->thumbnail_url ?? 'https://placehold.co/100x100?text=No+Image' }}" alt="{{ $destination->place_name }}"
+                        <img src="{{ $destination->thumbnail_url ?? asset('images/placeholder.svg') }}" alt="{{ $destination->place_name }}"
                             class="w-10 h-10 rounded-xl object-cover shrink-0 border border-gray-100">
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-900 truncate">{{ $destination->place_name }}</p>
@@ -126,7 +126,7 @@
                             @endif
                             <a href="{{ route('admins.destinations.edit', $destination->slug) }}"
                                 class="text-gray-400 hover:text-amber-500 transition-colors text-sm">
-                                <i class="fa-solid fa-pen"></i>
+                                <x-icon name="pen" />
                             </a>
                         </div>
                     </div>

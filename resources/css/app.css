@@ -84,3 +84,71 @@ body.lang-switching [x-html] {
     opacity: 0 !important;
     transform: translateY(-2px);
 }
+
+/* Admin Panel Cross-Document View Transitions */
+@view-transition {
+    navigation: auto;
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .admin-sidebar {
+        view-transition-name: sidebar;
+    }
+
+    .admin-header {
+        view-transition-name: header;
+    }
+
+    .admin-content {
+        view-transition-name: content;
+    }
+
+    ::view-transition-group(root),
+    ::view-transition-group(content) {
+        animation-duration: 0s;
+    }
+
+    ::view-transition-group(sidebar),
+    ::view-transition-group(header) {
+        animation-duration: 0.2s;
+    }
+
+    ::view-transition-old(content) {
+        animation: 0.2s ease-out both fade-out;
+    }
+
+    ::view-transition-new(content) {
+        animation: 0.3s ease-out both fade-in-up;
+    }
+}
+
+.fa-spin {
+    animation: fa-spin 1s linear infinite;
+}
+
+@keyframes fa-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+

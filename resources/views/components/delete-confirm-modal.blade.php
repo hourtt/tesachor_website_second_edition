@@ -32,7 +32,7 @@
 
         {{-- Warning Icon Header --}}
         <div class="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-4 ring-8 ring-red-50/60 shadow-xs shrink-0">
-            <i class="fa-solid fa-trash-can text-xl"></i>
+            <x-icon name="trash-can" class="text-xl" />
         </div>
 
         {{-- Title --}}
@@ -59,13 +59,13 @@
                 class="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-semibold text-sm shadow-sm transition inline-flex items-center justify-center gap-2 cursor-pointer">
                 <template x-if="isDeleting">
                     <span class="inline-flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-circle-notch fa-spin text-sm"></i>
+                        <x-icon name="circle-notch" class="fa-spin text-sm" />
                         <span>Deleting...</span>
                     </span>
                 </template>
                 <template x-if="!isDeleting">
                     <span class="inline-flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-trash-can text-sm"></i>
+                        <x-icon name="trash-can" class="text-sm" />
                         <span>Delete</span>
                     </span>
                 </template>
