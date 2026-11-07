@@ -68,13 +68,13 @@
         <div class="lg:col-span-2 space-y-6">
             {{-- Short Description --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Short Description</h3>
+                <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Short Description</h3>
                 <p class="text-gray-700 leading-relaxed">{{ $destination->short_description }}</p>
             </div>
 
             {{-- Full Description --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Full Description</h3>
+                <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Full Description</h3>
                 <div class="prose max-w-none text-gray-700 leading-relaxed">
                     {!! nl2br(e($destination->place_description)) !!}
                 </div>
@@ -82,14 +82,14 @@
 
             @if ($destination->place_history)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">History & Background</h3>
+                    <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">History & Background</h3>
                     <p class="text-gray-700 leading-relaxed">{!! nl2br(e($destination->place_history)) !!}</p>
                 </div>
             @endif
 
             @if ($destination->place_information)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Logistics & Information</h3>
+                    <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Logistics & Information</h3>
                     <p class="text-gray-700 leading-relaxed">{!! nl2br(e($destination->place_information)) !!}</p>
                 </div>
             @endif
