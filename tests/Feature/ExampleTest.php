@@ -18,4 +18,12 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_nonexistent_url_renders_custom_404_page_with_image(): void
+    {
+        $response = $this->get('/nonexistent-page-url-404-check');
+
+        $response->assertStatus(404);
+        $response->assertSee('storage/404.png');
+    }
 }
