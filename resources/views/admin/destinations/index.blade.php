@@ -25,29 +25,41 @@
             </div>
 
             {{-- Category Filter --}}
+            @php
+                $selectedCategoryId = request('category_id');
+                if (!$selectedCategoryId && request('category')) {
+                    $selectedCategoryId = $categories->firstWhere('slug', request('category'))?->id;
+                }
+                $categoryFilterOptions = array_merge(
+                    [['label' => 'All Categories', 'value' => '']],
+                    $categories->sortBy('name')->map(fn($c) => ['label' => $c->name, 'value' => (string)$c->id])->values()->all()
+                );
+            @endphp
             <div class="w-full md:w-56">
-                <select name="category_id" onchange="this.form.submit()"
-                    class="w-full px-3 py-2 text-sm border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition bg-white text-gray-700 cursor-pointer">
-                    <option value="">All Categories</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}" {{ (string) request('category_id') === (string) $category->id || request('category') === $category->slug ? 'selected' : '' }}>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
+                <x-custom-select
+                    name="category_id"
+                    placeholder="All Categories"
+                    :selected="$selectedCategoryId"
+                    :options="$categoryFilterOptions"
+                    :auto-submit="true"
+                />
             </div>
 
             {{-- Province Filter --}}
+            @php
+                $provinceFilterOptions = array_merge(
+                    [['label' => 'All Provinces', 'value' => '']],
+                    $provinces->sortBy('name')->map(fn($p) => ['label' => $p->name, 'value' => (string)$p->id])->values()->all()
+                );
+            @endphp
             <div class="w-full md:w-56">
-                <select name="province_id" onchange="this.form.submit()"
-                    class="w-full px-3 py-2 text-sm border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none transition bg-white text-gray-700 cursor-pointer">
-                    <option value="">All Provinces</option>
-                    @foreach ($provinces as $province)
-                        <option value="{{ $province->id }}" {{ (string) request('province_id') === (string) $province->id ? 'selected' : '' }}>
-                            {{ $province->name }}
-                        </option>
-                    @endforeach
-                </select>
+                <x-custom-select
+                    name="province_id"
+                    placeholder="All Provinces"
+                    :selected="request('province_id')"
+                    :options="$provinceFilterOptions"
+                    :auto-submit="true"
+                />
             </div>
 
             {{-- Action Buttons --}}
