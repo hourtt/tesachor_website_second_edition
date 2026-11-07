@@ -44,78 +44,47 @@
             <div class="w-px h-6 sm:h-8 bg-gray-200 mx-1 sm:mx-3 shrink-0"></div>
             {{-- Category Dropdown --}}
             @php
-                use App\Models\Category;
-                use Illuminate\Support\Facades\Lang;
-                use Illuminate\Support\Facades\Schema;
-
-                $dbCategories = Schema::hasTable('categories') ? Category::orderBy('name')->get() : collect();
                 $selectedCategory = request('category', '');
-                $selectedCategory = is_scalar($selectedCategory) ? (string) $selectedCategory : '';
-
-                // Resolve a numeric category ID to its slug, without querying a missing table
-                if ($selectedCategory !== '' && ctype_digit($selectedCategory)) {
-                    $foundCat = $dbCategories->firstWhere('id', (int) $selectedCategory);
+                if ($selectedCategory && is_numeric($selectedCategory)) {
+                    $foundCat = \App\Models\Category::find((int) $selectedCategory);
                     if ($foundCat) {
                         $selectedCategory = $foundCat->slug;
                     }
                 }
 
-                $allCategoriesOption = [
-                    'label' => __('landing/landing.all_categories'),
-                    'value' => '',
-                    'key' => 'landing/landing.all_categories',
-                ];
+                $dbCategories = \Illuminate\Support\Facades\Schema::hasTable('categories')
+                    ? \App\Models\Category::orderBy('name')->get()
+                    : collect();
 
                 if ($dbCategories->isNotEmpty()) {
                     $categoryOptions = array_merge(
-                        [$allCategoriesOption],
-                        $dbCategories
-                            ->map(
-                                fn($c) => [
-                                    'label' => Lang::has("landing/landing/{$c->slug}")
-                                        ? __("landing/landing/{$c->slug}")
-                                        : $c->name,
-                                    'value' => $c->slug,
-                                    'key' => Lang::has("landing/landing/{$c->slug}")
-                                        ? "landing/landing/{$c->slug}"
-                                        : null,
-                                ],
-                            )
-                            ->all(),
+                        [[
+                            'label' => __('landing/landing.all_categories'),
+                            'value' => '',
+                            'key'   => 'landing/landing.all_categories',
+                        ]],
+                        $dbCategories->map(fn($c) => [
+                            'label' => \Illuminate\Support\Facades\Lang::has('landing/landing.' . $c->slug)
+                                ? __('landing/landing.' . $c->slug)
+                                : $c->name,
+                            'value' => $c->slug,
+                            'key'   => \Illuminate\Support\Facades\Lang::has('landing/landing.' . $c->slug)
+                                ? 'landing/landing.' . $c->slug
+                                : null,
+                        ])->all()
                     );
                 } else {
                     $categoryOptions = [
-                        [
-                            'label' => __('landing/landing.all_categories'),
-                            'value' => '',
-                            'key' => 'landing/landing.all_categories',
-                        ],
-                        [
-                            'label' => __('landing/landing.temples'),
-                            'value' => 'temples',
-                            'key' => 'landing/landing.temples',
-                        ],
-                        [
-                            'label' => __('landing/landing.beaches'),
-                            'value' => 'beaches',
-                            'key' => 'landing/landing.beaches',
-                        ],
-                        [
-                            'label' => __('landing/landing.nature'),
-                            'value' => 'nature',
-                            'key' => 'landing/landing.nature',
-                        ],
+                        ['label' => __('landing/landing.all_categories'), 'value' => '', 'key' => 'landing/landing.all_categories'],
+                        ['label' => __('landing/landing.temples'), 'value' => 'temples', 'key' => 'landing/landing.temples'],
+                        ['label' => __('landing/landing.beaches'), 'value' => 'beaches', 'key' => 'landing/landing.beaches'],
+                        ['label' => __('landing/landing.nature'), 'value' => 'nature', 'key' => 'landing/landing.nature'],
                     ];
                 }
 
-                $activeCategoryI18nKey =
-                    $selectedCategory && Lang::has("landing/landing/{$selectedCategory}")
-                        ? "landing/landing/{$selectedCategory}"
-                        : null;
-
-                if ($activeCategoryI18nKey && !Lang::has($activeCategoryI18nKey)) {
-                    $activeCategoryI18nKey = null;
-                }
+                $activeCategoryI18nKey = ($selectedCategory && \Illuminate\Support\Facades\Lang::has('landing/landing.' . $selectedCategory))
+                    ? 'landing/landing.' . $selectedCategory
+                    : null;
             @endphp
             <x-custom-select name="category" variant="pill" :auto-submit="true" :searchable="false" :selected="$selectedCategory"
                 :options="$categoryOptions" placeholder="{{ __('landing/landing.all_categories') }}"
