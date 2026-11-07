@@ -92,7 +92,11 @@ class UnifiedFrontendTest extends TestCase
 
     public function test_guest_can_access_unified_frontend_pages(): void
     {
-        $this->get(route('public.landing'))->assertOk()->assertSee('Tesachor');
+        $this->get(route('public.landing'))
+            ->assertOk()
+            ->assertSee('Tesachor')
+            ->assertSee('cambodia-flag-wind-waving.gif')
+            ->assertDontSee('cambodia-flag-wind-waving.mp4');
         $this->get(route('public.provinces.index'))->assertOk()->assertSee('Siem Reap');
         $this->get(route('public.provinces.show', 'siem-reap'))->assertOk()->assertSee('Angkor Wat');
         $this->get(route('public.destinations.show', 'angkor-wat'))->assertOk()->assertSee('Angkor Wat');

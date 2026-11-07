@@ -4,10 +4,8 @@
         class="relative h-127.5 sm:h-167.5 lg:h-screen w-full overflow-hidden flex items-center justify-center group">
         {{-- Animation: zoom-out (Creates a cinematic opening effect) --}}
         <div class="absolute inset-0 z-0 bg-gray-900" data-aos="zoom-out" data-aos-duration="2000">
-            <video autoplay loop muted playsinline
-                class="absolute inset-0 w-full h-full object-cover object-center opacity-80" id="myVideo">
-                <source src="{{ url('storage/cambodia-flag-wind-waving.mp4') }}" type="video/mp4">
-            </video>
+            <img src="{{ asset('storage/cambodia-flag-wind-waving.gif') }}" alt="Cambodia flag waving in the wind"
+                class="absolute inset-0 w-full h-full object-cover object-center opacity-80">
             <div class="absolute inset-0 bg-linear-to-b from-black/40 via-black/20 to-black/60"></div>
         </div>
 
