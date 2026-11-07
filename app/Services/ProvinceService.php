@@ -76,7 +76,7 @@ class ProvinceService
 
     public function getProvincesPaginated(int $perPage = 8)
     {
-        return Province::with('destinations')->orderBy('name', 'asc')->paginate($perPage);
+        return Province::withCount('destinations')->with('destinations')->orderBy('name', 'asc')->paginate($perPage);
     }
 
     public function getProvinceByIdOrSlug(string $identifier): Province

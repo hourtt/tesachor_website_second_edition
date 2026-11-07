@@ -54,8 +54,8 @@
                     <span
                         class="bg-black/50 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 shadow-sm flex items-center gap-1">
                         <x-icon name="map-location-dot" class="text-white/70" />
-                        {{ $province->destinations->count() }}
-                        {{ Str::plural('Place', $province->destinations->count()) }}
+                        {{ $province->destinations_count ?? $province->destinations->count() }}
+                        {{ Str::plural('Place', $province->destinations_count ?? $province->destinations->count()) }}
                     </span>
                 </div>
 

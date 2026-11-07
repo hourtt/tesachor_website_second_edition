@@ -19,7 +19,7 @@ class DashboardController extends Controller
                 'recommended' => Destination::where('is_recommended', true)->count(),
             ];
 
-            $recentProvinces = Province::latest()->take(5)->get();
+            $recentProvinces = Province::withCount('destinations')->latest()->take(5)->get();
             $recentDestinations = Destination::with('province')->latest()->take(5)->get();
         } catch (\Throwable $e) {
             report($e);

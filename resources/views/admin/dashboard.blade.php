@@ -80,7 +80,7 @@
                             class="w-10 h-10 rounded-xl object-cover shrink-0 border border-gray-100">
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-semibold text-gray-900 truncate">{{ $province->name }}</p>
-                            <p class="text-xs text-gray-400">{{ $province->destinations->count() }} destinations</p>
+                            <p class="text-xs text-gray-400">{{ $province->destinations_count ?? $province->destinations->count() }} destinations</p>
                         </div>
                         <div class="flex gap-2 shrink-0">
                             <a href="{{ route('admins.provinces.show', $province->slug) }}"
