@@ -46,7 +46,7 @@
               :class="selected.value ? 'text-gray-900 font-medium' : 'text-gray-400'">
             {{ $initialOption['value'] ? $initialOption['label'] : $placeholder }}
         </span>
-        <svg class="w-4 h-4 text-gray-400 transition-transform duration-200 transform flex-shrink-0 ml-2"
+        <svg class="w-4 h-4 text-gray-400 transition-transform duration-200 transform shrink-0 ml-2"
              :class="{ 'rotate-180 text-blue-600': open }"
              fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -89,7 +89,7 @@
                             : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900 font-medium'">
                     <span x-text="option.label"></span>
                     <svg x-show="selected.value == option.value"
-                         class="w-4 h-4 text-blue-600 flex-shrink-0 ml-2"
+                         class="w-4 h-4 text-blue-600 shrink-0 ml-2"
                          fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
                     </svg>
