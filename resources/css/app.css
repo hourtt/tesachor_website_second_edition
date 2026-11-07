@@ -1,10 +1,7 @@
-@import "./fonts-english.css";
-@import "./font-khmer.css";
 @import "tailwindcss";
 @config "../../tailwind.config.js";
 
-/* Default (English): Roboto for both sans and serif.
-   Kantumruy Pro / Hanuman are fallbacks so Khmer text still renders. */
+/* Default (English): Roboto for sans-serif body, Kantumruy Pro & Hanuman fallbacks for Khmer text */
 :root {
     --font-sans:
         "Roboto", "Kantumruy Pro", ui-sans-serif, system-ui, -apple-system,
@@ -12,20 +9,19 @@
         "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         "Noto Color Emoji";
     --font-serif:
-        "Roboto", "Hanuman", "Kantumruy Pro", ui-sans-serif, system-ui, -apple-system,
-        BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    --font-khmer: "Roboto", "Kantumruy Pro", "Hanuman", sans-serif;
+        "Hanuman", "Roboto", "Kantumruy Pro", serif;
+    --font-khmer: "Kantumruy Pro", "Hanuman", "Roboto", sans-serif;
 }
 
-/* Khmer active: Roboto for English/numbers, Kantumruy Pro for Khmer body, Hanuman for Khmer headings */
+/* Khmer active: Kantumruy Pro for body, Hanuman for headings, Roboto for numbers/English text */
 html[lang="km"],
 :root:lang(km) {
     --font-sans:
-        "Roboto", "Kantumruy Pro", ui-sans-serif, system-ui, sans-serif;
+        "Kantumruy Pro", "Roboto", ui-sans-serif, system-ui, sans-serif;
     --font-serif:
-        "Roboto", "Hanuman", "Kantumruy Pro", sans-serif;
+        "Hanuman", "Roboto", "Kantumruy Pro", serif;
     --font-khmer:
-        "Roboto", "Kantumruy Pro", "Hanuman", sans-serif;
+        "Kantumruy Pro", "Hanuman", "Roboto", sans-serif;
 }
 
 html,

@@ -1,26 +1,10 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? 'Admin Panel' }}</title>
-
-    <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Regular.ttf') }}" as="font" type="font/ttf"
-        crossorigin="anonymous">
-    <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Bold.ttf') }}" as="font" type="font/ttf"
-        crossorigin="anonymous">
-    <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Regular.ttf') }}" as="font" type="font/ttf"
-        crossorigin="anonymous">
-    <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Bold.ttf') }}" as="font" type="font/ttf"
-        crossorigin="anonymous">
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="min-h-full bg-gray-50 font-sans antialiased" x-data="{ sidebarOpen: false, logoutModalOpen: false }"
-    @keydown.escape.window="sidebarOpen = false; logoutModalOpen = false">
+<x-root-layout
+    :title="$title ?? 'Admin Panel'"
+    htmlClass="h-full"
+    bodyClass="min-h-full bg-gray-50 font-sans antialiased"
+    x-data="{ sidebarOpen: false, logoutModalOpen: false }"
+    @keydown.escape.window="sidebarOpen = false; logoutModalOpen = false"
+>
 
     {{-- MOBILE SIDEBAR OVERLAY --}}
     <div x-cloak x-show="sidebarOpen" x-transition:enter="transition-opacity ease-linear duration-300"
@@ -303,6 +287,4 @@
     {{-- REUSABLE DELETE CONFIRMATION MODAL --}}
     <x-delete-confirm-modal />
 
-</body>
-
-</html>
+</x-root-layout>

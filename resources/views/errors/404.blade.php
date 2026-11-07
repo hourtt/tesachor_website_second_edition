@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>404 - Page Not Found</title>
-    {{-- Local font preloads --}}
-    <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Regular.ttf') }}" as="font" type="font/ttf"
-        crossorigin="anonymous">
-    <link rel="preload" href="{{ asset('fonts/english/roboto/Roboto-Bold.ttf') }}" as="font" type="font/ttf"
-        crossorigin="anonymous">
-    <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Regular.ttf') }}" as="font" type="font/ttf"
-        crossorigin="anonymous">
-    <link rel="preload" href="{{ asset('fonts/khmer/kantumruy_pro/KantumruyPro-Bold.ttf') }}" as="font" type="font/ttf"
-        crossorigin="anonymous">
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-
-<body class="min-h-full bg-gray-50 font-sans text-gray-800 antialiased flex flex-col justify-between">
+<x-root-layout
+    title="404 - Page Not Found"
+    htmlClass="h-full"
+    bodyClass="min-h-full bg-gray-50 font-sans text-gray-800 antialiased flex flex-col justify-between"
+>
     {{-- Header / Brand --}}
     <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
         <a href="{{ route('public.landing') }}" class="flex items-center gap-3 group">
@@ -47,6 +30,4 @@
             </div>
         </div>
     </main>
-</body>
-
-</html>
+</x-root-layout>
