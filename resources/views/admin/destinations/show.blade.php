@@ -47,10 +47,10 @@
                     Recommended
                 </span>
             @endif
-            <h2 class="text-3xl font-bold font-sans">{{ $destination->place_name }}</h2>
             @if ($destination->place_name_in_khmer)
                 <p class="font-khmer text-lg text-gray-200 mt-0.5">{{ $destination->place_name_in_khmer }}</p>
             @endif
+            <h2 class="text-3xl font-bold font-sans">{{ $destination->place_name }}</h2>
             <div class="flex items-center gap-4 mt-2 text-sm text-gray-200">
                 @if ($destination->province)
                     <span class="flex items-center gap-1.5"><x-icon name="map-pin" class="text-blue-400" /> {{ $destination->province->name }}</span>
@@ -72,41 +72,53 @@
             {{-- Short Description --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                 <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Short Description</h3>
-                <p class="text-gray-700 leading-relaxed">{{ $destination->short_description }}</p>
                 @if ($destination->short_description_in_khmer)
-                    <p class="font-khmer leading-loose text-gray-600 mt-3 pt-3 border-t border-gray-100">{{ $destination->short_description_in_khmer }}</p>
+                    <p class="font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">{{ $destination->short_description_in_khmer }}</p>
                 @endif
+                <p class="text-gray-700 leading-relaxed mt-4">{{ $destination->short_description }}</p>
             </div>
 
             {{-- Full Description --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                 <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Full Description</h3>
-                <div class="prose max-w-none text-gray-700 leading-relaxed">
-                    {!! nl2br(e($destination->place_description)) !!}
-                </div>
                 @if ($destination->place_description_in_khmer)
-                    <div class="font-khmer leading-loose text-gray-600 mt-3 pt-3 border-t border-gray-100">
+                    <div class="font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
                         {!! nl2br(e($destination->place_description_in_khmer)) !!}
                     </div>
                 @endif
+                <div class="text-gray-700 leading-relaxed mt-4">
+                    {!! nl2br(e($destination->place_description)) !!}
+                </div>
             </div>
 
-            @if ($destination->place_history)
+            @if ($destination->place_history || $destination->place_history_in_khmer)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">History & Background</h3>
-                    <p class="text-gray-700 leading-relaxed">{!! nl2br(e($destination->place_history)) !!}</p>
                     @if ($destination->place_history_in_khmer)
-                        <p class="font-khmer leading-loose text-gray-600 mt-3 pt-3 border-t border-gray-100">{!! nl2br(e($destination->place_history_in_khmer)) !!}</p>
+                        <div class="font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
+                            {!! nl2br(e($destination->place_history_in_khmer)) !!}
+                        </div>
+                    @endif
+                    @if ($destination->place_history)
+                        <div class="text-gray-700 leading-relaxed mt-4">
+                            {!! nl2br(e($destination->place_history)) !!}
+                        </div>
                     @endif
                 </div>
             @endif
 
-            @if ($destination->place_information)
+            @if ($destination->place_information || $destination->place_information_in_khmer)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Logistics & Information</h3>
-                    <p class="text-gray-700 leading-relaxed">{!! nl2br(e($destination->place_information)) !!}</p>
                     @if ($destination->place_information_in_khmer)
-                        <p class="font-khmer leading-loose text-gray-600 mt-3 pt-3 border-t border-gray-100">{!! nl2br(e($destination->place_information_in_khmer)) !!}</p>
+                        <div class="font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
+                            {!! nl2br(e($destination->place_information_in_khmer)) !!}
+                        </div>
+                    @endif
+                    @if ($destination->place_information)
+                        <div class="text-gray-700 leading-relaxed mt-4">
+                            {!! nl2br(e($destination->place_information)) !!}
+                        </div>
                     @endif
                 </div>
             @endif
