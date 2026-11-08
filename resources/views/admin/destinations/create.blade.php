@@ -36,8 +36,8 @@
                     Basic Information
                 </h2>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                    {{-- Place Name --}}
+                {{-- Place Name: English + Khmer side by side --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Place Name <span class="text-red-500">*</span></label>
                         <input type="text" name="place_name" value="{{ old('place_name') }}" required
@@ -47,7 +47,18 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-700">Place Name (Khmer)</label>
+                        <input type="text" name="place_name_in_khmer" value="{{ old('place_name_in_khmer') }}"
+                            class="font-khmer w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition"
+                            placeholder="e.g. អង្គរវត្ត">
+                        @error('place_name_in_khmer')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     {{-- Province Dropdown --}}
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Province <span class="text-red-500">*</span></label>
@@ -62,9 +73,7 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     {{-- Category Dropdown --}}
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Category <span class="text-red-500">*</span></label>
@@ -79,7 +88,9 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
+                </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     {{-- Rating --}}
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Rating (0 - 5.0)</label>
@@ -90,29 +101,42 @@
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
 
-                {{-- Recommendation Checkbox --}}
-                <div class="mb-6">
-                    <label class="inline-flex items-center gap-2 cursor-pointer">
-                        <input id="is_recommended" type="checkbox" name="is_recommended" value="1"
-                            {{ old('is_recommended') ? 'checked' : '' }}
-                            class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer">
-                        <span class="text-sm font-medium text-gray-800">Mark as "Recommended for You"</span>
-                    </label>
-                </div>
-
-                {{-- Short Description --}}
-                <div>
-                    <div class="flex justify-between items-center mb-2">
-                        <label class="text-sm font-medium text-gray-700">Short Description <span class="text-red-500">*</span></label>
-                        <span class="text-xs text-gray-400">Max 500 characters</span>
+                    {{-- Recommendation Checkbox --}}
+                    <div class="flex items-center pt-8">
+                        <label class="inline-flex items-center gap-2 cursor-pointer">
+                            <input id="is_recommended" type="checkbox" name="is_recommended" value="1"
+                                {{ old('is_recommended') ? 'checked' : '' }}
+                                class="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 cursor-pointer">
+                            <span class="text-sm font-medium text-gray-800">Mark as "Recommended for You"</span>
+                        </label>
                     </div>
-                    <textarea name="short_description" rows="3" required maxlength="500"
-                        class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('short_description') }}</textarea>
-                    @error('short_description')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                </div>
+
+                {{-- Short Description: English + Khmer side by side --}}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-medium text-gray-700">Short Description <span class="text-red-500">*</span></label>
+                            <span class="text-xs text-gray-400">Max 500 characters</span>
+                        </div>
+                        <textarea name="short_description" rows="3" required maxlength="500"
+                            class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('short_description') }}</textarea>
+                        @error('short_description')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-sm font-medium text-gray-700">Short Description (Khmer)</label>
+                            <span class="text-xs text-gray-400">Max 500 characters</span>
+                        </div>
+                        <textarea name="short_description_in_khmer" rows="3" maxlength="500"
+                            class="font-khmer leading-loose w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('short_description_in_khmer') }}</textarea>
+                        @error('short_description_in_khmer')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
             </div>
 
@@ -162,36 +186,127 @@
                 </div>
             </div>
 
-            {{-- 3. Content & History --}}
+            {{-- 3. Content & Details --}}
             <div class="mb-8">
                 <h2 class="text-base font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100 flex items-center gap-2">
                     <span class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 text-xs font-bold flex items-center justify-center">3</span>
                     Content & Details
                 </h2>
 
-                <div class="mb-4">
-                    <label class="block mb-2 text-sm font-medium text-gray-700">Full Description <span class="text-red-500">*</span></label>
-                    <textarea name="place_description" rows="5" required
-                        class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('place_description') }}</textarea>
-                    @error('place_description')
-                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                    @enderror
+                {{-- Full Description with Alpine tab switcher --}}
+                @php
+                    $descHasKmError = $errors->has('place_description_in_khmer');
+                    $descHasEnError = $errors->has('place_description');
+                    $descInitLang = ($descHasKmError && !$descHasEnError) ? 'km' : 'en';
+                @endphp
+                <div class="mb-4"
+                    x-data="{ lang: '{{ $descInitLang }}' }">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-sm font-medium text-gray-700">Full Description <span class="text-red-500">*</span></label>
+                        <div class="flex rounded-lg border border-gray-200 overflow-hidden text-xs font-medium">
+                            <button type="button" @click="lang = 'en'"
+                                :class="lang === 'en' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'"
+                                class="px-3 py-1.5 transition">English</button>
+                            <button type="button" @click="lang = 'km'"
+                                :class="lang === 'km' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'"
+                                class="px-3 py-1.5 transition relative">
+                                ខ្មែរ
+                                @if ($descHasKmError)
+                                    <span class="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                                @endif
+                            </button>
+                        </div>
+                    </div>
+                    <div x-show="lang === 'en'">
+                        <textarea name="place_description" rows="5" required
+                            class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('place_description') }}</textarea>
+                        @error('place_description')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div x-show="lang === 'km'">
+                        <textarea name="place_description_in_khmer" rows="5"
+                            class="font-khmer leading-loose w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('place_description_in_khmer') }}</textarea>
+                        @error('place_description_in_khmer')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">History & Background</label>
+                {{-- History with Alpine tab switcher --}}
+                @php
+                    $histHasKmError = $errors->has('place_history_in_khmer');
+                    $histHasEnError = $errors->has('place_history');
+                    $histInitLang = ($histHasKmError && !$histHasEnError) ? 'km' : 'en';
+                @endphp
+                <div class="mb-4"
+                    x-data="{ lang: '{{ $histInitLang }}' }">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-sm font-medium text-gray-700">History & Background</label>
+                        <div class="flex rounded-lg border border-gray-200 overflow-hidden text-xs font-medium">
+                            <button type="button" @click="lang = 'en'"
+                                :class="lang === 'en' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'"
+                                class="px-3 py-1.5 transition">English</button>
+                            <button type="button" @click="lang = 'km'"
+                                :class="lang === 'km' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'"
+                                class="px-3 py-1.5 transition relative">
+                                ខ្មែរ
+                                @if ($histHasKmError)
+                                    <span class="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                                @endif
+                            </button>
+                        </div>
+                    </div>
+                    <div x-show="lang === 'en'">
                         <textarea name="place_history" rows="4"
                             class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('place_history') }}</textarea>
                         @error('place_history')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">Visitor Tips & Logistics</label>
+                    <div x-show="lang === 'km'">
+                        <textarea name="place_history_in_khmer" rows="4"
+                            class="font-khmer leading-loose w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('place_history_in_khmer') }}</textarea>
+                        @error('place_history_in_khmer')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Visitor Tips with Alpine tab switcher --}}
+                @php
+                    $infoHasKmError = $errors->has('place_information_in_khmer');
+                    $infoHasEnError = $errors->has('place_information');
+                    $infoInitLang = ($infoHasKmError && !$infoHasEnError) ? 'km' : 'en';
+                @endphp
+                <div x-data="{ lang: '{{ $infoInitLang }}' }">
+                    <div class="flex items-center justify-between mb-2">
+                        <label class="text-sm font-medium text-gray-700">Visitor Tips & Logistics</label>
+                        <div class="flex rounded-lg border border-gray-200 overflow-hidden text-xs font-medium">
+                            <button type="button" @click="lang = 'en'"
+                                :class="lang === 'en' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'"
+                                class="px-3 py-1.5 transition">English</button>
+                            <button type="button" @click="lang = 'km'"
+                                :class="lang === 'km' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'"
+                                class="px-3 py-1.5 transition relative">
+                                ខ្មែរ
+                                @if ($infoHasKmError)
+                                    <span class="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+                                @endif
+                            </button>
+                        </div>
+                    </div>
+                    <div x-show="lang === 'en'">
                         <textarea name="place_information" rows="4"
                             class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('place_information') }}</textarea>
                         @error('place_information')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div x-show="lang === 'km'">
+                        <textarea name="place_information_in_khmer" rows="4"
+                            class="font-khmer leading-loose w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">{{ old('place_information_in_khmer') }}</textarea>
+                        @error('place_information_in_khmer')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
@@ -205,29 +320,39 @@
                     Key Highlights
                 </h2>
 
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">English</p>
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">ខ្មែរ (Khmer)</p>
+                </div>
+
                 <div id="highlight_container" class="space-y-2 mb-3">
-                    @if (old('highlights'))
-                        @foreach (old('highlights') as $highlight)
+                    @php
+                        $hlEn  = old('highlights', ['']);
+                        $hlKm  = old('highlights_in_khmer', ['']);
+                        $hlMax = max(count($hlEn), count($hlKm));
+                        while (count($hlEn) < $hlMax) $hlEn[]  = '';
+                        while (count($hlKm) < $hlMax) $hlKm[] = '';
+                    @endphp
+                    @foreach ($hlEn as $i => $enVal)
+                        <div class="highlight-row grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
                             <div class="flex gap-2">
-                                <input type="text" name="highlights[]" value="{{ $highlight }}"
+                                <input type="text" name="highlights[]" value="{{ $enVal }}"
+                                    placeholder="e.g. Sunrise view at Angkor Wat"
                                     class="w-full px-4 py-2 border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
-                                <button type="button" onclick="removeField(this)" class="px-3 text-red-500 hover:text-red-700">
+                            </div>
+                            <div class="flex gap-2">
+                                <input type="text" name="highlights_in_khmer[]" value="{{ $hlKm[$i] ?? '' }}"
+                                    placeholder="e.g. ទិដ្ឋភាពថ្ងៃរះ"
+                                    class="font-khmer w-full px-4 py-2 border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
+                                <button type="button" onclick="removeHighlightRow(this)" class="px-3 text-red-500 hover:text-red-700 shrink-0">
                                     <x-icon name="trash" />
                                 </button>
                             </div>
-                        @endforeach
-                    @else
-                        <div class="flex gap-2">
-                            <input type="text" name="highlights[]" placeholder="e.g. Sunrise view at Angkor Wat"
-                                class="w-full px-4 py-2 border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
-                            <button type="button" onclick="removeField(this)" class="px-3 text-red-500 hover:text-red-700">
-                                <x-icon name="trash" />
-                            </button>
                         </div>
-                    @endif
+                    @endforeach
                 </div>
 
-                <button type="button" onclick="addHighlightField()" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
+                <button type="button" onclick="addHighlightRow()" class="text-sm font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1">
                     <x-icon name="plus" class="text-xs" /> Add Another Highlight
                 </button>
             </div>
@@ -255,4 +380,35 @@
             </div>
         </form>
     </div>
+
+    <script>
+        function removeHighlightRow(btn) {
+            const container = document.getElementById('highlight_container');
+            const row = btn.closest('.highlight-row');
+            if (container.querySelectorAll('.highlight-row').length > 1) {
+                row.remove();
+            } else {
+                row.querySelectorAll('input[type="text"]').forEach(i => i.value = '');
+            }
+        }
+
+        function addHighlightRow() {
+            const container = document.getElementById('highlight_container');
+            const row = document.createElement('div');
+            row.className = 'highlight-row grid grid-cols-1 md:grid-cols-2 gap-2 items-center';
+            row.innerHTML = `
+                <div class="flex gap-2">
+                    <input type="text" name="highlights[]" placeholder="e.g. Sunrise view at Angkor Wat"
+                        class="w-full px-4 py-2 border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" name="highlights_in_khmer[]" placeholder="e.g. ទិដ្ឋភាពថ្ងៃរះ"
+                        class="font-khmer w-full px-4 py-2 border rounded-xl border-gray-200 focus:ring-2 focus:ring-blue-500 outline-none">
+                    <button type="button" onclick="removeHighlightRow(this)" class="px-3 text-red-500 hover:text-red-700 shrink-0">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>`;
+            container.appendChild(row);
+        }
+    </script>
 </x-admin-layout>

@@ -48,6 +48,9 @@
                 </span>
             @endif
             <h2 class="text-3xl font-bold font-sans">{{ $destination->place_name }}</h2>
+            @if ($destination->place_name_in_khmer)
+                <p class="font-khmer text-lg text-gray-200 mt-0.5">{{ $destination->place_name_in_khmer }}</p>
+            @endif
             <div class="flex items-center gap-4 mt-2 text-sm text-gray-200">
                 @if ($destination->province)
                     <span class="flex items-center gap-1.5"><x-icon name="map-pin" class="text-blue-400" /> {{ $destination->province->name }}</span>
@@ -70,6 +73,9 @@
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                 <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Short Description</h3>
                 <p class="text-gray-700 leading-relaxed">{{ $destination->short_description }}</p>
+                @if ($destination->short_description_in_khmer)
+                    <p class="font-khmer leading-loose text-gray-600 mt-3 pt-3 border-t border-gray-100">{{ $destination->short_description_in_khmer }}</p>
+                @endif
             </div>
 
             {{-- Full Description --}}
@@ -78,12 +84,20 @@
                 <div class="prose max-w-none text-gray-700 leading-relaxed">
                     {!! nl2br(e($destination->place_description)) !!}
                 </div>
+                @if ($destination->place_description_in_khmer)
+                    <div class="font-khmer leading-loose text-gray-600 mt-3 pt-3 border-t border-gray-100">
+                        {!! nl2br(e($destination->place_description_in_khmer)) !!}
+                    </div>
+                @endif
             </div>
 
             @if ($destination->place_history)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">History & Background</h3>
                     <p class="text-gray-700 leading-relaxed">{!! nl2br(e($destination->place_history)) !!}</p>
+                    @if ($destination->place_history_in_khmer)
+                        <p class="font-khmer leading-loose text-gray-600 mt-3 pt-3 border-t border-gray-100">{!! nl2br(e($destination->place_history_in_khmer)) !!}</p>
+                    @endif
                 </div>
             @endif
 
@@ -91,6 +105,9 @@
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Logistics & Information</h3>
                     <p class="text-gray-700 leading-relaxed">{!! nl2br(e($destination->place_information)) !!}</p>
+                    @if ($destination->place_information_in_khmer)
+                        <p class="font-khmer leading-loose text-gray-600 mt-3 pt-3 border-t border-gray-100">{!! nl2br(e($destination->place_information_in_khmer)) !!}</p>
+                    @endif
                 </div>
             @endif
         </div>
@@ -98,14 +115,31 @@
         {{-- Right 1 col: Meta, Highlights & Gallery --}}
         <div class="space-y-6">
             {{-- Highlights --}}
-            @if (is_array($destination->highlights) && count($destination->highlights) > 0)
+            @php
+                $enHighlights = is_array($destination->highlights) ? array_filter($destination->highlights) : [];
+                $kmHighlights = is_array($destination->highlights_in_khmer) ? array_filter($destination->highlights_in_khmer) : [];
+                $hasHighlights = count($enHighlights) > 0 || count($kmHighlights) > 0;
+            @endphp
+            @if ($hasHighlights)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Highlights</h3>
                     <ul class="space-y-2">
-                        @foreach ($destination->highlights as $hl)
-                            <li class="flex items-center gap-2 text-sm text-gray-700">
-                                <x-icon name="check" class="text-green-500 text-xs" />
-                                {{ $hl }}
+                        @foreach ($enHighlights as $i => $hl)
+                            <li class="flex flex-col gap-0.5">
+                                <span class="flex items-center gap-2 text-sm text-gray-700">
+                                    <x-icon name="check" class="text-green-500 text-xs shrink-0" />
+                                    {{ $hl }}
+                                </span>
+                                @if (!empty($kmHighlights[$i]))
+                                    <span class="font-khmer text-sm text-gray-500 pl-5">{{ $kmHighlights[$i] }}</span>
+                                @endif
+                            </li>
+                        @endforeach
+                        {{-- Show any extra Khmer-only highlights --}}
+                        @foreach (array_slice($kmHighlights, count($enHighlights)) as $kmExtra)
+                            <li class="flex items-center gap-2 font-khmer text-sm text-gray-500">
+                                <x-icon name="check" class="text-green-500 text-xs shrink-0" />
+                                {{ $kmExtra }}
                             </li>
                         @endforeach
                     </ul>

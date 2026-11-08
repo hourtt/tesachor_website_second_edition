@@ -14,8 +14,12 @@ class StoreDestinationRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        $khmerName = $this->input('place_name_in_khmer');
         $this->merge([
             'is_recommended' => $this->has('is_recommended'),
+            'place_name_in_khmer' => \is_string($khmerName)
+                ? (trim(str_replace("\u{200B}", '', $khmerName)) ?: null)
+                : null,
         ]);
     }
 
@@ -29,11 +33,7 @@ class StoreDestinationRequest extends FormRequest
                 'string',
                 'max:255',
                 function ($attribute, $value, $fail) {
-                    $trimmed = trim((string) $value);
-                    if ($trimmed === '') {
-                        return;
-                    }
-                    if (Destination::whereRaw('LOWER(place_name) = LOWER(?)', [$trimmed])->exists()) {
+                    if (Destination::whereRaw('LOWER(place_name) = LOWER(?)', [$value])->exists()) {
                         $fail('This destination already exists.');
                     }
                 },
@@ -49,6 +49,22 @@ class StoreDestinationRequest extends FormRequest
             'highlights.*' => 'string|max:255',
             'gallery_images' => 'nullable|array|max:10',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:10240',
+            'place_name_in_khmer' => [
+                'nullable',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) {
+                    if (Destination::where('place_name_in_khmer', $value)->exists()) {
+                        $fail('This Khmer destination name already exists.');
+                    }
+                },
+            ],
+            'short_description_in_khmer' => ['nullable', 'string', 'max:500'],
+            'place_description_in_khmer' => ['nullable', 'string'],
+            'place_history_in_khmer' => ['nullable', 'string'],
+            'place_information_in_khmer' => ['nullable', 'string'],
+            'highlights_in_khmer' => ['nullable', 'array'],
+            'highlights_in_khmer.*' => ['nullable', 'string', 'max:255'],
         ];
     }
 

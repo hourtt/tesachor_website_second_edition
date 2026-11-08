@@ -173,7 +173,7 @@ class DestinationService
                 return $destination;
             } catch (\Throwable $e) {
                 // If anything fails, clean up any uploaded files from cloud storage
-                $disk = Storage::disk($this->disk);
+            $disk = Storage::disk($this->disk);
                 foreach ($uploadedFiles as $file) {
                     try {
                         $disk->delete($file);

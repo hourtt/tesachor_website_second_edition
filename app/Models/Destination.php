@@ -48,11 +48,18 @@ class Destination extends Model
         'place_information',
         'highlights',
         'gallery_images',
+        'place_name_in_khmer',
+        'short_description_in_khmer',
+        'place_description_in_khmer',
+        'place_history_in_khmer',
+        'place_information_in_khmer',
+        'highlights_in_khmer',
     ];
 
     // * $casts automatically converts model attributes to specific PHP data types
     protected $casts = [
         'highlights' => 'array',
+        'highlights_in_khmer' => 'array',
         'gallery_images' => 'array',
         'is_recommended' => 'boolean',
     ];

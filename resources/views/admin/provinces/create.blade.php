@@ -25,21 +25,20 @@
                         <input type="text" name="name" value="{{ old('name') }}" required
                             class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition capitalize"
                             placeholder="e.g. Siem Reap">
-                        {{-- @error('name')
+                        @error('name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror --}}
+                        @enderror
                     </div>
 
                     {{-- Khmer Name --}}
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (Khmer)</label>
-                        <input type="text" name="name_in_khmer" value="{{ old('name_in_khmer') }}" required
-                            pattern="[\u1780-\u17B3\u17B6-\u17D3 ]+" title="Enter Khmer letters only"
+                        <input type="text" name="name_in_khmer" value="{{ old('name_in_khmer') }}"
                             class="font-khmer font-normal w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition"
                             placeholder="e.g. សៀមរាប">
-                        {{-- @error('name_in_khmer')
+                        @error('name_in_khmer')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror --}}
+                        @enderror
                     </div>
 
                     {{-- Image Upload Section --}}

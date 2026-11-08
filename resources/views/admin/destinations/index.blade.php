@@ -166,6 +166,9 @@
                                             <a href="{{ route('admins.destinations.show', $destination->slug) }}" class="font-semibold text-gray-900 hover:text-blue-600 transition">
                                                 {{ $destination->place_name }}
                                             </a>
+                                            @if ($destination->place_name_in_khmer)
+                                                <p class="font-khmer text-xs text-gray-400">{{ $destination->place_name_in_khmer }}</p>
+                                            @endif
                                             <p class="text-xs text-gray-400 line-clamp-1 max-w-xs">{{ $destination->short_description }}</p>
                                         </div>
                                     </div>

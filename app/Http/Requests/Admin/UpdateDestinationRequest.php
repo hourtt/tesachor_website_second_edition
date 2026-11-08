@@ -14,8 +14,12 @@ class UpdateDestinationRequest extends FormRequest
 
     protected function prepareForValidation(): void
     {
+        $khmerName = $this->input('place_name_in_khmer');
         $this->merge([
             'is_recommended' => $this->has('is_recommended'),
+            'place_name_in_khmer' => \is_string($khmerName)
+                ? (trim(str_replace("\u{200B}", '', $khmerName)) ?: null)
+                : null,
         ]);
     }
 
@@ -39,15 +43,10 @@ class UpdateDestinationRequest extends FormRequest
                 'string',
                 'max:255',
                 function ($attribute, $value, $fail) use ($destinationId) {
-                    $trimmed = trim((string) $value);
-                    if ($trimmed === '') {
-                        return;
-                    }
-                    $query = Destination::whereRaw('LOWER(place_name) = LOWER(?)', [$trimmed]);
-                    if ($destinationId) {
-                        $query->where('id', '!=', $destinationId);
-                    }
-                    if ($query->exists()) {
+                    $exists = Destination::whereRaw('LOWER(place_name) = LOWER(?)', [$value])
+                        ->when($destinationId, fn($q) => $q->where('id', '!=', $destinationId))
+                        ->exists();
+                    if ($exists) {
                         $fail('This destination already exists.');
                     }
                 },
@@ -63,6 +62,26 @@ class UpdateDestinationRequest extends FormRequest
             'highlights.*' => 'string|max:255',
             'gallery_images' => 'nullable|array|max:10',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:10240',
+            'place_name_in_khmer' => [
+                'nullable',
+                'string',
+                'max:255',
+                function ($attribute, $value, $fail) use ($destinationId) {
+                    $exists = Destination::where('place_name_in_khmer', $value)
+                        ->when($destinationId, fn($q) => $q->where('id', '!=', $destinationId))
+                        ->exists();
+                    if ($exists) {
+                        $fail('This destination already exists.');
+
+                    }
+                },
+            ],
+            'short_description_in_khmer' => ['nullable', 'string', 'max:500'],
+            'place_description_in_khmer' => ['nullable', 'string'],
+            'place_history_in_khmer' => ['nullable', 'string'],
+            'place_information_in_khmer' => ['nullable', 'string'],
+            'highlights_in_khmer' => ['nullable', 'array'],
+            'highlights_in_khmer.*' => ['nullable', 'string', 'max:255'],
         ];
     }
 

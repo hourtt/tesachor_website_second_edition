@@ -15,7 +15,8 @@ class DestinationController extends Controller
 {
     public function __construct(
         protected DestinationService $destinationService,
-    ) {}
+    ) {
+    }
 
     public function index(Request $request)
     {
@@ -25,9 +26,12 @@ class DestinationController extends Controller
         if ($search = $request->input('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('place_name', 'like', "%{$search}%")
-                    ->orWhere('short_description', 'like', "%{$search}%");
+                    ->orWhere('place_name_in_khmer', 'like', "%{$search}%")
+                    ->orWhere('short_description', 'like', "%{$search}%")
+                    ->orWhere('short_description_in_khmer', 'like', "%{$search}%");
             });
         }
+
 
         // Category filter (supports category_id or slug)
         if ($categoryId = $request->input('category_id')) {

@@ -35,7 +35,7 @@
                     {{-- Khmer Name --}}
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (Khmer)</label>
-                        <input type="text" name="name_in_khmer" value="{{ old('name_in_khmer', $province->name_in_khmer) }}" required
+                        <input type="text" name="name_in_khmer" value="{{ old('name_in_khmer', $province->name_in_khmer) }}"
                             class="font-khmer font-normal w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">
                         @error('name_in_khmer')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>

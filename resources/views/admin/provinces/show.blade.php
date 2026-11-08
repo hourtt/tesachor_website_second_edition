@@ -110,11 +110,14 @@
                 @endif
 
                 <div class="absolute bottom-0 inset-x-0 p-5 text-center z-10">
-                    <h4 class="text-lg font-bold text-white mb-1 font-serif tracking-wide drop-shadow-md">
+                    <h4 class="text-lg font-bold text-white mb-0.5 font-serif tracking-wide drop-shadow-md">
                         {{ $destination->place_name }}
                     </h4>
+                    @if ($destination->place_name_in_khmer)
+                        <p class="font-khmer text-sm text-gray-200 drop-shadow-md">{{ $destination->place_name_in_khmer }}</p>
+                    @endif
                     @if ($destination->rating)
-                        <div class="flex items-center justify-center gap-1 text-yellow-400 text-xs">
+                        <div class="flex items-center justify-center gap-1 text-yellow-400 text-xs mt-1">
                             <x-icon name="star" />
                             <span class="text-white font-medium">{{ $destination->rating }}</span>
                         </div>
