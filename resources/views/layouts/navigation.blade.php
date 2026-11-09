@@ -1,57 +1,66 @@
+@php
+    $isLanding = request()->routeIs('public.landing');
+@endphp
+
 <script>
     if (!window.translations) {
         window.translations = @json($navTranslations);
     }
 </script>
 
-{{-- Main Navigation Bar (Solid White on Load/Reload, Dynamic Transparent on Scroll) --}}
+{{-- Main Navigation Bar (Fixed & Dynamic Transparent on Landing, Relative on other pages) --}}
 <nav x-data="{
     open: false,
     isTransparent: false,
+    isLanding: @json($isLanding),
     activeSection: 'home',
     init() {
-        // 1. Initial State on Load / Reload: Explicitly start with solid white background
-        this.isTransparent = false;
+        if (this.isLanding) {
+            // 1. Initial State on Load / Reload: Explicitly start with solid white background
+            this.isTransparent = false;
 
-        // 2. Scroll Interaction: Become transparent once user scrolls down, revert to white when back at top
-        window.addEventListener('scroll', () => {
-            this.isTransparent = (window.pageYOffset || window.scrollY || 0) > 20;
-        }, { passive: true });
+            // 2. Scroll Interaction: Become transparent once user scrolls down, revert to white when back at top
+            window.addEventListener('scroll', () => {
+                this.isTransparent = (window.pageYOffset || window.scrollY || 0) > 20;
+            }, { passive: true });
 
-        // 3. Sync active section from URL hash on load or reload (e.g., /#travel)
-        if (window.location.hash) {
-            const initialHash = window.location.hash.replace('#', '');
-            if (document.getElementById(initialHash)) {
-                this.activeSection = initialHash;
+            // 3. Sync active section from URL hash on load or reload (e.g., /#travel)
+            if (window.location.hash) {
+                const initialHash = window.location.hash.replace('#', '');
+                if (document.getElementById(initialHash)) {
+                    this.activeSection = initialHash;
+                }
             }
-        }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.activeSection = entry.target.id;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        this.activeSection = entry.target.id;
+                    }
+                });
+            }, { rootMargin: '-80px 0px -60% 0px' });
+
+            document.querySelectorAll('section[id]').forEach(section => {
+                observer.observe(section);
+            });
+
+            window.addEventListener('hashchange', () => {
+                if (window.location.hash) {
+                    const currentHash = window.location.hash.replace('#', '');
+                    if (document.getElementById(currentHash)) {
+                        this.activeSection = currentHash;
+                    }
                 }
             });
-        }, { rootMargin: '-80px 0px -60% 0px' });
-
-        document.querySelectorAll('section[id]').forEach(section => {
-            observer.observe(section);
-        });
-
-        window.addEventListener('hashchange', () => {
-            if (window.location.hash) {
-                const currentHash = window.location.hash.replace('#', '');
-                if (document.getElementById(currentHash)) {
-                    this.activeSection = currentHash;
-                }
-            }
-        });
+        }
     }
 }"
-    :class="(isTransparent && !open)
-        ? 'bg-transparent border-transparent shadow-none'
+    :class="isLanding
+        ? ((isTransparent && !open)
+            ? 'bg-transparent border-transparent shadow-none'
+            : 'bg-white border-b border-gray-200/80 shadow-xs')
         : 'bg-white border-b border-gray-200/80 shadow-xs'"
-    class="fixed top-0 left-0 w-full z-50 transition-all duration-300 ease-in-out">
+    class="{{ $isLanding ? 'fixed top-0 left-0 transition-all duration-300 ease-in-out' : 'relative' }} w-full z-50">
 
     {{-- Navbar Container (Wider on 2xl and 3xl screens) --}}
     <div class="max-w-7xl 2xl:max-w-[1700px] 3xl:max-w-[2100px] mx-auto px-4 sm:px-6 lg:px-8 3xl:px-16">
@@ -68,14 +77,15 @@
             {{-- 2. Center Menu Links (Tablet, Desktop & 4K) --}}
             <div class="hidden md:flex items-center md:gap-4 lg:gap-8 2xl:gap-12 3xl:gap-16">
                 @foreach ($navItems as $navItem)
-                    <a href="#{{ $navItem['id'] }}" @click="activeSection = '{{ $navItem['id'] }}'"
+                    <a href="{{ $isLanding ? '#' . $navItem['id'] : route('public.landing') . '#' . $navItem['id'] }}"
+                        @click="if (isLanding) activeSection = '{{ $navItem['id'] }}'"
                         class="text-xs lg:text-sm 2xl:text-base 3xl:text-xl font-medium whitespace-nowrap shrink-0 transition-colors duration-200 relative group py-1"
-                        :class="activeSection === '{{ $navItem['id'] }}' ? 'text-blue-600 font-semibold' : 'text-gray-800 hover:text-blue-600'">
+                        :class="(isLanding && activeSection === '{{ $navItem['id'] }}') ? 'text-blue-600 font-semibold' : 'text-gray-800 hover:text-blue-600'">
                         <span x-text="$store.i18n.t('navbar.{{ $navItem['id'] }}')">{{ $navItem['label'] }}</span>
                         {{-- Active / Hover Underline --}}
                         <span
                             class="absolute -bottom-1 3xl:-bottom-2 left-0 w-0 h-0.5 3xl:h-1 bg-blue-600 transition-all duration-300 group-hover:w-full"
-                            :class="{ 'w-full': activeSection === '{{ $navItem['id'] }}' }"></span>
+                            :class="{ 'w-full': isLanding && activeSection === '{{ $navItem['id'] }}' }"></span>
                     </a>
                 @endforeach
             </div>
@@ -152,9 +162,10 @@
         {{-- Mobile Navigation Links --}}
         <div class="pb-3 py-2">
             @foreach ($navItems as $navItem)
-                <a href="#{{ $navItem['id'] }}" @click="open = false; activeSection = '{{ $navItem['id'] }}'"
+                <a href="{{ $isLanding ? '#' . $navItem['id'] : route('public.landing') . '#' . $navItem['id'] }}"
+                    @click="open = false; if (isLanding) activeSection = '{{ $navItem['id'] }}'"
                     class="block w-full ps-3 pe-4 py-2 border-l-4 text-start text-base transition duration-150 ease-in-out"
-                    :class="activeSection === '{{ $navItem['id'] }}'
+                    :class="(isLanding && activeSection === '{{ $navItem['id'] }}')
                         ? 'border-blue-500 text-blue-700 bg-blue-50 font-semibold'
                         : 'border-transparent text-gray-700 hover:text-gray-900 hover:bg-gray-50 hover:border-gray-300'">
                     <span x-text="$store.i18n.t('navbar.{{ $navItem['id'] }}')">{{ $navItem['label'] }}</span>

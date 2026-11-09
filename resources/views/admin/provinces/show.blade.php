@@ -55,7 +55,7 @@
                         <span class="text-3xl font-bold text-blue-700">{{ $province->destinations->count() }}</span>
                     </div>
                     <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-                        <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Slug</span>
+                        <span class="block text-xs font-bold text-gray-400 capitalize tracking-wider mb-1">Slug</span>
                         <span class="text-sm font-medium text-gray-700 font-mono break-all">{{ $province->slug }}</span>
                     </div>
                 </div>

@@ -28,13 +28,13 @@
 
                     <div class="grid grid-cols-2 gap-6">
                         <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
-                            <span class="block text-xs font-bold text-blue-400 uppercase tracking-wider mb-1">Total
+                            <span class="block text-xs font-bold text-blue-400 capitalize tracking-wider mb-1">Total
                                 Destinations</span>
                             <span class="text-3xl font-bold text-blue-700">{{ $province->destinations->count() }}</span>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
                             <span
-                                class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Slug</span>
+                                class="block text-xs font-bold text-gray-400 capitalize tracking-wider mb-1">Slug</span>
                             <span class="text-sm font-medium text-gray-600 font-mono">{{ $province->slug }}</span>
                         </div>
                     </div>
