@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Destination;
 use App\Models\Province;
-use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -15,7 +14,6 @@ class DashboardController extends Controller
             $stats = [
                 'provinces' => Province::count(),
                 'destinations' => Destination::count(),
-                'users' => User::count(),
                 'recommended' => Destination::where('is_recommended', true)->count(),
             ];
 
@@ -27,7 +25,6 @@ class DashboardController extends Controller
             $stats = [
                 'provinces' => 0,
                 'destinations' => 0,
-                'users' => 0,
                 'recommended' => 0,
             ];
             $recentProvinces = collect();

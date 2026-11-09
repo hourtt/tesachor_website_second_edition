@@ -791,42 +791,7 @@ class AdminPanelTest extends TestCase
         $this->assertDatabaseMissing('destinations', ['slug' => 'preah-vihear-temple']);
     }
 
-    // 4. USERS MANAGEMENT & DEACTIVATION TESTS
-
-    public function test_admin_can_view_users_list(): void
-    {
-        $response = $this->actingAs($this->admin)->get(route('admins.users.index'));
-
-        $response->assertOk();
-        $response->assertSee($this->admin->name);
-        $response->assertSee($this->regularUser->name);
-    }
-
-    public function test_admin_can_update_user_role_and_status(): void
-    {
-        $targetUser = User::factory()->create();
-        $targetUser->assignRole('user');
-
-        $response = $this->actingAs($this->admin)->put(route('admins.users.update', $targetUser->id), [
-            'role' => 'admin',
-            'is_active' => '1',
-        ]);
-
-        $response->assertRedirect(route('admins.users.index'));
-        $this->assertTrue($targetUser->fresh()->hasRole('admin'));
-    }
-
-    public function test_admin_cannot_deactivate_themselves(): void
-    {
-        $response = $this->actingAs($this->admin)->put(route('admins.users.update', $this->admin->id), [
-            'role' => 'user',
-            'is_active' => '0',
-        ]);
-
-        $response->assertSessionHas('error');
-        $this->assertTrue($this->admin->fresh()->hasRole('admin'));
-        $this->assertTrue($this->admin->fresh()->is_active);
-    }
+    // 4. DEACTIVATION & SECURITY TESTS
 
     public function test_deactivated_user_is_logged_out_by_middleware(): void
     {

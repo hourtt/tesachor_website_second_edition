@@ -28,7 +28,7 @@ Route::middleware('guest')->group(function () {
         ->name('password.store');
 });
 
-Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function () {
+Route::middleware(['auth', 'prevent-back-history'])->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 

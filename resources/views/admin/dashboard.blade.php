@@ -7,7 +7,7 @@
     </div>
 
     {{-- Stats Grid --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
 
         {{-- Provinces --}}
         <a href="{{ route('admins.provinces.index') }}"
@@ -33,19 +33,6 @@
             </div>
             <p class="text-3xl font-bold text-gray-900">{{ $stats['destinations'] }}</p>
             <p class="text-sm text-gray-500 mt-1">Total destinations</p>
-        </a>
-
-        {{-- Users --}}
-        <a href="{{ route('admins.users.index') }}"
-            class="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all group">
-            <div class="flex items-center justify-between mb-4">
-                <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center group-hover:bg-purple-100 transition-colors">
-                    <x-icon name="users" class="text-purple-500" />
-                </div>
-                <span class="text-xs font-semibold text-purple-500 bg-purple-50 px-2 py-1 rounded-full">Users</span>
-            </div>
-            <p class="text-3xl font-bold text-gray-900">{{ $stats['users'] }}</p>
-            <p class="text-sm text-gray-500 mt-1">Registered users</p>
         </a>
 
         {{-- Recommended --}}

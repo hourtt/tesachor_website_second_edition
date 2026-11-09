@@ -3,8 +3,6 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DestinationController as AdminDestination;
 use App\Http\Controllers\Admin\ProvinceController as AdminProvince;
-// * New Admin Controllers
-use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\EditorUploadController;
 use App\Http\Controllers\ProfileAvatarController;
@@ -54,9 +52,6 @@ Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('adm
 
     // Destinations CRUD
     Route::resource('destinations', AdminDestination::class);
-
-    // Users management
-    Route::resource('users', AdminUser::class)->only(['index', 'edit', 'update']);
 });
 
 // SHARED AUTH ROUTES (Admin Avatar Upload & Remove, Editor Upload)
