@@ -1,14 +1,9 @@
 import "./bootstrap";
 import Alpine from "alpinejs";
 import registerRichEditor from "./rich-editor";
-
-// Import Swiper and AOS
-import Swiper from "swiper/bundle";
-import "swiper/css/bundle";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import "./image-cropper";
 import "./destination-form";
+
 window.Alpine = Alpine;
 
 const savedLocale = (() => {
@@ -67,7 +62,7 @@ Alpine.store("i18n", {
         }
 
         if (dict.landing && dict.landing[key] !== undefined) return dict.landing[key];
-        if (dict["landing/landing"] && dict["landing/landing"][key] !== undefined) return dict["landing/landing"][key];
+        if (dict["landing"] && dict["landing"][key] !== undefined) return dict["landing"][key];
         if (dict.navbar && dict.navbar[key] !== undefined) return dict.navbar[key];
 
         return key;
@@ -94,45 +89,120 @@ Alpine.store("i18n", {
     }
 });
 
+// Register rich editor component (engine is lazy-loaded on demand)
 registerRichEditor(Alpine);
 Alpine.start();
 
-// Initialize AOS (Animate On Scroll)
-AOS.init({
-    duration: 800,
-    easing: "ease-out-cubic",
-    once: true,
-    offset: 50,
-});
+// Lazy load & initialize AOS only if data-aos elements exist on the page
+let aosPromise = null;
+const initAOS = async () => {
+    if (!document.querySelector("[data-aos]")) return;
 
-// Make Swiper available globally if needed, or init directly in modules
-window.Swiper = Swiper;
+    if (!aosPromise) {
+        aosPromise = Promise.all([
+            import("aos"),
+            import("aos/dist/aos.css"),
+        ]).then(([aosModule]) => {
+            const AOS = aosModule.default;
+            AOS.init({
+                duration: 800,
+                easing: "ease-out-cubic",
+                once: true,
+                offset: 50,
+            });
+            window.AOS = AOS;
+            return AOS;
+        });
+    } else {
+        const AOS = await aosPromise;
+        AOS.refresh();
+    }
+};
 
-// Initialize Swiper on page load if element exists
-document.addEventListener("DOMContentLoaded", function () {
-    if (document.querySelector(".mySwiper")) {
-        new Swiper(".mySwiper", {
-            slidesPerView: 1,
-            spaceBetween: 0,
-            loop: true,
-            speed: 1000,
-            centeredSlides: false,
-            autoplay: {
-                delay: 3500,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            breakpoints: {
-                640: {
-                    slidesPerView: 2,
-                },
-                1024: {
-                    slidesPerView: 3,
-                },
-            },
+// Lazy load & initialize Swiper only if .mySwiper elements exist on the page
+let swiperPromise = null;
+const initSwiper = async () => {
+    const swiperEl = document.querySelector(".mySwiper");
+    if (!swiperEl) return;
+
+    if (!swiperPromise) {
+        swiperPromise = Promise.all([
+            import("swiper/bundle"),
+            import("swiper/css/bundle"),
+        ]).then(([swiperModule]) => {
+            const Swiper = swiperModule.default;
+            window.Swiper = Swiper;
+            return Swiper;
         });
     }
-});
+
+    const Swiper = await swiperPromise;
+    new Swiper(swiperEl, {
+        slidesPerView: 1,
+        spaceBetween: 0,
+        loop: true,
+        speed: 1000,
+        centeredSlides: false,
+        autoplay: {
+            delay: 3500,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        breakpoints: {
+            640: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        },
+    });
+};
+
+// Global async getters for external/inline scripts if needed
+window.loadSwiper = async () => {
+    if (window.Swiper) return window.Swiper;
+    if (!swiperPromise) {
+        swiperPromise = Promise.all([
+            import("swiper/bundle"),
+            import("swiper/css/bundle"),
+        ]).then(([swiperModule]) => {
+            const Swiper = swiperModule.default;
+            window.Swiper = Swiper;
+            return Swiper;
+        });
+    }
+    return swiperPromise;
+};
+
+window.loadAOS = async () => {
+    if (window.AOS) return window.AOS;
+    if (!aosPromise) {
+        aosPromise = Promise.all([
+            import("aos"),
+            import("aos/dist/aos.css"),
+        ]).then(([aosModule]) => {
+            const AOS = aosModule.default;
+            window.AOS = AOS;
+            return AOS;
+        });
+    }
+    return aosPromise;
+};
+
+// Initialize dynamic components on DOM ready and Livewire navigation
+const initInteractiveComponents = () => {
+    initAOS();
+    initSwiper();
+};
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initInteractiveComponents);
+} else {
+    initInteractiveComponents();
+}
+
+document.addEventListener("livewire:navigated", initInteractiveComponents);

@@ -1,9 +1,19 @@
-import Cropper from "cropperjs";
-import "cropperjs/dist/cropper.css";
-
 let cropper = null;
 let originalFile = null;
 let hasCropped = false;
+let cropperModulePromise = null;
+
+function loadCropper() {
+    if (!cropperModulePromise) {
+        cropperModulePromise = Promise.all([
+            import("cropperjs"),
+            import("cropperjs/dist/cropper.css"),
+        ]).then(([cropperModule]) => {
+            return cropperModule.default;
+        });
+    }
+    return cropperModulePromise;
+}
 
 function getElements() {
     return {
@@ -33,6 +43,9 @@ window.startCropping = function (event) {
     originalFile = file;
     hasCropped = false;
 
+    // Preload Cropper module in parallel with file reading
+    loadCropper();
+
     const reader = new FileReader();
     reader.onload = function (e) {
         const { imageToCrop } = getElements();
@@ -44,7 +57,7 @@ window.startCropping = function (event) {
     reader.readAsDataURL(file);
 };
 
-window.openModal = function () {
+window.openModal = async function () {
     const { modal, imageToCrop } = getElements();
     if (!modal || !imageToCrop) return;
 
@@ -57,7 +70,8 @@ window.openModal = function () {
         cropper = null;
     }
 
-    if (typeof Cropper !== "undefined") {
+    const Cropper = await loadCropper();
+    if (Cropper && imageToCrop) {
         cropper = new Cropper(imageToCrop, {
             aspectRatio: NaN,
             viewMode: 1,
@@ -102,6 +116,7 @@ window.performCrop = function () {
 
 window.reOpenCropper = function () {
     if (originalFile) {
+        loadCropper();
         const reader = new FileReader();
         reader.onload = function (e) {
             const { imageToCrop } = getElements();

@@ -8,4 +8,17 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (id.includes("node_modules")) {
+                        if (id.includes("alpinejs") || id.includes("axios")) {
+                            return "vendor";
+                        }
+                    }
+                },
+            },
+        },
+    },
 });
