@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @config "../../tailwind.config.js";
 
 /* Default (English): Roboto for sans-serif body, Kantumruy Pro & Hanuman fallbacks for Khmer text */
@@ -147,4 +148,23 @@ body.lang-switching [x-html] {
         transform: rotate(360deg);
     }
 }
+
+/* Tiptap / Rich Editor styles */
+.ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    height: 0;
+    pointer-events: none;
+    color: #9ca3af;
+}
+.ProseMirror table {
+    border-collapse: collapse;
+    width: 100%;
+}
+.ProseMirror td,
+.ProseMirror th {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem;
+}
+
 

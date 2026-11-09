@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Stevebauman\Purify\Casts\PurifyHtmlOnSet;
 
 /**
  * @property int $id
@@ -57,12 +58,23 @@ class Destination extends Model
     ];
 
     // * $casts automatically converts model attributes to specific PHP data types
-    protected $casts = [
-        'highlights' => 'array',
-        'highlights_in_khmer' => 'array',
-        'gallery_images' => 'array',
-        'is_recommended' => 'boolean',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'highlights' => 'array',
+            'highlights_in_khmer' => 'array',
+            'gallery_images' => 'array',
+            'is_recommended' => 'boolean',
+            'short_description' => PurifyHtmlOnSet::class,
+            'short_description_in_khmer' => PurifyHtmlOnSet::class,
+            'place_description' => PurifyHtmlOnSet::class,
+            'place_description_in_khmer' => PurifyHtmlOnSet::class,
+            'place_history' => PurifyHtmlOnSet::class,
+            'place_history_in_khmer' => PurifyHtmlOnSet::class,
+            'place_information' => PurifyHtmlOnSet::class,
+            'place_information_in_khmer' => PurifyHtmlOnSet::class,
+        ];
+    }
 
     public function province()
     {

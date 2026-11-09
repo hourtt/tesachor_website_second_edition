@@ -177,7 +177,7 @@
                         </h3>
 
                         <p class="mb-3 line-clamp-2 wrap-break-words text-xs leading-relaxed sm:text-sm md:text-base">
-                            {{ $tour->short_description }}
+                            {{ strip_tags($tour->short_description) }}
                         </p>
 
                         <a href="{{ route('public.destinations.show', $tour->slug) }}"

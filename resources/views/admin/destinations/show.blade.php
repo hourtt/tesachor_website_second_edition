@@ -17,9 +17,7 @@
                 <x-icon name="pen-to-square" class="mr-2" /> Edit
             </a>
             <form action="{{ route('admins.destinations.destroy', $destination->slug) }}" method="POST"
-                data-confirm-delete
-                data-title="Delete Destination?"
-                data-name="{{ $destination->place_name }}"
+                data-confirm-delete data-title="Delete Destination?" data-name="{{ $destination->place_name }}"
                 data-warning="Are you sure you want to delete {{ $destination->place_name }}? This action cannot be undone.">
                 @csrf
                 @method('DELETE')
@@ -34,7 +32,8 @@
     {{-- Destination Hero Preview --}}
     <div class="relative w-full h-80 rounded-2xl overflow-hidden mb-8 shadow-sm">
         @if ($destination->thumbnail)
-            <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}" class="w-full h-full object-cover">
+            <img src="{{ $destination->thumbnail_url }}" alt="{{ $destination->place_name }}"
+                class="w-full h-full object-cover">
         @else
             <div class="w-full h-full bg-gray-100 flex items-center justify-center text-gray-400">
                 <x-icon name="image" class="text-3xl" />
@@ -43,23 +42,34 @@
         <div class="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent"></div>
         <div class="absolute bottom-0 left-0 p-6 sm:p-8 text-white">
             @if ($destination->is_recommended)
-                <span class="bg-amber-500 text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider mb-2 inline-block">
+                <span
+                    class="bg-amber-500 text-white text-[10px] font-bold px-2.5 py-1 rounded uppercase tracking-wider mb-2 inline-block">
                     Recommended
                 </span>
             @endif
-            @if ($destination->place_name_in_khmer)
-                <p class="font-khmer text-lg text-gray-200 mt-0.5">{{ $destination->place_name_in_khmer }}</p>
-            @endif
-            <h2 class="text-3xl font-bold font-sans">{{ $destination->place_name }}</h2>
+            <div class="flex items-baseline gap-3">
+                @if ($destination->place_name_in_khmer)
+                    <h2 class="font-khmer text-4xl font-bold text-khmer">
+                        {{ $destination->place_name_in_khmer }}
+                    </h2>
+                @endif
+
+                <h2 class="font-sans text-3xl font-bold">
+                    ({{ $destination->place_name }})
+                </h2>
+            </div>
             <div class="flex items-center gap-4 mt-2 text-sm text-gray-200">
                 @if ($destination->province)
-                    <span class="flex items-center gap-1.5"><x-icon name="map-pin" class="text-blue-400" /> {{ $destination->province->name }}</span>
+                    <span class="flex items-center gap-1.5"><x-icon name="map-pin" class="text-blue-400" />
+                        {{ $destination->province->name }}</span>
                 @endif
                 @if ($destination->category)
-                    <span class="flex items-center gap-1.5"><x-icon name="tag" class="text-emerald-400" /> {{ $destination->category->name }}</span>
+                    <span class="flex items-center gap-1.5"><x-icon name="tag" class="text-emerald-400" />
+                        {{ $destination->category->name }}</span>
                 @endif
                 @if ($destination->rating)
-                    <span class="flex items-center gap-1.5"><x-icon name="star" class="text-yellow-400" /> {{ $destination->rating }} / 5.0</span>
+                    <span class="flex items-center gap-1.5"><x-icon name="star" class="text-yellow-400" />
+                        {{ $destination->rating }} / 5.0</span>
                 @endif
             </div>
         </div>
@@ -73,21 +83,25 @@
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                 <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Short Description</h3>
                 @if ($destination->short_description_in_khmer)
-                    <p class="font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">{{ $destination->short_description_in_khmer }}</p>
+                    <div class="prose max-w-none font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
+                        {!! !preg_match('/<[a-z][\s\S]*>/i', $destination->short_description_in_khmer) ? nl2br(e($destination->short_description_in_khmer)) : $destination->short_description_in_khmer !!}
+                    </div>
                 @endif
-                <p class="text-gray-700 leading-relaxed mt-4">{{ $destination->short_description }}</p>
+                <div class="prose max-w-none text-gray-700 leading-relaxed mt-4">
+                    {!! !preg_match('/<[a-z][\s\S]*>/i', $destination->short_description) ? nl2br(e($destination->short_description)) : $destination->short_description !!}
+                </div>
             </div>
 
             {{-- Full Description --}}
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                 <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Full Description</h3>
                 @if ($destination->place_description_in_khmer)
-                    <div class="font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
-                        {!! nl2br(e($destination->place_description_in_khmer)) !!}
+                    <div class="prose max-w-none font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
+                        {!! !preg_match('/<[a-z][\s\S]*>/i', $destination->place_description_in_khmer) ? nl2br(e($destination->place_description_in_khmer)) : $destination->place_description_in_khmer !!}
                     </div>
                 @endif
-                <div class="text-gray-700 leading-relaxed mt-4">
-                    {!! nl2br(e($destination->place_description)) !!}
+                <div class="prose max-w-none text-gray-700 leading-relaxed mt-4">
+                    {!! !preg_match('/<[a-z][\s\S]*>/i', $destination->place_description) ? nl2br(e($destination->place_description)) : $destination->place_description !!}
                 </div>
             </div>
 
@@ -95,13 +109,13 @@
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">History & Background</h3>
                     @if ($destination->place_history_in_khmer)
-                        <div class="font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
-                            {!! nl2br(e($destination->place_history_in_khmer)) !!}
+                        <div class="prose max-w-none font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
+                            {!! !preg_match('/<[a-z][\s\S]*>/i', $destination->place_history_in_khmer) ? nl2br(e($destination->place_history_in_khmer)) : $destination->place_history_in_khmer !!}
                         </div>
                     @endif
                     @if ($destination->place_history)
-                        <div class="text-gray-700 leading-relaxed mt-4">
-                            {!! nl2br(e($destination->place_history)) !!}
+                        <div class="prose max-w-none text-gray-700 leading-relaxed mt-4">
+                            {!! !preg_match('/<[a-z][\s\S]*>/i', $destination->place_history) ? nl2br(e($destination->place_history)) : $destination->place_history !!}
                         </div>
                     @endif
                 </div>
@@ -111,13 +125,13 @@
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-2">Logistics & Information</h3>
                     @if ($destination->place_information_in_khmer)
-                        <div class="font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
-                            {!! nl2br(e($destination->place_information_in_khmer)) !!}
+                        <div class="prose max-w-none font-khmer leading-loose text-gray-600 mt-1 pt-3 border-t border-gray-100">
+                            {!! !preg_match('/<[a-z][\s\S]*>/i', $destination->place_information_in_khmer) ? nl2br(e($destination->place_information_in_khmer)) : $destination->place_information_in_khmer !!}
                         </div>
                     @endif
                     @if ($destination->place_information)
-                        <div class="text-gray-700 leading-relaxed mt-4">
-                            {!! nl2br(e($destination->place_information)) !!}
+                        <div class="prose max-w-none text-gray-700 leading-relaxed mt-4">
+                            {!! !preg_match('/<[a-z][\s\S]*>/i', $destination->place_information) ? nl2br(e($destination->place_information)) : $destination->place_information !!}
                         </div>
                     @endif
                 </div>
@@ -129,7 +143,9 @@
             {{-- Highlights --}}
             @php
                 $enHighlights = is_array($destination->highlights) ? array_filter($destination->highlights) : [];
-                $kmHighlights = is_array($destination->highlights_in_khmer) ? array_filter($destination->highlights_in_khmer) : [];
+                $kmHighlights = is_array($destination->highlights_in_khmer)
+                    ? array_filter($destination->highlights_in_khmer)
+                    : [];
                 $hasHighlights = count($enHighlights) > 0 || count($kmHighlights) > 0;
             @endphp
             @if ($hasHighlights)
@@ -161,7 +177,8 @@
             {{-- Gallery Images --}}
             @if (is_array($destination->gallery_images) && count($destination->gallery_images) > 0)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Gallery ({{ count($destination->gallery_images) }})</h3>
+                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Gallery
+                        ({{ count($destination->gallery_images) }})</h3>
                     <div class="grid grid-cols-2 gap-3">
                         @foreach ($destination->gallery_urls as $gUrl)
                             <div class="h-24 rounded-xl overflow-hidden border border-gray-100">

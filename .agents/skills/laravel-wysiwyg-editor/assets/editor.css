@@ -1,0 +1,7 @@
+/* Append to resources/css/app.css */
+.ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left; height: 0; pointer-events: none; color: #9ca3af;
+}
+.ProseMirror table { border-collapse: collapse; width: 100%; }
+.ProseMirror td, .ProseMirror th { border: 1px solid #d1d5db; padding: .5rem; }

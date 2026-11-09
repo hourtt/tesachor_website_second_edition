@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ProvinceController as AdminProvince;
 // * New Admin Controllers
 use App\Http\Controllers\Admin\UserController as AdminUser;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\EditorUploadController;
 use App\Http\Controllers\ProfileAvatarController;
 use App\Http\Controllers\Public\DestinationController as PublicDestination;
 // * Shared Public Controllers
@@ -58,10 +59,11 @@ Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('adm
     Route::resource('users', AdminUser::class)->only(['index', 'edit', 'update']);
 });
 
-// SHARED AUTH ROUTES (Admin Avatar Upload & Remove)
-Route::middleware(['auth:web,admins', 'prevent-back-history'])->group(function () {
+// SHARED AUTH ROUTES (Admin Avatar Upload & Remove, Editor Upload)
+Route::middleware(['auth', 'prevent-back-history'])->group(function () {
     Route::post('/profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar.update');
     Route::delete('/profile/avatar', [ProfileAvatarController::class, 'destroy'])->name('profile.avatar.destroy');
+    Route::post('/editor/upload', EditorUploadController::class)->name('editor.upload');
 });
 
 require __DIR__.'/auth.php';

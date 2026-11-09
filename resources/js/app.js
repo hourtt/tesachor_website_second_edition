@@ -1,5 +1,6 @@
 import "./bootstrap";
 import Alpine from "alpinejs";
+import registerRichEditor from "./rich-editor";
 
 // Import Swiper and AOS
 import Swiper from "swiper/bundle";
@@ -93,6 +94,7 @@ Alpine.store("i18n", {
     }
 });
 
+registerRichEditor(Alpine);
 Alpine.start();
 
 // Initialize AOS (Animate On Scroll)

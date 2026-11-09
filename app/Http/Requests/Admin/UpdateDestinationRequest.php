@@ -51,7 +51,7 @@ class UpdateDestinationRequest extends FormRequest
                     }
                 },
             ],
-            'short_description' => 'required|string|max:500',
+            'short_description' => 'required|string|max:3000',
             'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'rating' => 'nullable|numeric|min:0|max:5',
             'is_recommended' => 'boolean',
@@ -76,7 +76,7 @@ class UpdateDestinationRequest extends FormRequest
                     }
                 },
             ],
-            'short_description_in_khmer' => ['nullable', 'string', 'max:500'],
+            'short_description_in_khmer' => ['nullable', 'string', 'max:3000'],
             'place_description_in_khmer' => ['nullable', 'string'],
             'place_history_in_khmer' => ['nullable', 'string'],
             'place_information_in_khmer' => ['nullable', 'string'],
