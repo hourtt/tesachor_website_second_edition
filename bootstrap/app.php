@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Middleware\PreventBackHistory;
 use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\UserMiddleware;
@@ -22,15 +21,13 @@ return Application::configure(basePath: dirname(__DIR__))
             'prevent-back-history' => PreventBackHistory::class,
             'admin' => AdminMiddleware::class,
             'user' => UserMiddleware::class,
-            'active' => EnsureUserIsActive::class,
         ]);
 
         // Stealth 404: Never redirect unauthorized guests to secret admin login URL
         $middleware->redirectGuestsTo(fn (Request $request) => abort(404));
 
-        // Append to the web group so every request checks user status and applies session locale
+        // Append to the web group to apply session locale
         $middleware->web(append: [
-            EnsureUserIsActive::class,
             SetLocale::class,
         ]);
     })

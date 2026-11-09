@@ -12,18 +12,17 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Traits\HasRoles;
 
-/** @property string|null $avatar_path
+/**
+ * @property string|null $avatar_path
  * @property string|null $avatar_url
  * @property string $name
  * @property string $email
  * @property string $password
- * @property string $is_active
  */
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory;
-
     use HasRoles;
     use Notifiable;
 
@@ -37,16 +36,6 @@ class User extends Authenticatable
         'email',
         'password',
         'avatar_path',
-        'is_active',
-    ];
-
-    /**
-     * The model's default values for attributes.
-     *
-     * @var array<string, mixed>
-     */
-    protected $attributes = [
-        'is_active' => true,
     ];
 
     /**
@@ -98,7 +87,6 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_active' => 'boolean',
         ];
     }
 }

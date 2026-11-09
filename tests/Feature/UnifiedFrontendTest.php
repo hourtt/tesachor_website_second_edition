@@ -83,10 +83,10 @@ class UnifiedFrontendTest extends TestCase
             'is_recommended' => true,
         ]);
 
-        $this->user = User::factory()->create(['is_active' => true]);
+        $this->user = User::factory()->create();
         $this->user->assignRole('user');
 
-        $this->admin = User::factory()->create(['is_active' => true]);
+        $this->admin = User::factory()->create();
         $this->admin->assignRole('admin');
     }
 

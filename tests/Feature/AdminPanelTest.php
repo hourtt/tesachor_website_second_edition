@@ -791,25 +791,7 @@ class AdminPanelTest extends TestCase
         $this->assertDatabaseMissing('destinations', ['slug' => 'preah-vihear-temple']);
     }
 
-    // 4. DEACTIVATION & SECURITY TESTS
-
-    public function test_deactivated_user_is_logged_out_by_middleware(): void
-    {
-        $activeUser = User::factory()->create(['is_active' => true]);
-        $activeUser->assignRole('user');
-
-        // Can access landing page while active
-        $response = $this->actingAs($activeUser)->get(route('public.landing'));
-        $response->assertOk();
-
-        // Admin deactivates user
-        $activeUser->update(['is_active' => false]);
-
-        // Attempting to visit landing page now redirects to login
-        $response2 = $this->actingAs($activeUser)->get(route('public.landing'));
-        $response2->assertRedirect(route('login'));
-        $this->assertGuest();
-    }
+    // 4. ADMIN DASHBOARD & SECURITY TESTS
 
     public function test_admin_dashboard_renders_profile_edit_link_and_logout_modal(): void
     {
