@@ -43,18 +43,16 @@ class NavigationComposer
         $navTranslations = [
             'en' => [
                 'navbar' => trans('navbar', [], 'en'),
-                'landing' => trans('landing/landing', [], 'en'),
-                'landing/landing' => trans('landing/landing', [], 'en'),
+                'landing' => trans('landing', [], 'en'),
             ],
             'km' => [
                 'navbar' => trans('navbar', [], 'km'),
-                'landing' => trans('landing/landing', [], 'km'),
-                'landing/landing' => trans('landing/landing', [], 'km'),
+                'landing' => trans('landing', [], 'km'),
             ],
         ];
 
         foreach (['en', 'km'] as $loc) {
-            $landingArr = trans('landing/landing', [], $loc);
+            $landingArr = trans('landing', [], $loc);
             if (is_array($landingArr)) {
                 $navTranslations[$loc] += $landingArr;
             }

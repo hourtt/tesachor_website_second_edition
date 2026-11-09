@@ -12,15 +12,15 @@
         <div class="relative z-10 text-center text-white px-4 pt-14 pb-10 sm:py-0">
             {{-- Animation: fade-down (Headline drops in from top) --}}
             <h1 class="font-sans text-4xl sm:text-5xl md:text-7xl lg:text-9xl tracking-tight mb-3 sm:mb-4 drop-shadow-2xl"
-                data-aos="fade-down" data-aos-duration="1000" x-text="$store.i18n.t('landing/landing.headline')">
-                {{ __('landing/landing.headline') }}
+                data-aos="fade-down" data-aos-duration="1000" x-text="$store.i18n.t('landing.headline')">
+                {{ __('landing.headline') }}
             </h1>
 
             {{-- Animation: fade-up (Subtitle rises from bottom) --}}
             <p class="text-sm sm:text-lg md:text-2xl font-light tracking-[0.2em] uppercase mb-6 sm:mb-8 text-gray-100"
                 data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000"
-                x-text="$store.i18n.t('landing/landing.subtitle')">
-                {{ __('landing/landing.subtitle') }}
+                x-text="$store.i18n.t('landing.subtitle')">
+                {{ __('landing.subtitle') }}
             </p>
         </div>
     </section>
@@ -37,8 +37,8 @@
                         d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
                 <input type="text" name="search" value="{{ request('search') }}"
-                    placeholder="{{ __('landing/landing.search_placeholder') }}"
-                    :placeholder="$store.i18n.t('landing/landing.search_placeholder')"
+                    placeholder="{{ __('landing.search_placeholder') }}"
+                    :placeholder="$store.i18n.t('landing.search_placeholder')"
                     class="w-full border-none focus:ring-0 text-gray-700 bg-transparent py-2 sm:py-3 pl-2 sm:px-4 text-xs sm:text-sm md:text-base outline-none">
             </div>
             <div class="w-px h-6 sm:h-8 bg-gray-200 mx-1 sm:mx-3 shrink-0"></div>
@@ -59,41 +59,41 @@
                 if ($dbCategories->isNotEmpty()) {
                     $categoryOptions = array_merge(
                         [[
-                            'label' => __('landing/landing.all_categories'),
+                            'label' => __('landing.all_categories'),
                             'value' => '',
-                            'key'   => 'landing/landing.all_categories',
+                            'key'   => 'landing.all_categories',
                         ]],
                         $dbCategories->map(fn($c) => [
-                            'label' => \Illuminate\Support\Facades\Lang::has('landing/landing.' . $c->slug)
-                                ? __('landing/landing.' . $c->slug)
+                            'label' => \Illuminate\Support\Facades\Lang::has('landing.' . $c->slug)
+                                ? __('landing.' . $c->slug)
                                 : $c->name,
                             'value' => $c->slug,
-                            'key'   => \Illuminate\Support\Facades\Lang::has('landing/landing.' . $c->slug)
-                                ? 'landing/landing.' . $c->slug
+                            'key'   => \Illuminate\Support\Facades\Lang::has('landing.' . $c->slug)
+                                ? 'landing.' . $c->slug
                                 : null,
                         ])->all()
                     );
                 } else {
                     $categoryOptions = [
-                        ['label' => __('landing/landing.all_categories'), 'value' => '', 'key' => 'landing/landing.all_categories'],
-                        ['label' => __('landing/landing.temples'), 'value' => 'temples', 'key' => 'landing/landing.temples'],
-                        ['label' => __('landing/landing.beaches'), 'value' => 'beaches', 'key' => 'landing/landing.beaches'],
-                        ['label' => __('landing/landing.nature'), 'value' => 'nature', 'key' => 'landing/landing.nature'],
+                        ['label' => __('landing.all_categories'), 'value' => '', 'key' => 'landing.all_categories'],
+                        ['label' => __('landing.temples'), 'value' => 'temples', 'key' => 'landing.temples'],
+                        ['label' => __('landing.beaches'), 'value' => 'beaches', 'key' => 'landing.beaches'],
+                        ['label' => __('landing.nature'), 'value' => 'nature', 'key' => 'landing.nature'],
                     ];
                 }
 
-                $activeCategoryI18nKey = ($selectedCategory && \Illuminate\Support\Facades\Lang::has('landing/landing.' . $selectedCategory))
-                    ? 'landing/landing.' . $selectedCategory
+                $activeCategoryI18nKey = ($selectedCategory && \Illuminate\Support\Facades\Lang::has('landing.' . $selectedCategory))
+                    ? 'landing.' . $selectedCategory
                     : null;
             @endphp
             <x-custom-select name="category" variant="pill" :auto-submit="true" :searchable="false" :selected="$selectedCategory"
-                :options="$categoryOptions" placeholder="{{ __('landing/landing.all_categories') }}"
-                placeholder-key="landing/landing.all_categories" />
+                :options="$categoryOptions" placeholder="{{ __('landing.all_categories') }}"
+                placeholder-key="landing.all_categories" />
 
             <button type="submit"
                 class="bg-gray-900 text-white px-5 sm:px-8 py-2.5 sm:py-3 rounded-full text-xs sm:text-sm md:text-base font-bold hover:bg-blue-600 transition shrink-0 cursor-pointer"
-                x-text="$store.i18n.t('landing/landing.search_button')">
-                {{ __('landing/landing.search_button') }}
+                x-text="$store.i18n.t('landing.search_button')">
+                {{ __('landing.search_button') }}
             </button>
         </form>
 
@@ -105,7 +105,7 @@
                     <span
                         class="inline-flex items-center gap-1.5 pl-3.5 pr-1.5 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-white/95 text-gray-800 border border-blue-200 shadow-sm backdrop-blur-md transition-all hover:border-blue-300">
                         <span class="text-blue-600 font-semibold"
-                            x-text="$store.i18n.t('landing/landing.filter_category') + ':'">{{ __('landing/landing.filter_category') }}:</span>
+                            x-text="$store.i18n.t('landing.filter_category') + ':'">{{ __('landing.filter_category') }}:</span>
                         <span class="text-gray-900 font-medium"
                             @if ($activeCategoryI18nKey) x-text="$store.i18n.t('{{ $activeCategoryI18nKey }}')" @endif>{{ $activeCategoryName }}</span>
                         <a href="{{ route('public.landing', array_merge(request()->except(['category', 'category_id', 'page']), [])) }}#travel"
@@ -124,7 +124,7 @@
                     <span
                         class="inline-flex items-center gap-1.5 pl-3.5 pr-1.5 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-white/95 text-gray-800 border border-gray-200 shadow-sm backdrop-blur-md transition-all hover:border-gray-300">
                         <span class="text-gray-500 font-semibold"
-                            x-text="$store.i18n.t('landing/landing.filter_search') + ':'">{{ __('landing/landing.filter_search') }}:</span>
+                            x-text="$store.i18n.t('landing.filter_search') + ':'">{{ __('landing.filter_search') }}:</span>
                         <span class="text-gray-900 font-medium">"{{ request('search') }}"</span>
                         <a href="{{ route('public.landing', array_merge(request()->except(['search', 'page']), [])) }}#travel"
                             class="inline-flex items-center justify-center w-5 h-5 ml-1 rounded-full bg-gray-100 hover:bg-red-100 text-gray-500 hover:text-red-600 transition-colors focus:outline-none"
@@ -145,17 +145,17 @@
         <div class="max-w-7xl mx-auto px-4 mb-10 text-center">
             @if (request()->filled('search') || request()->filled('category'))
                 <h2 class="font-sans text-4xl md:text-5xl text-gray-900" data-aos="fade-up"
-                    x-text="$store.i18n.t('landing/landing.search_results')">
-                    {{ __('landing/landing.search_results') }}
+                    x-text="$store.i18n.t('landing.search_results')">
+                    {{ __('landing.search_results') }}
                 </h2>
                 <p class="mt-2 text-sm text-gray-500" data-aos="fade-up"
-                    x-text="$store.i18n.t('landing/landing.showing_matching')">
-                    {{ __('landing/landing.showing_matching') }}
+                    x-text="$store.i18n.t('landing.showing_matching')">
+                    {{ __('landing.showing_matching') }}
                 </p>
             @else
                 <h2 class="font-sans text-4xl md:text-5xl text-gray-900" data-aos="fade-up"
-                    x-text="$store.i18n.t('landing/landing.recommended_title')">
-                    {{ __('landing/landing.recommended_title') }}
+                    x-text="$store.i18n.t('landing.recommended_title')">
+                    {{ __('landing.recommended_title') }}
                 </h2>
             @endif
         </div>
@@ -182,8 +182,8 @@
 
                         <a href="{{ route('public.destinations.show', $tour->slug) }}"
                             class="mt-auto inline-flex text-xs font-bold capitalize tracking-wider text-gray-900 transition-colors hover:text-blue-600 sm:text-sm"
-                            x-text="$store.i18n.t('landing/landing.read_more')">
-                            {{ __('landing/landing.read_more') }}
+                            x-text="$store.i18n.t('landing.read_more')">
+                            {{ __('landing.read_more') }}
                         </a>
                     </div>
                 </div>
@@ -193,8 +193,8 @@
                         class="rounded-2xl border border-dashed border-gray-300 bg-white p-8 shadow-sm max-w-md mx-auto">
                         @if (request()->filled('search') || request()->filled('category'))
                             <p class="mb-5 text-gray-500 italic"
-                                x-text="$store.i18n.t('landing/landing.no_search_results')">
-                                {{ __('landing/landing.no_search_results') }}
+                                x-text="$store.i18n.t('landing.no_search_results')">
+                                {{ __('landing.no_search_results') }}
                             </p>
                             <a href="{{ route('public.landing') }}#travel"
                                 class="inline-flex items-center gap-1.5 px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-full bg-gray-900 text-white hover:bg-blue-600 transition shadow-sm">
@@ -204,12 +204,12 @@
                                         d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                 </svg>
                                 <span
-                                    x-text="$store.i18n.t('landing/landing.clear_all')">{{ __('landing/landing.clear_all') }}</span>
+                                    x-text="$store.i18n.t('landing.clear_all')">{{ __('landing.clear_all') }}</span>
                             </a>
                         @else
                             <p class="mb-5 text-gray-500 italic"
-                                x-text="$store.i18n.t('landing/landing.no_recommended')">
-                                {{ __('landing/landing.no_recommended') }}
+                                x-text="$store.i18n.t('landing.no_recommended')">
+                                {{ __('landing.no_recommended') }}
                             </p>
                         @endif
                     </div>
@@ -225,8 +225,8 @@
                 class="flex flex-col md:flex-row justify-between items-end md:items-center text-center md:text-left gap-4 py-4">
                 <div class="w-full md:w-auto">
                     <h2 class="font-sans text-4xl italic text-gray-800" data-aos="fade-up"
-                        x-text="$store.i18n.t('landing/landing.provinces_cities_title')">
-                        {{ __('landing/landing.provinces_cities_title') }}</h2>
+                        x-text="$store.i18n.t('landing.provinces_cities_title')">
+                        {{ __('landing.provinces_cities_title') }}</h2>
                 </div>
 
                 <div data-aos="fade-left" class="flex flex-wrap justify-center gap-3">
@@ -235,7 +235,7 @@
                         class="inline-flex items-center px-6 py-3 bg-white text-gray-900 border border-gray-200 rounded-full hover:bg-gray-50 hover:text-white-600 transition shadow-md text-sm font-semibold capitalize tracking-wider">
                         <x-icon name="list-ul" class="mr-2" />
                         <span
-                            x-text="$store.i18n.t('landing/landing.see_provinces_list')">{{ __('landing/landing.see_provinces_list') }}</span>
+                            x-text="$store.i18n.t('landing.see_provinces_list')">{{ __('landing.see_provinces_list') }}</span>
                     </a>
                 </div>
             </div>
@@ -268,8 +268,8 @@
             @empty
                 <div
                     class="col-span-full text-center py-16 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-300">
-                    <p class="text-gray-500 mb-4" x-text="$store.i18n.t('landing/landing.no_provinces')">
-                        {{ __('landing/landing.no_provinces') }}</p>
+                    <p class="text-gray-500 mb-4" x-text="$store.i18n.t('landing.no_provinces')">
+                        {{ __('landing.no_provinces') }}</p>
                 </div>
             @endforelse
         </div>
@@ -297,16 +297,16 @@
                     class="absolute bottom-0 left-0 p-8 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                     <span
                         class="inline-block px-3 py-1 bg-blue-500/90 backdrop-blur rounded-full text-[10px] font-bold tracking-widest uppercase mb-3"
-                        x-text="$store.i18n.t('landing/landing.featured')">
-                        {{ __('landing/landing.featured') }}
+                        x-text="$store.i18n.t('landing.featured')">
+                        {{ __('landing.featured') }}
                     </span>
                     <h3 class="font-sans text-4xl mb-3 group-hover:text-white-200 transition-colors"
-                        x-text="$store.i18n.t('landing/landing.coastal_journey_title')">
-                        {{ __('landing/landing.coastal_journey_title') }}
+                        x-text="$store.i18n.t('landing.coastal_journey_title')">
+                        {{ __('landing.coastal_journey_title') }}
                     </h3>
                     <p class="font-sans text-xs text-gray-200 mb-3 line-clamp-5"
-                        x-text="$store.i18n.t('landing/landing.coastal_journey_desc')">
-                        {{ __('landing/landing.coastal_journey_desc') }}
+                        x-text="$store.i18n.t('landing.coastal_journey_desc')">
+                        {{ __('landing.coastal_journey_desc') }}
                     </p>
                 </div>
             </div>
@@ -341,15 +341,15 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center max-w-3xl mx-auto mb-16" data-aos="fade-up" data-aos-duration="1000">
                 <span class="text-white-500 font-bold tracking-widest text-sm uppercase mb-3 block"
-                    x-text="$store.i18n.t('landing/landing.who_we_are')">{{ __('landing/landing.who_we_are') }}</span>
+                    x-text="$store.i18n.t('landing.who_we_are')">{{ __('landing.who_we_are') }}</span>
                 <h2 class="font-sans text-4xl md:text-5xl text-gray-900 leading-tight mb-6">
                     <span
-                        x-text="$store.i18n.t('landing/landing.authentic_cambodian')">{{ __('landing/landing.authentic_cambodian') }}</span>
+                        x-text="$store.i18n.t('landing.authentic_cambodian')">{{ __('landing.authentic_cambodian') }}</span>
                     <span class="text-transparent bg-clip-text bg-linear-to-r from-red-600 to-orange-500"
-                        x-text="$store.i18n.t('landing/landing.adventures')">{{ __('landing/landing.adventures') }}</span>
+                        x-text="$store.i18n.t('landing.adventures')">{{ __('landing.adventures') }}</span>
                 </h2>
-                <p class="text-gray-600 leading-relaxed text-lg" x-html="$store.i18n.t('landing/landing.about_desc')">
-                    {!! __('landing/landing.about_desc') !!}
+                <p class="text-gray-600 leading-relaxed text-lg" x-html="$store.i18n.t('landing.about_desc')">
+                    {!! __('landing.about_desc') !!}
                 </p>
             </div>
             <div class="grid md:grid-cols-3 gap-8">
@@ -381,8 +381,8 @@
     <section id="lifestyle" class="py-10 bg-transparent">
         <div class="max-w-7xl mx-auto px-4 text-center mb-16">
             <h2 class="font-sans text-4xl italic text-gray-800"
-                x-text="$store.i18n.t('landing/landing.discover_cambodia_title')">
-                {{ __('landing/landing.discover_cambodia_title') }}</h2>
+                x-text="$store.i18n.t('landing.discover_cambodia_title')">
+                {{ __('landing.discover_cambodia_title') }}</h2>
         </div>
 
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -428,8 +428,8 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
                 <h2 class="font-sans text-3xl md:text-4xl text-gray-900 mb-4"
-                    x-text="$store.i18n.t('landing/landing.good_to_know_title')">
-                    {{ __('landing/landing.good_to_know_title') }}</h2>
+                    x-text="$store.i18n.t('landing.good_to_know_title')">
+                    {{ __('landing.good_to_know_title') }}</h2>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-8">

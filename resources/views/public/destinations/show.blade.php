@@ -143,7 +143,7 @@
                 @endphp
                 @if ($hasHighlights)
                     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Highlights</h3>
+                        <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-3">Highlights</h3>
                         <ul class="space-y-2">
                             @foreach ($enHighlights as $i => $hl)
                                 <li class="flex flex-col gap-0.5">
@@ -201,7 +201,7 @@
                         @keydown.window.arrow-left="if (isOpen) prev()">
 
                         <div class="flex items-center justify-between mb-3">
-                            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider">Gallery
+                            <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider">Gallery
                                 ({{ count($destination->gallery_images) }})</h3>
                         </div>
 

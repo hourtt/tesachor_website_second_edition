@@ -52,19 +52,19 @@
             $translations = [
                 'en' => [
                     'navbar' => trans('navbar', [], 'en'),
-                    'landing' => trans('landing/landing', [], 'en'),
-                    'landing/landing' => trans('landing/landing', [], 'en'),
+                    'landing' => trans('landing', [], 'en'),
+                    'landing' => trans('landing', [], 'en'),
                     'auth' => trans('auth', [], 'en'),
                 ],
                 'km' => [
                     'navbar' => trans('navbar', [], 'km'),
-                    'landing' => trans('landing/landing', [], 'km'),
-                    'landing/landing' => trans('landing/landing', [], 'km'),
+                    'landing' => trans('landing', [], 'km'),
+                    'landing' => trans('landing', [], 'km'),
                     'auth' => trans('auth', [], 'km'),
                 ],
             ];
             foreach (['en', 'km'] as $loc) {
-                $landingArr = trans('landing/landing', [], $loc);
+                $landingArr = trans('landing', [], $loc);
                 if (is_array($landingArr)) {
                     $translations[$loc] += $landingArr;
                 }

@@ -150,17 +150,17 @@
             @endphp
             @if ($hasHighlights)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Highlights</h3>
+                    <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-3">Highlights</h3>
                     <ul class="space-y-2">
                         @foreach ($enHighlights as $i => $hl)
                             <li class="flex flex-col gap-0.5">
                                 <span class="flex items-center gap-2 text-sm text-gray-700">
+                                    @if (!empty($kmHighlights[$i]))
+                                        <span class="font-khmer text-sm text-gray-500 pl-5">{{ $kmHighlights[$i] }}</span>
+                                    @endif
                                     <x-icon name="check" class="text-green-500 text-xs shrink-0" />
                                     {{ $hl }}
                                 </span>
-                                @if (!empty($kmHighlights[$i]))
-                                    <span class="font-khmer text-sm text-gray-500 pl-5">{{ $kmHighlights[$i] }}</span>
-                                @endif
                             </li>
                         @endforeach
                         {{-- Show any extra Khmer-only highlights --}}
@@ -177,7 +177,7 @@
             {{-- Gallery Images --}}
             @if (is_array($destination->gallery_images) && count($destination->gallery_images) > 0)
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                    <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-3">Gallery
+                    <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-3">Gallery
                         ({{ count($destination->gallery_images) }})</h3>
                     <div class="grid grid-cols-2 gap-3">
                         @foreach ($destination->gallery_urls as $gUrl)

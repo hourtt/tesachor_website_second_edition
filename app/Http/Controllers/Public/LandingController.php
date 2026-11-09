@@ -38,8 +38,8 @@ class LandingController extends Controller
                 ? Category::find((int) $catParam)
                 : Category::where('slug', $catParam)->orWhere('name', $catParam)->first();
             if ($cat) {
-                $activeCategoryName = Lang::has('landing/landing.'.$cat->slug)
-                    ? __('landing/landing.'.$cat->slug)
+                $activeCategoryName = Lang::has('landing.'.$cat->slug)
+                    ? __('landing.'.$cat->slug)
                     : $cat->name;
             } else {
                 $activeCategoryName = ucfirst((string) $catParam);
