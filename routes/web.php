@@ -51,6 +51,7 @@ Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('adm
     Route::resource('provinces', AdminProvince::class);
 
     // Destinations CRUD
+    Route::patch('destinations/{destination}/location', [AdminDestination::class, 'updateLocation'])->name('destinations.location.update');
     Route::resource('destinations', AdminDestination::class);
 });
 

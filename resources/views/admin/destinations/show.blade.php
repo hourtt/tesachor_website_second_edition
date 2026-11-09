@@ -188,6 +188,9 @@
                     </div>
                 </div>
             @endif
+
+            {{-- Location Map --}}
+            <x-destination-map :destination="$destination" :editable="true" />
         </div>
     </div>
 </x-admin-layout>

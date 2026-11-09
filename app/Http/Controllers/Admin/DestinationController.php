@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreDestinationRequest;
+use App\Http\Requests\Admin\UpdateDestinationLocationRequest;
 use App\Http\Requests\Admin\UpdateDestinationRequest;
 use App\Models\Category;
 use App\Models\Destination;
@@ -133,5 +134,27 @@ class DestinationController extends Controller
         $this->destinationService->deleteDestination($destination);
 
         return redirect()->back()->with('success', 'Destination deleted successfully!');
+    }
+
+    public function updateLocation(UpdateDestinationLocationRequest $request, string $id)
+    {
+        try {
+            $destination = $this->destinationService->getDestinationByIdOrSlug($id);
+            $destination->update($request->validated());
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Location updated successfully.',
+                'latitude' => $destination->latitude,
+                'longitude' => $destination->longitude,
+            ]);
+        } catch (\Throwable $e) {
+            report($e);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Could not save the location. Please try again.',
+            ], 500);
+        }
     }
 }

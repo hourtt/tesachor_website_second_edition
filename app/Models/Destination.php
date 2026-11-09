@@ -24,6 +24,8 @@ use Stevebauman\Purify\Casts\PurifyHtmlOnSet;
  * @property string|null $place_information
  * @property array<string>|null $highlights
  * @property array<string>|null $gallery_images
+ * @property float|null $latitude
+ * @property float|null $longitude
  * @property-read string|null $thumbnail_url
  * @property-read array<string> $gallery_urls
  * @property-read Province|null $province
@@ -49,6 +51,8 @@ class Destination extends Model
         'place_information',
         'highlights',
         'gallery_images',
+        'latitude',
+        'longitude',
         'place_name_in_khmer',
         'short_description_in_khmer',
         'place_description_in_khmer',
@@ -64,6 +68,8 @@ class Destination extends Model
             'highlights' => 'array',
             'highlights_in_khmer' => 'array',
             'gallery_images' => 'array',
+            'latitude' => 'float',
+            'longitude' => 'float',
             'is_recommended' => 'boolean',
             'short_description' => PurifyHtmlOnSet::class,
             'short_description_in_khmer' => PurifyHtmlOnSet::class,

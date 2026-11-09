@@ -258,6 +258,9 @@
                         </div>
                     </div>
                 @endif
+
+                {{-- Location Map --}}
+                <x-destination-map :destination="$destination" :editable="false" />
             </div>
         </div>
     </div>
