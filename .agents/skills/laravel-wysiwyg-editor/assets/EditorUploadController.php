@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+/** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
 
 class EditorUploadController extends Controller
 {
@@ -14,7 +15,8 @@ class EditorUploadController extends Controller
         ]);
 
         $path = $request->file('image')->store('editor', 'public');
-
-        return response()->json(['url' => Storage::disk('public')->url($path)]);
+        /** @var \Illuminate\Filesystem\FilesystemAdapter $disk */
+        $disk = Storage::disk();
+        return response()->json(['url' => $disk->url($path)]);
     }
 }

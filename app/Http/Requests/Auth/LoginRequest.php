@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
+use Carbon\CarbonInterface;
+use Carbon\CarbonInterval;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -45,7 +47,8 @@ class LoginRequest extends FormRequest
         $credentials = $this->only('email', 'password');
         $remember = $this->boolean('remember');
 
-        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
+        if (!Auth::attempt($credentials, $remember)) {
+            // * 900 seconds = 15 minutes
             RateLimiter::hit($this->throttleKey(), 900);
 
             throw ValidationException::withMessages([
@@ -64,7 +67,7 @@ class LoginRequest extends FormRequest
      */
     public function ensureIsNotRateLimited(): void
     {
-        if (! RateLimiter::tooManyAttempts($this->throttleKey(), 3)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey(), 5)) {
             return;
         }
 
@@ -72,11 +75,19 @@ class LoginRequest extends FormRequest
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
+        $messages = collect(['km', 'en'])->map(fn(string $locale) => trans('auth.throttle', ['time' => $this->formatWait($seconds, $locale)], $locale))->all();
+
         throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
+            'email' => $messages,
+        ]);
+    }
+
+    protected function formatWait(int $seconds, string $locale): string
+    {
+        return CarbonInterval::seconds($seconds)->locale($locale)->cascade()->forHumans([
+            'parts' => 2,
+            'join' => true,
+            'syntax' => 1,
         ]);
     }
 
@@ -85,6 +96,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }

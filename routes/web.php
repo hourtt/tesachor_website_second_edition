@@ -26,10 +26,10 @@ Route::get('/lang/{locale}', function (Request $request, string $locale) {
     }
 
     return redirect()->back(fallback: route('public.landing'));
-})->name('locale.switch');
+})->middleware('throttle:public')->name('locale.switch');
 
 // SHARED PUBLIC ROUTES (Accessible to both Guests and Authenticated Users)
-Route::name('public.')->group(function () {
+Route::middleware('throttle:public')->name('public.')->group(function () {
     Route::get('/', [LandingController::class, 'index'])->name('landing');
     Route::get('/provinces', [PublicProvince::class, 'index'])->name('provinces.index');
     Route::get('/provinces/{province:slug}', [PublicProvince::class, 'show'])->name('provinces.show');
@@ -37,9 +37,8 @@ Route::name('public.')->group(function () {
 });
 
 // ADMIN ROUTES
-Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('admins.')->group(function () {
+Route::middleware(['auth', 'admin', 'prevent-back-history'])->prefix('admin')->name('admins.')->group(function () {
 
-    // Dashboard
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
 
     // Profile
@@ -53,13 +52,13 @@ Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('adm
     // Destinations CRUD
     Route::patch('destinations/{destination}/location', [AdminDestination::class, 'updateLocation'])->name('destinations.location.update');
     Route::resource('destinations', AdminDestination::class);
+
+    // Uploads (admin only, throttled)
+    Route::middleware('throttle:uploads')->group(function () {
+        Route::post('editor/upload', EditorUploadController::class)->name('editor.upload');
+        Route::post('profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar.update');
+        Route::delete('profile/avatar', [ProfileAvatarController::class, 'destroy'])->name('profile.avatar.destroy');
+    });
 });
 
-// SHARED AUTH ROUTES (Admin Avatar Upload & Remove, Editor Upload)
-Route::middleware(['auth', 'prevent-back-history'])->group(function () {
-    Route::post('/profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar.update');
-    Route::delete('/profile/avatar', [ProfileAvatarController::class, 'destroy'])->name('profile.avatar.destroy');
-    Route::post('/editor/upload', EditorUploadController::class)->name('editor.upload');
-});
-
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

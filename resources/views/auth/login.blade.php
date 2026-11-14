@@ -20,9 +20,17 @@
 
         <div>
             <x-input-label for="email" :value="__('Email Address')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
-                required autofocus autocomplete="username" placeholder="name@example.com" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus
+                autocomplete="username" placeholder="name@example.com" />
+            @php($emailErrors = $errors->get('email'))
+            
+            @if ($emailErrors)
+                <div x-data="{ i: 0, msgs: @js($emailErrors) }"
+                    x-init="if (msgs.length > 1) setInterval(() => i = (i + 1) % msgs.length, 3000)" class="mt-2 text-sm text-red-600"
+                    role="alert">
+                    <p x-text="msgs[i]">{{ $emailErrors[0] }}</p>
+                </div>
+            @endif
         </div>
 
         <div class="mt-4">
@@ -30,7 +38,7 @@
             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
                 autocomplete="current-password" placeholder="••••••••" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
-    </div>
+        </div>
 
         <div class="flex items-center justify-between mt-4">
             <label for="remember_me" class="inline-flex items-center">

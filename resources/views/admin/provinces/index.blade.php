@@ -73,8 +73,7 @@
                     <x-icon name="map" class="text-2xl" />
                 </div>
                 <h3 class="text-lg font-medium text-gray-900">No provinces found</h3>
-                <p class="text-gray-500 mb-6 max-w-sm mx-auto">Get started by adding the first province or city to your
-                    database.</p>
+                <p class="text-gray-500 mb-6 max-w-sm mx-auto">Get started by adding the first province or city to your database.</p>
                 <a href="{{ route('admins.provinces.create') }}"
                     class="inline-flex items-center justify-center px-6 py-2.5 border border-transparent font-semibold rounded-xl text-white bg-blue-600 hover:bg-blue-700 transition shadow-md">
                     <x-icon name="plus" class="mr-2" /> Create Province
