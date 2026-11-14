@@ -6,9 +6,11 @@
         <div class="mb-6 flex items-center justify-between">
             <div>
                 <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Edit Province</h1>
-                <p class="text-gray-500 text-sm mt-1">Update details for <span class="font-semibold text-gray-800">{{ $province->name }}</span></p>
+                <p class="text-gray-500 text-sm mt-1">Update details for <span
+                        class="font-semibold text-gray-800">{{ $province->name }}</span></p>
             </div>
-            <a href="{{ route('admins.provinces.index') }}" class="text-sm font-medium text-gray-600 hover:text-gray-900">
+            <a href="{{ route('admins.provinces.index') }}"
+                class="text-sm font-medium text-gray-600 hover:text-gray-900">
                 <x-icon name="arrow-left" class="mr-1" /> Back to Provinces
             </a>
         </div>
@@ -16,30 +18,35 @@
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sm:p-8">
             <x-form-alerts />
 
-            <form action="{{ route('admins.provinces.update', $province->slug) }}" method="POST" enctype="multipart/form-data"
-                x-data="{ submitting: false }" @submit="if (submitting) { $event.preventDefault(); return false; } submitting = true;">
+            <form action="{{ route('admins.provinces.update', $province->slug) }}" method="POST"
+                enctype="multipart/form-data" x-data="{ submitting: false }"
+                @submit="if (submitting) { $event.preventDefault(); return false; } submitting = true;">
                 @csrf
                 @method('PUT')
 
                 <div class="space-y-6">
                     {{-- English Name --}}
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (English)</label>
-                        <input type="text" name="name" value="{{ old('name', $province->name) }}" required
-                            class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">
-                        @error('name')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {{-- English Name --}}
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (English)</label>
+                            <input type="text" name="name" value="{{ old('name', $province->name) }}" required
+                                class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">
+                            @error('name')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
 
-                    {{-- Khmer Name --}}
-                    <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (Khmer)</label>
-                        <input type="text" name="name_in_khmer" value="{{ old('name_in_khmer', $province->name_in_khmer) }}"
-                            class="font-khmer font-normal w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">
-                        @error('name_in_khmer')
-                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                        @enderror
+                        {{-- Khmer Name --}}
+                        <div>
+                            <label class="block mb-2 text-sm font-medium text-gray-700">Province Name (Khmer)</label>
+                            <input type="text" name="name_in_khmer"
+                                value="{{ old('name_in_khmer', $province->name_in_khmer) }}"
+                                class="font-khmer font-normal w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition">
+                            @error('name_in_khmer')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
                     {{-- Image Upload Section --}}
@@ -48,17 +55,17 @@
 
                         <div class="flex flex-col md:flex-row gap-6 items-start">
                             {{-- Preview Box --}}
-                            <div class="shrink-0 w-44 h-44 bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group">
+                            <div
+                                class="shrink-0 w-44 h-44 bg-gray-50 rounded-xl overflow-hidden border border-gray-200 shadow-sm relative group">
                                 <img id="final_preview" class="w-full h-full object-cover"
                                     src="{{ $province->thumbnail_url ?? asset('images/placeholder.svg') }}">
                                 <div id="edit_overlay"
                                     class="hidden absolute inset-0 bg-black/50 items-center justify-center transition-opacity opacity-0 group-hover:opacity-100 cursor-pointer"
-                                    style="display: none;"
-                                    onclick="reOpenCropper()">
+                                    style="display: none;" onclick="reOpenCropper()">
                                     <span class="text-white text-xs font-bold bg-black/60 px-3 py-1.5 rounded-lg">
-                                         <x-icon name="pen" class="mr-1" /> Edit Crop
-                                     </span>
-                                 </div>
+                                        <x-icon name="pen" class="mr-1" /> Edit Crop
+                                    </span>
+                                </div>
                             </div>
 
                             {{-- Input Area --}}
@@ -71,7 +78,8 @@
                                         file:bg-blue-50 file:text-blue-700
                                         hover:file:bg-blue-100
                                         cursor-pointer transition" />
-                                <p class="text-xs text-gray-500 mt-2">Leave empty to keep existing image, or choose a new one to replace.</p>
+                                <p class="text-xs text-gray-500 mt-2">Leave empty to keep existing image, or choose a
+                                    new one to replace.</p>
                                 @error('thumbnail')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
@@ -86,8 +94,7 @@
                         class="px-5 py-2.5 rounded-xl border border-gray-200 text-gray-600 hover:bg-gray-50 transition font-medium text-sm">
                         Cancel
                     </a>
-                    <button type="submit"
-                        :disabled="submitting"
+                    <button type="submit" :disabled="submitting"
                         :class="{ 'opacity-75 cursor-not-allowed': submitting }"
                         class="text-white bg-blue-600 hover:bg-blue-700 font-semibold rounded-xl px-6 py-2.5 shadow-sm transition text-sm flex items-center gap-2">
                         <template x-if="submitting">
@@ -106,8 +113,7 @@
     </div>
 
     {{-- Cropper Modal --}}
-    <div id="cropper_modal"
-        class="fixed inset-0 z-50 hidden bg-black/80 items-center justify-center p-4"
+    <div id="cropper_modal" class="fixed inset-0 z-50 hidden bg-black/80 items-center justify-center p-4"
         style="display: none;">
         <div class="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden">
             <div class="p-4 border-b flex justify-between items-center">

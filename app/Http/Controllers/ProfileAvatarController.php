@@ -7,13 +7,14 @@ use Illuminate\Http\Request;
 
 class ProfileAvatarController extends Controller
 {
+
     public function update(Request $request, ProfileAvatarService $profileAvatarService)
     {
         $user = $request->user();
         $requestFile = $request->file('avatar');
 
         $request->validate([
-            'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'avatar' => ['required', 'image', 'mimetypes:image/png,image/jpeg,image/webp,image/avif', 'max:5120'],
         ]);
 
         $profileAvatarService->updateAvatar($user, $requestFile);

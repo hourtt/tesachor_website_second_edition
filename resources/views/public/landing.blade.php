@@ -133,7 +133,7 @@
             @forelse($provinces as $index => $province)
                 {{-- DYNAMIC LINK: Checks if User is Admin --}}
                 <a href="{{ route('public.provinces.show', $province->slug) }}"
-                    class="block rounded-2xl overflow-hidden shadow-lg group hover:-translate-y-2 transition-transform cursor-pointer relative aspect-3/4 px-5 py-2.5 text-xs md:px-8 md:py-3 md:text-sm"
+                    class="block rounded-2xl overflow-hidden shadow-lg group cursor-pointer relative aspect-3/4 px-5 py-2.5 text-xs md:px-8 md:py-3 md:text-sm"
                     data-aos="flip-left" data-aos-delay="{{ $index * 50 }}">
 
                     {{-- Full Image Background --}}
