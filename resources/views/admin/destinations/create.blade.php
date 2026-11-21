@@ -119,7 +119,7 @@
                         <div class="flex justify-between items-center mb-2">
                             <label class="text-sm font-medium text-gray-700">Short Description <span class="text-red-500">*</span></label>
                         </div>
-                        <x-rich-editor name="short_description" :value="old('short_description')" :upload-url="route('editor.upload')" min-height="min-h-[140px]" />
+                        <x-rich-editor name="short_description" :value="old('short_description')" :upload-url="route('admins.editor.upload')" min-height="min-h-[140px]" />
                         @error('short_description')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
@@ -128,7 +128,7 @@
                         <div class="flex justify-between items-center mb-2">
                             <label class="text-sm font-medium text-gray-700">Short Description (Khmer)</label>
                         </div>
-                        <x-rich-editor name="short_description_in_khmer" :value="old('short_description_in_khmer')" :upload-url="route('editor.upload')" :khmer="true" min-height="min-h-[140px]" />
+                        <x-rich-editor name="short_description_in_khmer" :value="old('short_description_in_khmer')" :upload-url="route('admins.editor.upload')" :khmer="true" min-height="min-h-[140px]" />
                         @error('short_description_in_khmer')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
@@ -214,13 +214,13 @@
                         </div>
                     </div>
                     <div x-show="lang === 'en'">
-                        <x-rich-editor name="place_description" :value="old('place_description')" :upload-url="route('editor.upload')" min-height="min-h-[220px]" />
+                        <x-rich-editor name="place_description" :value="old('place_description')" :upload-url="route('admins.editor.upload')" min-height="min-h-[220px]" />
                         @error('place_description')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div x-show="lang === 'km'">
-                        <x-rich-editor name="place_description_in_khmer" :value="old('place_description_in_khmer')" :upload-url="route('editor.upload')" :khmer="true" min-height="min-h-[220px]" />
+                        <x-rich-editor name="place_description_in_khmer" :value="old('place_description_in_khmer')" :upload-url="route('admins.editor.upload')" :khmer="true" min-height="min-h-[220px]" />
                         @error('place_description_in_khmer')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
@@ -252,13 +252,13 @@
                         </div>
                     </div>
                     <div x-show="lang === 'en'">
-                        <x-rich-editor name="place_history" :value="old('place_history')" :upload-url="route('editor.upload')" min-height="min-h-[200px]" />
+                        <x-rich-editor name="place_history" :value="old('place_history')" :upload-url="route('admins.editor.upload')" min-height="min-h-[200px]" />
                         @error('place_history')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div x-show="lang === 'km'">
-                        <x-rich-editor name="place_history_in_khmer" :value="old('place_history_in_khmer')" :upload-url="route('editor.upload')" :khmer="true" min-height="min-h-[200px]" />
+                        <x-rich-editor name="place_history_in_khmer" :value="old('place_history_in_khmer')" :upload-url="route('admins.editor.upload')" :khmer="true" min-height="min-h-[200px]" />
                         @error('place_history_in_khmer')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
@@ -289,13 +289,13 @@
                         </div>
                     </div>
                     <div x-show="lang === 'en'">
-                        <x-rich-editor name="place_information" :value="old('place_information')" :upload-url="route('editor.upload')" min-height="min-h-[200px]" />
+                        <x-rich-editor name="place_information" :value="old('place_information')" :upload-url="route('admins.editor.upload')" min-height="min-h-[200px]" />
                         @error('place_information')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div x-show="lang === 'km'">
-                        <x-rich-editor name="place_information_in_khmer" :value="old('place_information_in_khmer')" :upload-url="route('editor.upload')" :khmer="true" min-height="min-h-[200px]" />
+                        <x-rich-editor name="place_information_in_khmer" :value="old('place_information_in_khmer')" :upload-url="route('admins.editor.upload')" :khmer="true" min-height="min-h-[200px]" />
                         @error('place_information_in_khmer')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror

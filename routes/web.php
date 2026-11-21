@@ -36,7 +36,7 @@ Route::middleware('throttle:public')->name('public.')->group(function () {
 });
 
 // ADMIN ROUTES
-Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('admins.')->group(function () {
+Route::middleware(['auth', 'admin', 'prevent-back-history'])->prefix('admin')->name('admins.')->group(function () {
 
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
 
@@ -52,19 +52,12 @@ Route::middleware(['admin', 'prevent-back-history'])->prefix('admin')->name('adm
     Route::patch('destinations/{destination}/location', [AdminDestination::class, 'updateLocation'])->name('destinations.location.update');
     Route::resource('destinations', AdminDestination::class);
 
-    // Admin Uploads (throttled)
+    // Uploads (admin only, throttled)
     Route::middleware('throttle:uploads')->group(function () {
         Route::post('editor/upload', EditorUploadController::class)->name('editor.upload');
-        Route::post('profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar.update');
+        Route::post('profile/avatar', [ProfileAvatarController::class, 'update'])->middleware('throttle:uploads')->name('profile.avatar.update');
         Route::delete('profile/avatar', [ProfileAvatarController::class, 'destroy'])->name('profile.avatar.destroy');
     });
-});
-
-// SHARED AUTH UPLOAD ROUTES (Admin Avatar Upload & Remove, Editor Upload - Throttled)
-Route::middleware(['auth', 'prevent-back-history', 'throttle:uploads'])->group(function () {
-    Route::post('/profile/avatar', [ProfileAvatarController::class, 'update'])->name('profile.avatar.update');
-    Route::delete('/profile/avatar', [ProfileAvatarController::class, 'destroy'])->name('profile.avatar.destroy');
-    Route::post('/editor/upload', EditorUploadController::class)->name('editor.upload');
 });
 
 require __DIR__ . '/auth.php';

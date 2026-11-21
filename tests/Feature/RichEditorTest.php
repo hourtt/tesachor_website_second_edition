@@ -89,7 +89,7 @@ class RichEditorTest extends TestCase
     public function test_image_upload_returns_url_for_authenticated_user(): void
     {
         $response = $this->actingAs($this->admin)
-            ->postJson(route('editor.upload'), [
+            ->postJson(route('admins.editor.upload'), [
                 'image' => UploadedFile::fake()->image('photo.jpg'),
             ]);
 
@@ -99,7 +99,7 @@ class RichEditorTest extends TestCase
 
     public function test_image_upload_fails_for_unauthenticated_guests(): void
     {
-        $this->postJson(route('editor.upload'), [
+        $this->postJson(route('admins.editor.upload'), [
             'image' => UploadedFile::fake()->image('photo.jpg'),
         ])->assertStatus(401);
     }

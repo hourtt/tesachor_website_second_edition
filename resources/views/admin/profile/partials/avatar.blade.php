@@ -12,7 +12,7 @@
     class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 pb-6 border-b border-gray-100">
 
     {{-- Hidden Avatar Upload Form (Supabase Storage) --}}
-    <form x-ref="avatarUploadForm" method="post" action="{{ route('profile.avatar.update') }}"
+    <form x-ref="avatarUploadForm" method="post" action="{{ route('admins.profile.avatar.update') }}"
         enctype="multipart/form-data" class="hidden">
         @csrf
         <input type="file" x-ref="avatarFileInput" id="admin_avatar_file" name="avatar"

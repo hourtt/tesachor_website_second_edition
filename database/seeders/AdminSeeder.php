@@ -33,31 +33,22 @@ class AdminSeeder extends Seeder
                 );
             }
 
-            // Delete all existing admin accounts
-            $existingAdmins = User::role('admin')->get();
-
-            foreach ($existingAdmins as $user) {
-                $user->syncRoles([]);
-                $user->delete();
-            }
-
-            $adminAccount = $existingAdmins->count();
-            $this->command->info(
-                "{$adminAccount} admin" . ($adminAccount === 1 ? " account" : " accounts") . " has been deleted."
+            // Ensure admin account exists without deleting other administrators
+            $admin = User::firstOrCreate(
+                ['email' => $email],
+                [
+                    'name' => 'System Administrator',
+                    'password' => Hash::make($password),
+                    'email_verified_at' => now(),
+                ]
             );
 
-            // Create a new admin account
-            $admin = User::create([
-                'name' => 'System Administrator',
-                'email' => $email,
-                'password' => Hash::make($password),
-                'email_verified_at' => now(),
-            ]);
-
-            $admin->assignRole($adminRole);
+            if (! $admin->hasRole('admin')) {
+                $admin->assignRole($adminRole);
+            }
 
             $this->command->info(
-                "New admin account created: {$email}"
+                "Admin account ensured: {$email}"
             );
         });
 
