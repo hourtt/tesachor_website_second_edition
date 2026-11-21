@@ -1,4 +1,9 @@
-<x-app-layout>
+<x-app-layout
+    :title="$destination->place_name . ($destination->place_name_in_khmer ? ' (' . $destination->place_name_in_khmer . ')' : '') . ' — Tesachor'"
+    :description="strip_tags($destination->short_description)"
+    :image="$destination->thumbnail_url ?: asset('images/tesachor-logo.png')"
+    type="article"
+>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
 
         {{-- Breadcrumb / Header (Public Navigation Only - No Admin Actions) --}}
@@ -135,6 +140,7 @@
             <div class="space-y-6">
                 {{-- Highlights --}}
                 @php
+                    $isKhmer = app()->getLocale() === 'km';
                     $enHighlights = is_array($destination->highlights) ? array_filter($destination->highlights) : [];
                     $kmHighlights = is_array($destination->highlights_in_khmer)
                         ? array_filter($destination->highlights_in_khmer)
@@ -143,26 +149,34 @@
                 @endphp
                 @if ($hasHighlights)
                     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-3">Highlights</h3>
-                        <ul class="space-y-2">
+                        <h3 class="text-sm font-bold text-gray-400 capitalize tracking-wider mb-4">Highlights</h3>
+                        <ul class="space-y-3">
                             @foreach ($enHighlights as $i => $hl)
-                                <li class="flex flex-col gap-0.5">
-                                    <span class="flex items-center gap-2 text-sm text-gray-700">
-                                        <x-icon name="check" class="text-green-500 text-xs shrink-0" />
-                                        {{ $hl }}
-                                    </span>
-                                    @if (!empty($kmHighlights[$i]))
-                                        <span
-                                            class="font-khmer text-sm text-gray-500 pl-5">{{ $kmHighlights[$i] }}</span>
-                                    @endif
+                                @php
+                                    $kmText = !empty($kmHighlights[$i]) ? $kmHighlights[$i] : null;
+                                @endphp
+                                <li class="flex items-start gap-3">
+                                    <x-icon name="check" class="text-green-500 text-xs shrink-0 mt-1" />
+                                    <div class="flex flex-col min-w-0">
+                                        @if ($kmText)
+                                            <span class="font-khmer text-sm text-gray-800 font-medium leading-relaxed">{{ $kmText }}</span>
+                                            <span class="text-xs text-gray-500 leading-normal mt-0.5">{{ $hl }}</span>
+                                        @else
+                                            <span class="text-sm text-gray-800 font-medium leading-normal">{{ $hl }}</span>
+                                        @endif
+                                    </div>
                                 </li>
                             @endforeach
                             {{-- Show any extra Khmer-only highlights --}}
                             @foreach (array_slice($kmHighlights, count($enHighlights)) as $kmExtra)
-                                <li class="flex items-center gap-2 font-khmer text-sm text-gray-500">
-                                    <x-icon name="check" class="text-green-500 text-xs shrink-0" />
-                                    {{ $kmExtra }}
-                                </li>
+                                @if (!empty($kmExtra))
+                                    <li class="flex items-start gap-3">
+                                        <x-icon name="check" class="text-green-500 text-xs shrink-0 mt-1" />
+                                        <div class="flex flex-col min-w-0">
+                                            <span class="font-khmer text-sm text-gray-800 font-medium leading-relaxed">{{ $kmExtra }}</span>
+                                        </div>
+                                    </li>
+                                @endif
                             @endforeach
                         </ul>
                     </div>
