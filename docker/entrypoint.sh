@@ -3,13 +3,15 @@ set -e
 
 # Port configuration (supports Railway, Render, Fly.io, Cloud Run $PORT)
 PORT="${PORT:-80}"
+echo "==> Configuring Nginx to bind to 0.0.0.0:${PORT}..."
+
 if [ -f /etc/nginx/http.d/default.conf ]; then
-    sed -i "s/listen [0-9]* default_server;/listen ${PORT} default_server;/g" /etc/nginx/http.d/default.conf
-    sed -i "s/listen \[::\]:[0-9]* default_server;/listen [::]:${PORT} default_server;/g" /etc/nginx/http.d/default.conf
+    sed -i "s/listen .*/listen 0.0.0.0:${PORT} default_server;/g" /etc/nginx/http.d/default.conf
 elif [ -f /etc/nginx/conf.d/default.conf ]; then
-    sed -i "s/listen [0-9]* default_server;/listen ${PORT} default_server;/g" /etc/nginx/conf.d/default.conf
-    sed -i "s/listen \[::\]:[0-9]* default_server;/listen [::]:${PORT} default_server;/g" /etc/nginx/conf.d/default.conf
+    sed -i "s/listen .*/listen 0.0.0.0:${PORT} default_server;/g" /etc/nginx/conf.d/default.conf
 fi
+
+nginx -t || echo "Warning: Nginx configuration test returned a warning."
 
 # Ensure storage subdirectories exist and have proper permissions
 mkdir -p /var/www/html/storage/framework/cache/data \
@@ -26,10 +28,15 @@ if [ ! -L /var/www/html/public/storage ]; then
     php artisan storage:link || true
 fi
 
+# Check for APP_KEY
+if [ -z "${APP_KEY}" ]; then
+    echo "==> WARNING: APP_KEY is not set in Railway environment variables! Sessions and encryption will fail."
+fi
+
 # Run database migrations if enabled via environment variable
 if [ "${AUTORUN_MIGRATIONS:-false}" = "true" ] || [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
-    echo "Running database migrations..."
-    php artisan migrate --force
+    echo "==> Running database migrations..."
+    php artisan migrate --force || echo "==> WARNING: Database migration failed. Check your database credentials in Railway variables."
 fi
 
 # Cache optimization for production

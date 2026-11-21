@@ -97,7 +97,7 @@ RUN chown -R www-data:www-data /var/www/html \
 
 # Healthcheck using Laravel 12 built-in health endpoint
 HEALTHCHECK --interval=30s --timeout=5s --start-period=15s --retries=3 \
-    CMD curl -f http://localhost:${PORT:-80}/up || exit 1
+    CMD curl -f http://127.0.0.1:${PORT:-80}/up || exit 1
 
 EXPOSE 80
 
