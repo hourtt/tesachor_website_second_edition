@@ -4,8 +4,12 @@
         class="relative h-127.5 sm:h-167.5 lg:h-screen w-full overflow-hidden flex items-center justify-center group">
         {{-- Animation: zoom-out (Creates a cinematic opening effect) --}}
         <div class="absolute inset-0 z-0 bg-gray-900" data-aos="zoom-out" data-aos-duration="2000">
-            <img src="{{ asset('storage/cambodia-flag-wind-waving.gif') }}" alt="Cambodia flag waving in the wind"
-                class="absolute inset-0 w-full h-full object-cover object-center opacity-80">
+            <video autoplay loop muted playsinline poster="{{ asset('images/cambodia-flag-hero-poster.webp') }}"
+                class="absolute inset-0 w-full h-full object-cover object-center opacity-80 pointer-events-none">
+                <source src="{{ asset('storage/cambodia-flag-wind-waving.mp4') }}" type="video/mp4">
+                <img src="{{ asset('images/cambodia-flag-hero-poster.webp') }}" alt="Cambodia flag waving in the wind"
+                    class="absolute inset-0 w-full h-full object-cover object-center">
+            </video>
             <div class="absolute inset-0 bg-linear-to-b from-black/40 via-black/20 to-black/60"></div>
         </div>
 
@@ -171,8 +175,8 @@
                 data-aos-duration="800" data-aos-once="true">
 
                 {{-- Image --}}
-                <img src="{{ asset('storage/container-images/1500-mountains.jpg') }}"
-                    class="absolute inset-0 w-full h-full object-cover" alt="Koh Rong">
+                <img src="{{ asset('images/showcase/1500-mountains.webp') }}"
+                    class="absolute inset-0 w-full h-full object-cover" alt="1500 Mountains">
 
                 {{-- Gradient Overlay --}}
                 <div
@@ -204,7 +208,7 @@
                 @foreach ($cards as $card)
                     <div class="relative group h-60 rounded-3xl overflow-hidden shadow-xl cursor-pointer"
                         data-aos="fade-left" data-aos-delay="{{ $card['delay'] }}" data-aos-once="true">
-                        <img src="{{ asset('storage/container-images/' . $card['image']) }}"
+                        <img src="{{ asset('images/' . $card['image']) }}"
                             class="absolute inset-0 w-full h-full object-cover" alt="{{ $card['alt'] }}">
                         <div class="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors"></div>
                         <div
@@ -281,7 +285,7 @@
                         class="group h-full bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-out cursor-pointer flex flex-col">
                         <!-- image -->
                         <div class="relative h-56 overflow-hidden">
-                            <img src="{{ asset('storage/' . $card['image']) }}" alt="{{ $card['alt'] }}"
+                            <img src="{{ asset('images/' . $card['image']) }}" alt="{{ $card['alt'] }}"
                                 class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 will-change-transform" />
 
                             <!-- dark overlay -->

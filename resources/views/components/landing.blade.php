@@ -1,5 +1,7 @@
 <x-root-layout
-    title="Tesachor - Explore Cambodia"
+    title="Tesachor — Cambodia Tourism & Travel Guide"
+    description="Your gateway to exploring Cambodia's premier destinations, culture, and provinces. Discover Angkor, pristine beaches, and hidden gems with Tesachor."
+    :image="asset('images/tesachor-logo.png')"
     htmlClass="scroll-smooth"
     bodyClass="font-sans antialiased text-gray-800 bg-transparent overflow-x-hidden"
     x-data

@@ -69,7 +69,7 @@
             {{-- 1. Brand Logo --}}
             <div class="flex shrink-0">
                 <a href="{{ route($logoRoute) }}" class="flex items-center gap-2.5 group">
-                    <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
+                    <img src="{{ asset('images/tesachor-logo.webp') }}" alt="Tesachor Logo"
                         class="h-8 lg:h-10 2xl:h-12 3xl:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-xs">
                 </a>
             </div>

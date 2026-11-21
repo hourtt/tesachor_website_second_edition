@@ -2,7 +2,7 @@
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
         <div>
             <a href="/">
-                <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
+                <img src="{{ asset('images/tesachor-logo.webp') }}" alt="Tesachor Logo"
                     class="w-16 h-16 object-contain drop-shadow-md transition-transform duration-300 group-hover:scale-105">
             </a>
         </div>

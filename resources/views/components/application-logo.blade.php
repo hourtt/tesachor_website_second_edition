@@ -1,1 +1,1 @@
-<img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo" {{ $attributes->merge(['class' => 'object-contain']) }}>
+<img src="{{ asset('images/tesachor-logo.webp') }}" alt="Tesachor Logo" {{ $attributes->merge(['class' => 'object-contain']) }}>

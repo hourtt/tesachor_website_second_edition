@@ -1,4 +1,9 @@
-<x-app-layout :hideNav="true">
+<x-app-layout
+    :hideNav="true"
+    :title="$province->name . ($province->name_in_khmer ? ' (' . $province->name_in_khmer . ')' : '') . ' — Tesachor'"
+    :description="'Explore ' . $province->name . ', Cambodia — discover attractions, places to visit, and travel guide.'"
+    :image="$province->thumbnail_url ?: asset('images/tesachor-logo.png')"
+>
     <div class="max-w-7xl mx-auto py-10 px-4">
         {{-- Header --}}
         <div class="flex justify-between items-center mb-8">

@@ -1,12 +1,16 @@
-<x-app-layout :hideNav="true">
+<x-app-layout
+    :hideNav="true"
+    title="Provinces & Cities of Cambodia — Tesachor"
+    description="Discover and explore every province and city across Cambodia with Tesachor. Find local attractions, guides, and places to visit."
+    :image="asset('images/tesachor-logo.png')"
+>
     <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
 
         {{-- Header Section --}}
         <div class="flex flex-col sm:flex-row justify-between items-end mb-8 gap-4 border-b border-gray-100 pb-6">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Provinces & Cities</h1>
-                <p class="text-gray-500 mt-2">Explore every province and city in Cambodia ({{$provinces->total() - 1}}
-                    Provinces & {{$provinces->total() - 24}} City).</p>
+                <p class="text-gray-500 mt-2">Explore provinces, capital city Phnom Penh, and travel destinations across Cambodia ({{ $provinces->total() }} {{ Str::plural('Region', $provinces->total()) }}).</p>
             </div>
 
             <div class="flex items-center gap-3">

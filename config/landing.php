@@ -3,7 +3,7 @@
 return [
     'cards' => [
         [
-            'image' => 'independence-monument.jpg',
+            'image' => 'showcase/independence-monument.webp',
             'alt' => 'Independent Monument',
             'title' => 'landing.lifestyle_title',
             'description' => 'landing.lifestyle_desc',
@@ -11,7 +11,7 @@ return [
             'delay' => 100,
         ],
         [
-            'image' => 'phnom-penh-royal-palace.jpg',
+            'image' => 'showcase/phnom-penh-royal-palace.webp',
             'alt' => 'Royal Palace',
             'title' => 'landing.nation_soul_title',
             'description' => 'landing.nation_soul_desc',
@@ -22,21 +22,21 @@ return [
 
     'discover_cambodia_cards' => [
         [
-            'image' => 'khmer-food-collection.jpg',
+            'image' => 'showcase/khmer-food-collection.webp',
             'alt' => 'Cambodian food',
             'title' => 'landing.food_drink_title',
             'description' => 'landing.food_drink_desc',
             'delay' => 100,
         ],
         [
-            'image' => 'siem-reap-local-life.png',
+            'image' => 'showcase/siem-reap-local-life.webp',
             'alt' => 'Local life in Siem Reap',
             'title' => 'landing.local_life_title',
             'description' => 'landing.local_life_desc',
             'delay' => 200,
         ],
         [
-            'image' => 'cambodia-culture.png',
+            'image' => 'showcase/cambodia-culture.webp',
             'alt' => 'Cambodian culture',
             'title' => 'landing.culture_title',
             'description' => 'landing.culture_desc',

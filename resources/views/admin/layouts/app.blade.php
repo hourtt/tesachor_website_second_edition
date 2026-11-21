@@ -24,7 +24,7 @@
             {{-- Logo & Mobile Close --}}
             <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                 <a href="{{ route('admins.dashboard') }}" class="flex items-center gap-3 group">
-                    <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
+                    <img src="{{ asset('images/tesachor-logo.webp') }}" alt="Tesachor Logo"
                         class="w-9 h-9 object-contain drop-shadow-sm shrink-0 transition-transform duration-200 group-hover:scale-105">
                     <p class="text-xs font-bold text-gray-700 uppercase tracking-wider">Admin Panel</p>
                 </a>

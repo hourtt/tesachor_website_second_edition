@@ -6,7 +6,7 @@
     {{-- Header / Brand --}}
     <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
         <a href="{{ route('public.landing') }}" class="flex items-center gap-3 group">
-            <img src="{{ asset('storage/tesachor_transparent_logo.png') }}" alt="Tesachor Logo"
+            <img src="{{ asset('images/tesachor-logo.webp') }}" alt="Tesachor Logo"
                 class="w-10 h-10 object-contain drop-shadow-sm transition-transform duration-200 group-hover:scale-105">
             <span class="text-xl font-bold tracking-tight text-gray-900">Tesachor</span>
         </a>
@@ -17,7 +17,7 @@
         <div class="max-w-xl w-full text-center">
             {{-- 404 Responsive Image --}}
             <div class="mb-8 flex justify-center">
-                <img src="{{ asset('storage/404.png') }}"
+                <img src="{{ asset('images/404.webp') }}"
                     alt="Page Not Found illustration"
                     class="w-full max-w-md sm:max-w-lg h-auto object-contain mx-auto drop-shadow-sm">
             </div>
