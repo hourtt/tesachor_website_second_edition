@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Trust all proxies (required for Railway, Cloudflare, AWS load balancers)
+        $middleware->trustProxies(at: '*');
+
         // Alias middleware
         $middleware->alias([
             'prevent-back-history' => PreventBackHistory::class,

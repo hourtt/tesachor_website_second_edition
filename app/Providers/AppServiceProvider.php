@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
         // Register the Class in a Service Provider after create a navigation composer class
         View::composer('layouts.navigation', NavigationComposer::class);
         Model::preventLazyLoading(!app()->isProduction());
+
+        if (app()->isProduction()) {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
         ResetPassword::createUrlUsing(fn(object $notifiable, string $token) => route('password.reset', ['token' => $token, 'email' => $notifiable->getEmailForPasswordReset()]));
 
         //* Limit the image upload to prevent spamming

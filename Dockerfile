@@ -5,10 +5,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-COPY vite.config.js ./
-COPY resources ./resources
-COPY public ./public
-
+COPY . .
 RUN npm run build
 
 # Stage 2: Install Composer Dependencies
