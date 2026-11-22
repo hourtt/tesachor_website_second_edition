@@ -43,7 +43,7 @@
                         Recommended
                     </span>
                 @endif
-                <div class="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-2">
+                <div class="flex flex-col gap-1">
                     @if ($destination->place_name_in_khmer)
                         <h2 class="font-khmer text-[clamp(1.25rem,5.5vw,2.25rem)] font-bold text-khmer leading-normal break-words">
                             {{ $destination->place_name_in_khmer }}
@@ -51,7 +51,7 @@
                     @endif
 
                     <h2 class="font-sans text-[clamp(1.25rem,5vw,1.875rem)] font-bold break-words">
-                        ({{ $destination->place_name }})
+                        {{ $destination->place_name }}
                     </h2>
                 </div>
                 <div class="flex flex-wrap items-center gap-4 mt-2 text-sm text-gray-200">
