@@ -89,7 +89,7 @@
                         <template x-if="hasEnglish(placeNameKm)">
                             <p class="text-amber-600 text-xs mt-1.5 flex items-center gap-1">
                                 <x-icon name="exclamation-triangle" class="text-amber-500 shrink-0 text-sm" />
-                                <span>English letters detected. Please enter Khmer script here.</span>
+                                <span>English letters detected. Please enter the Khmer name here and put the English name in the English field.</span>
                             </p>
                         </template>
                         @error('place_name_in_khmer')
