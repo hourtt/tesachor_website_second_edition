@@ -24,6 +24,14 @@ class StoreProvinceRequest extends FormRequest
                     if ($trimmed === '') {
                         return;
                     }
+                    if (preg_match('/[\x{1780}-\x{17FF}]/u', $trimmed)) {
+                        $fail('The province name must be in English. Please enter the Khmer name in the Khmer field.');
+                        return;
+                    }
+                    if (! preg_match('/[a-zA-Z]/', $trimmed)) {
+                        $fail('The province name must contain English letters.');
+                        return;
+                    }
                     if (Province::whereRaw('LOWER(name) = LOWER(?)', [$trimmed])->exists()) {
                         $fail('This province already exists.');
                     }

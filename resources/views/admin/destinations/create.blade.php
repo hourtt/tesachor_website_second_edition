@@ -26,7 +26,19 @@
         <x-form-alerts />
 
         <form action="{{ route('admins.destinations.store') }}" method="POST" enctype="multipart/form-data"
-            x-data="{ submitting: false }" @submit="if (submitting) { $event.preventDefault(); return false; } submitting = true;">
+            x-data="{
+                submitting: false,
+                placeNameEn: @js(old('place_name', '')),
+                placeNameKm: @js(old('place_name_in_khmer', '')),
+                hasKhmer(text) { return /[\u1780-\u17FF]/.test(text || ''); },
+                hasEnglish(text) { return /[a-zA-Z]/.test(text || ''); },
+                canSubmit() {
+                    if (this.hasKhmer(this.placeNameEn)) return false;
+                    if (this.hasEnglish(this.placeNameKm)) return false;
+                    return true;
+                }
+            }"
+            @submit="if (!canSubmit() || submitting) { $event.preventDefault(); return false; } submitting = true;">
             @csrf
 
             {{-- 1. Basic Information --}}
@@ -39,19 +51,45 @@
                 {{-- Place Name: English + Khmer side by side --}}
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                     <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">Place Name <span class="text-red-500">*</span></label>
-                        <input type="text" name="place_name" value="{{ old('place_name') }}" required
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-sm font-medium text-gray-700 flex items-center gap-1.5">
+                                Place Name <span class="text-red-500">*</span>
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-100 text-blue-700 uppercase tracking-wide">English</span>
+                            </label>
+                            <span class="text-xs text-gray-400">Used for URL slug</span>
+                        </div>
+                        <input type="text" name="place_name" x-model="placeNameEn" required
                             class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition"
-                            placeholder="e.g. Angkor Wat">
+                            :class="{ 'border-amber-400 bg-amber-50/30': hasKhmer(placeNameEn) }"
+                            placeholder="e.g. Teuk Chhu Natural Resort">
+                        <template x-if="hasKhmer(placeNameEn)">
+                            <p class="text-amber-600 text-xs mt-1.5 flex items-center gap-1">
+                                <x-icon name="exclamation-triangle" class="text-amber-500 shrink-0 text-sm" />
+                                <span>Khmer script detected. Please enter the English name here and put the Khmer name in the Khmer field.</span>
+                            </p>
+                        </template>
                         @error('place_name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-700">Place Name (Khmer)</label>
-                        <input type="text" name="place_name_in_khmer" value="{{ old('place_name_in_khmer') }}"
+                        <div class="flex items-center justify-between mb-2">
+                            <label class="text-sm font-medium text-gray-700 flex items-center gap-1.5">
+                                Place Name (Khmer)
+                                <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-700 uppercase tracking-wide">Khmer</span>
+                            </label>
+                            <span class="text-xs text-gray-400">អក្សរខ្មែរ</span>
+                        </div>
+                        <input type="text" name="place_name_in_khmer" x-model="placeNameKm"
                             class="font-khmer w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-blue-500 border-gray-200 outline-none transition"
-                            placeholder="e.g. អង្គរវត្ត">
+                            :class="{ 'border-amber-400 bg-amber-50/30': hasEnglish(placeNameKm) }"
+                            placeholder="e.g. រមណីយដ្ឋានធម្មជាតិទឹកឈូ">
+                        <template x-if="hasEnglish(placeNameKm)">
+                            <p class="text-amber-600 text-xs mt-1.5 flex items-center gap-1">
+                                <x-icon name="exclamation-triangle" class="text-amber-500 shrink-0 text-sm" />
+                                <span>English letters detected. Please enter Khmer script here.</span>
+                            </p>
+                        </template>
                         @error('place_name_in_khmer')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror

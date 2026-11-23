@@ -13,6 +13,15 @@ fi
 
 nginx -t || echo "Warning: Nginx configuration test returned a warning."
 
+# Ensure Nginx temporary and run directories exist with proper www-data ownership
+mkdir -p /var/lib/nginx/tmp/client_body \
+         /var/lib/nginx/tmp/proxy \
+         /var/lib/nginx/tmp/fastcgi \
+         /run/nginx \
+         /var/log/nginx
+chown -R www-data:www-data /var/lib/nginx /run/nginx /var/log/nginx
+chmod -R 755 /var/lib/nginx
+
 # Ensure storage subdirectories exist and have proper permissions
 mkdir -p /var/www/html/storage/framework/cache/data \
          /var/www/html/storage/framework/sessions \

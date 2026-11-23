@@ -42,24 +42,30 @@ class ProvinceController extends Controller
         }
     }
 
-    public function show(string $slug)
+    public function show(Province|string $slug)
     {
-        $province = $this->provinceService->getProvinceByIdOrSlug($slug);
+        $province = $slug instanceof Province
+            ? $slug->load('destinations')
+            : $this->provinceService->getProvinceByIdOrSlug($slug);
 
         return view('admin.provinces.show', compact('province'));
     }
 
-    public function edit(string $slug)
+    public function edit(Province|string $slug)
     {
-        $province = $this->provinceService->getProvinceByIdOrSlug($slug);
+        $province = $slug instanceof Province
+            ? $slug
+            : $this->provinceService->getProvinceByIdOrSlug($slug);
 
         return view('admin.provinces.edit', compact('province'));
     }
 
-    public function update(UpdateProvinceRequest $request, string $slug)
+    public function update(UpdateProvinceRequest $request, Province|string $slug)
     {
         try {
-            $province = $this->provinceService->getProvinceByIdOrSlug($slug);
+            $province = $slug instanceof Province
+                ? $slug
+                : $this->provinceService->getProvinceByIdOrSlug($slug);
 
             $this->provinceService->updateProvince(
                 $province,
@@ -76,9 +82,11 @@ class ProvinceController extends Controller
         }
     }
 
-    public function destroy(string $slug)
+    public function destroy(Province|string $slug)
     {
-        $province = $this->provinceService->getProvinceByIdOrSlug($slug);
+        $province = $slug instanceof Province
+            ? $slug
+            : $this->provinceService->getProvinceByIdOrSlug($slug);
 
         if (! $this->provinceService->deleteProvince($province)) {
             return redirect()->back()

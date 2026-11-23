@@ -33,6 +33,14 @@ class StoreDestinationRequest extends FormRequest
                 'string',
                 'max:255',
                 function ($attribute, $value, $fail) {
+                    if (preg_match('/[\x{1780}-\x{17FF}]/u', (string) $value)) {
+                        $fail('The place name must be in English. Please enter the Khmer name in the Place Name (Khmer) field.');
+                        return;
+                    }
+                    if (! preg_match('/[a-zA-Z]/', (string) $value)) {
+                        $fail('The place name must contain English letters.');
+                        return;
+                    }
                     if (Destination::whereRaw('LOWER(place_name) = LOWER(?)', [$value])->exists()) {
                         $fail('This destination already exists.');
                     }
@@ -54,6 +62,17 @@ class StoreDestinationRequest extends FormRequest
                 'string',
                 'max:255',
                 function ($attribute, $value, $fail) {
+                    if ($value === null || trim((string) $value) === '') {
+                        return;
+                    }
+                    if (preg_match('/[a-zA-Z]/', (string) $value)) {
+                        $fail('The Khmer place name must be in Khmer script. Please enter the English name in the Place Name field.');
+                        return;
+                    }
+                    if (! preg_match('/[\x{1780}-\x{17FF}]/u', (string) $value)) {
+                        $fail('The Khmer place name must contain Khmer script (អក្សរខ្មែរ).');
+                        return;
+                    }
                     if (Destination::where('place_name_in_khmer', $value)->exists()) {
                         $fail('This Khmer destination name already exists.');
                     }

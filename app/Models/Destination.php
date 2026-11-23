@@ -130,4 +130,19 @@ class Destination extends Model
             }
         );
     }
+
+    public function resolveRouteBindingQuery($query, $value, $field = null)
+    {
+        $field = $field ?? $this->getRouteKeyName();
+
+        if ($field === 'id' && ! is_numeric($value)) {
+            return $query->where('slug', $value);
+        }
+
+        if ($field === 'slug' && is_numeric($value)) {
+            return $query->where('id', (int) $value)->orWhere('slug', $value);
+        }
+
+        return parent::resolveRouteBindingQuery($query, $value, $field);
+    }
 }

@@ -61,7 +61,11 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Configure Nginx & Supervisor directories
-RUN mkdir -p /run/nginx /var/log/supervisor /etc/nginx/http.d
+RUN mkdir -p /run/nginx /var/log/supervisor /etc/nginx/http.d \
+             /var/lib/nginx/tmp/client_body \
+             /var/lib/nginx/tmp/proxy \
+             /var/lib/nginx/tmp/fastcgi \
+    && chown -R www-data:www-data /var/lib/nginx /run/nginx /var/log/nginx
 
 # Copy custom configurations
 COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf

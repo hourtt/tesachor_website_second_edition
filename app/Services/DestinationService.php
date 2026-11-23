@@ -23,7 +23,7 @@ class DestinationService
     {
         $baseSlug = Str::slug($name);
         if ($baseSlug === '') {
-            $baseSlug = 'destination';
+            $baseSlug = 'destination-' . Str::lower(Str::random(6));
         }
 
         $slug = $baseSlug;
@@ -198,7 +198,7 @@ class DestinationService
             $data['highlights'] = array_values(array_filter($data['highlights'], fn ($value) => ! is_null($value) && trim((string) $value) !== ''));
         }
 
-        if (isset($data['place_name']) && $destination->place_name !== $data['place_name']) {
+        if (isset($data['place_name']) && ($destination->place_name !== $data['place_name'] || $destination->slug === 'destination')) {
             $data['slug'] = $this->uniqueSlug($data['place_name'], $destination->id);
         }
 

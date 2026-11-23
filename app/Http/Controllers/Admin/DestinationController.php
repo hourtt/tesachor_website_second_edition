@@ -90,26 +90,32 @@ class DestinationController extends Controller
         }
     }
 
-    public function show(string $id)
+    public function show(Destination|string $id)
     {
-        $destination = $this->destinationService->getDestinationByIdOrSlug($id);
+        $destination = $id instanceof Destination
+            ? $id->load(['province', 'category'])
+            : $this->destinationService->getDestinationByIdOrSlug($id);
 
         return view('admin.destinations.show', compact('destination'));
     }
 
-    public function edit(string $id)
+    public function edit(Destination|string $id)
     {
-        $destination = $this->destinationService->getDestinationByIdOrSlug($id);
+        $destination = $id instanceof Destination
+            ? $id
+            : $this->destinationService->getDestinationByIdOrSlug($id);
         $provinces = Province::orderBy('name')->get();
         $categories = Category::orderBy('name')->get();
 
         return view('admin.destinations.edit', compact('destination', 'provinces', 'categories'));
     }
 
-    public function update(UpdateDestinationRequest $request, string $id)
+    public function update(UpdateDestinationRequest $request, Destination|string $id)
     {
         try {
-            $destination = $this->destinationService->getDestinationByIdOrSlug($id);
+            $destination = $id instanceof Destination
+                ? $id
+                : $this->destinationService->getDestinationByIdOrSlug($id);
 
             $this->destinationService->updateDestination(
                 $destination,
@@ -127,19 +133,23 @@ class DestinationController extends Controller
         }
     }
 
-    public function destroy(string $id)
+    public function destroy(Destination|string $id)
     {
-        $destination = $this->destinationService->getDestinationByIdOrSlug($id);
+        $destination = $id instanceof Destination
+            ? $id
+            : $this->destinationService->getDestinationByIdOrSlug($id);
 
         $this->destinationService->deleteDestination($destination);
 
         return redirect()->back()->with('success', 'Destination deleted successfully!');
     }
 
-    public function updateLocation(UpdateDestinationLocationRequest $request, string $id)
+    public function updateLocation(UpdateDestinationLocationRequest $request, Destination|string $id)
     {
         try {
-            $destination = $this->destinationService->getDestinationByIdOrSlug($id);
+            $destination = $id instanceof Destination
+                ? $id
+                : $this->destinationService->getDestinationByIdOrSlug($id);
             $destination->update($request->validated());
 
             return response()->json([

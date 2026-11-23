@@ -25,14 +25,16 @@ class UpdateDestinationRequest extends FormRequest
 
     public function rules(): array
     {
-        $param = (string) $this->route('destination');
-        $destination = Destination::where(function ($query) use ($param) {
-            if (is_numeric($param)) {
-                $query->where('id', (int) $param)->orWhere('slug', $param);
-            } else {
-                $query->where('slug', $param);
-            }
-        })->first();
+        $routeParam = $this->route('destination');
+        $destination = $routeParam instanceof Destination
+            ? $routeParam
+            : Destination::where(function ($query) use ($routeParam) {
+                if (is_numeric($routeParam)) {
+                    $query->where('id', (int) $routeParam)->orWhere('slug', (string) $routeParam);
+                } else {
+                    $query->where('slug', (string) $routeParam);
+                }
+            })->first();
         $destinationId = $destination?->id;
 
         return [
@@ -43,6 +45,14 @@ class UpdateDestinationRequest extends FormRequest
                 'string',
                 'max:255',
                 function ($attribute, $value, $fail) use ($destinationId) {
+                    if (preg_match('/[\x{1780}-\x{17FF}]/u', (string) $value)) {
+                        $fail('The place name must be in English. Please enter the Khmer name in the Place Name (Khmer) field.');
+                        return;
+                    }
+                    if (! preg_match('/[a-zA-Z]/', (string) $value)) {
+                        $fail('The place name must contain English letters.');
+                        return;
+                    }
                     $exists = Destination::whereRaw('LOWER(place_name) = LOWER(?)', [$value])
                         ->when($destinationId, fn($q) => $q->where('id', '!=', $destinationId))
                         ->exists();
@@ -67,12 +77,22 @@ class UpdateDestinationRequest extends FormRequest
                 'string',
                 'max:255',
                 function ($attribute, $value, $fail) use ($destinationId) {
+                    if ($value === null || trim((string) $value) === '') {
+                        return;
+                    }
+                    if (preg_match('/[a-zA-Z]/', (string) $value)) {
+                        $fail('The Khmer place name must be in Khmer script. Please enter the English name in the Place Name field.');
+                        return;
+                    }
+                    if (! preg_match('/[\x{1780}-\x{17FF}]/u', (string) $value)) {
+                        $fail('The Khmer place name must contain Khmer script (អក្សរខ្មែរ).');
+                        return;
+                    }
                     $exists = Destination::where('place_name_in_khmer', $value)
                         ->when($destinationId, fn($q) => $q->where('id', '!=', $destinationId))
                         ->exists();
                     if ($exists) {
                         $fail('This destination already exists.');
-
                     }
                 },
             ],
