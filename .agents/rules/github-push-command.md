@@ -1,7 +1,3 @@
----
-trigger: manual
----
-
 When I explicitly ask you to commit and push my project changes, follow these instructions.
 
 Before committing:

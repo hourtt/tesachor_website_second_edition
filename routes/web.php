@@ -3,9 +3,9 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DestinationController as AdminDestination;
 use App\Http\Controllers\Admin\ProvinceController as AdminProvince;
+use App\Http\Controllers\Auth\EditorUploadController;
+use App\Http\Controllers\Auth\ProfileAvatarController;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\EditorUploadController;
-use App\Http\Controllers\ProfileAvatarController;
 use App\Http\Controllers\Public\DestinationController as PublicDestination;
 // * Shared Public Controllers
 use App\Http\Controllers\Public\LandingController;
